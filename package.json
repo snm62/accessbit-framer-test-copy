@@ -1,12 +1,13 @@
 {
-  "name": "Accessibility",
+  "name": "accessbit",
   "version": "1.0.0",
   "scripts": {
     "dev": "npm install && concurrently \"webflow extension serve\" \"npm run watch-webpack\"",
     "dev:localhost": "webpack serve --config webpack.config.mjs --mode development",
-    "build": "npm run build-webpack && webflow extension bundle",
+    "build": "npm run build-webpack && npm run postbuild-webpack && webflow extension bundle",
     "watch-webpack": "webpack --config webpack.config.mjs --mode development --watch",
     "build-webpack": "webpack --config webpack.prod.config.mjs",
+    "postbuild-webpack": "node scripts/remove-function-constructor.js",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "devDependencies": {
@@ -40,7 +41,11 @@
   },
   "babel": {
     "presets": [
-      "@babel/preset-env",
+      ["@babel/preset-env", {
+        "useBuiltIns": false,
+        "corejs": false,
+        "modules": false
+      }],
       "@babel/preset-react"
     ]
   }

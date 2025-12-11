@@ -17,15 +17,15 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthorize, onNeedHelp ,
   const [isAuthorizing, setIsAuthorizing] = useState(false);
 
   useEffect(() => {
-    // Check for user authentication data in sessionStorage and authenticated prop
+    
     const checkUserAuth = () => {
       const userinfo = localStorage.getItem("accessbit-userinfo");
       const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
-      // User has data if either authenticated prop is true OR sessionStorage has data
+     
       setHasUserData(authenticated || !!hasData);
     };
 
-    // Set a 2-second delay before showing the actual buttons
+    
     const timer = setTimeout(() => {
       checkUserAuth();
       setIsCheckingAuth(false);
@@ -42,7 +42,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthorize, onNeedHelp ,
     }
   }, [authenticated]);
 
-  // Monitor sessionStorage changes for OAuth completion
+ 
   useEffect(() => {
     const checkSessionStorage = () => {
       const userinfo = localStorage.getItem("accessbit-userinfo");
@@ -55,13 +55,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthorize, onNeedHelp ,
       }
     };
 
-    // Check immediately
-    checkSessionStorage();
-
-    // Set up interval to check for changes
-    const interval = setInterval(checkSessionStorage, 1000);
-
-    return () => clearInterval(interval);
   }, [isAuthorizing]);
 
   const handleAuthorizeClick = () => {

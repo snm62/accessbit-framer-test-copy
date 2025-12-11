@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/customization.css";
 import iro from "@jaames/iro"; // Import iro.js
-const previewarea = new URL("../assets/preview-area.svg", import.meta.url).href;
+
+const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+  <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
+</svg>`);
+
 const mobile = new URL("../assets/mobile.svg", import.meta.url).href;
 const monitor = new URL("../assets/monitor.svg", import.meta.url).href;
-const whitearrow = new URL("../assets/→.svg", import.meta.url).href;
 const icon1 = new URL("../assets/Accessibility.webp", import.meta.url).href;
 
 type CustomizationData = {
@@ -28,11 +31,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   // Customization state
-  const [interfaceLeadColor, setInterfaceLeadColor] = useState("#FFFFFF");
   const [accessibilityStatementLink, setAccessibilityStatementLink] = useState("");
-  const [interfaceFooterContent, setInterfaceFooterContent] = useState("");
-  const [interfaceLanguage, setInterfaceLanguage] = useState("English");
-  const [interfacePosition, setInterfacePosition] = useState("Left");
   const [triggerVerticalPosition, setTriggerVerticalPosition] = useState("Bottom");
   const [triggerButtonSize, setTriggerButtonSize] = useState("Medium");
   const [triggerButtonShape, setTriggerButtonShape] = useState("Circle");
@@ -50,15 +49,9 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = useState("3");
 
   // colorpicker
-  const [isActive, setIsActive] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [btnOpen, setBtnOpen] = useState(false);
-  const [color, setColor] = useState("#ffffff");
-  const colorPickerRef = useRef<HTMLDivElement | null>(null);
-  const pickerInstance = useRef<any>(null);
   const btnPickerInstance = useRef<any>(null);
   const btnDropdownRef = useRef<HTMLDivElement | null>(null);
-
   const btnPickerRef = useRef<HTMLDivElement | null>(null);
   
 
@@ -66,11 +59,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   useEffect(() => {
   
     if (existingCustomizationData) {
-
-      setInterfaceLeadColor(existingCustomizationData.interfaceLeadColor || "#FFFFFF");
       setAccessibilityStatementLink(existingCustomizationData.accessibilityStatementLink || "");
-      setInterfaceFooterContent(existingCustomizationData.interfaceFooterContent || "");
-      setInterfacePosition(existingCustomizationData.interfacePosition || "Left");
       setTriggerVerticalPosition(existingCustomizationData.triggerVerticalPosition || "Bottom");
       setTriggerButtonSize(existingCustomizationData.triggerButtonSize || "Medium");
       setTriggerButtonShape(existingCustomizationData.triggerButtonShape || "Circle");
@@ -86,31 +75,10 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       setMobileTriggerShape(existingCustomizationData.mobileTriggerShape || "Rounded");
       setMobileTriggerHorizontalOffset(existingCustomizationData.mobileTriggerHorizontalOffset || "0");
       setMobileTriggerVerticalOffset(existingCustomizationData.mobileTriggerVerticalOffset || "0");
-      setInterfaceLanguage(existingCustomizationData.interfaceLanguage || "English");
     }
   }, [existingCustomizationData]);
 
  
-  useEffect(() => {
-    if (!pickerInstance.current && colorPickerRef.current) {
-      pickerInstance.current = iro.ColorPicker(colorPickerRef.current, {
-        width: 100,
-        color: color,
-        borderWidth: 2,
-        borderColor: "#ccc",
-      });
-
-      pickerInstance.current.on("color:change", (newColor: any) => {
-        setColor(newColor.hexString);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isOpen && pickerInstance.current) {
-      pickerInstance.current.color.set(color);
-    }
-  }, [isOpen]);
 
   useEffect(() => {
 
@@ -125,8 +93,9 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   }, [btnOpen])
 
   useEffect(() => {
-    // Handle click outside to close dropdowns
-    function handleClickOutside(event: MouseEvent) {
+    // Handle click outside to close any open dropdowns or color pickers
+    function handleGlobalClickOutside(event: MouseEvent) {
+      // Close button color picker dropdown if clicked outside
       if (
         btnOpen &&
         btnDropdownRef.current &&
@@ -136,16 +105,18 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       ) {
         setBtnOpen(false);
       }
+
+      // Close any open custom dropdown if clicked outside
+      Object.entries(dropdownRefs).forEach(([key, ref]) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
+          if (openDropdown === key) setOpenDropdown(null);
+        }
+      });
     }
 
-    if (btnOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [btnOpen]);
+    document.addEventListener("mousedown", handleGlobalClickOutside);
+    return () => document.removeEventListener("mousedown", handleGlobalClickOutside);
+  }, [btnOpen, openDropdown]);
 
 
   const dropdownRefs = {
@@ -241,18 +212,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const getLabel = (opts: any[], val: string) =>
     (opts.find((o) => o.value === val) || {}).label || val;
 
-  // Handle click outside for custom dropdowns
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      Object.entries(dropdownRefs).forEach(([key, ref]) => {
-        if (ref.current && !ref.current.contains(e.target as Node)) {
-          if (openDropdown === key) setOpenDropdown(null);
-        }
-      });
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [openDropdown]);
+  // (Consolidated click-outside handling in the effect above)
 
   const handleNextPayment = async () => {
 
@@ -267,9 +227,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
         triggerHorizontalOffset: triggerHorizontalOffset,
         triggerVerticalOffset: triggerVerticalOffset,
         hideTriggerButton: hideTriggerButton,
-        interfaceLeadColor: interfaceLeadColor,
-        interfacePosition: interfacePosition,
-        interfaceLanguage: interfaceLanguage,
         selectedIcon: 'accessibility', // Default icon
         selectedIconName: 'Accessibility', // Default icon name
         showOnMobile: showOnMobile,
@@ -280,10 +237,8 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
         mobileTriggerVerticalPosition: mobileTriggerVerticalPosition,
         mobileTriggerHorizontalOffset: mobileTriggerHorizontalOffset,
         mobileTriggerVerticalOffset: mobileTriggerVerticalOffset,
-        accessibilityStatementLink: accessibilityStatementLink,
-        interfaceFooterContent: interfaceFooterContent
+        accessibilityStatementLink: accessibilityStatementLink
       };
-      
       
       onNext(customizationData);
     } catch (error) {
@@ -292,83 +247,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     }
   };
 
-  // Helper function for site ID
-  const getCurrentSiteId = async () => {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlSiteId = urlParams.get('siteId');
-    
-    // Check the correct sessionStorage key used by the auth system (new key with legacy fallback)
-    const accessbitUserInfo = localStorage.getItem('accessbit-userinfo');
-    let sessionSiteId = null;
-    if (accessbitUserInfo) {
-      try {
-        const userData = JSON.parse(accessbitUserInfo);
-        sessionSiteId = userData.siteId;
-        
-      } catch (error) {
-        
-      }
-    }
-    
-    // Also check the old keys for backward compatibility
-    const oldSessionSiteId = localStorage.getItem('accessibility_site_id');
-    const localSiteId = localStorage.getItem('accessibility_site_id');
-    
-
-    
-    // If we have a URL siteId, use it (this comes from domain lookup)
-    if (urlSiteId) {
-     
-      return urlSiteId;
-    }
-    
-    // If no URL siteId, try to get it from domain lookup
-    if (sessionSiteId) {
-      try {
-       
-        const response = await fetch(`https://accessibility-widget.web-8fb.workers.dev/api/accessibility/domain-lookup?domain=${window.location.hostname}`);
-        if (response.ok) {
-          const domainData = await response.json();
-          if (domainData.siteId) {
-
-            return domainData.siteId;
-          }
-        }
-      } catch (error) {
-
-      }
-    }
-    
-    // Fallback to sessionStorage
-    const siteId = sessionSiteId || oldSessionSiteId || localSiteId;
-
-    return siteId;
-  };
-
-
-  // Load customization data function
-  const loadCustomizationData = async (siteId: string) => {
-    try {
-      
-      const response = await fetch(`https://accessibility-widget.web-8fb.workers.dev/api/accessibility/config?siteId=${siteId}`);
-      
-
-      
-      if (response.ok) {
-        const data = await response.json();
-      
-        return data.customization;
-      } else {
-        const errorText = await response.text();
-      
-        return null;
-      }
-    } catch (error) {
-     
-      return null;
-    }
-  };
 
   const handleBack = () => {
     onBack();
@@ -436,41 +314,18 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
 
   return (
     <div className="customization-screen">
-      {/* Loading indicator for existing data */}
-      {isLoadingExistingData && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999
-        }}>
-       {/*<div style={{
-            backgroundColor: 'white',
-            padding: '20px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            textAlign: 'center'
-          }}>
-            <div style={{ marginBottom: '10px' }}>Loading your existing settings...</div>
-            <div style={{ fontSize: '14px', color: '#666' }}>Please wait while we fetch your customization data</div>
-          </div>*/}
-        </div>
-      )}
       
       {/* Header */}
       <div className="customization-header">
         <div className="app-name"></div>
         <div className="header-buttons">
           <button className="back-btn" onClick={handleBack}>
-            <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)' }} /> Back
+            <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
+            Back
           </button>
                 <button className="next-btn" onClick={handleNextPayment}>
-            Next <img src={whitearrow} alt="" />
+            Next
+            <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
           </button>
         </div>
       </div>
@@ -483,10 +338,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
         </div>
         <div className="step">
           <span className="step-number">STEP 2</span>
-          <span className="step-name">Payment</span>
-        </div>
-        <div className="step">
-          <span className="step-number">STEP 3</span>
           <span className="step-name">Publish</span>
         </div>
       </div>
@@ -500,18 +351,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
               <h3>Customization AccessWidget Interface</h3>
 
               <div className="interface-grid">
-                {/* <div className="form-group">
-                      <label>Interface Lead Color</label>
-                      <div className="color-input-group">
-                        <input
-                          type="text"
-                          value={interfaceLeadColor}
-                          onChange={(e) => setInterfaceLeadColor(e.target.value)}
-                          className="color-input"
-                        />
-                      </div>
-                    </div> */}
-
                 <div className="form-group">
                   <label>Accessibility Statement Link</label>
                   <input
@@ -521,24 +360,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                     onChange={(e) => setAccessibilityStatementLink(e.target.value)}
                   />
                 </div>
-
-                {/* <div className="form-group">
-                      <label>Interface Footer Content</label>
-                      <input
-                        type="text"
-                        placeholder="Link here."
-                        value={interfaceFooterContent}
-                        onChange={(e) => setInterfaceFooterContent(e.target.value)}
-                      />
-                    </div> */}
-
-                {/*<div className="form-group">
-                  <label>Interface language</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("interfaceLanguage", "", interfaceLanguage, languageOptions, setInterfaceLanguage)}
-                  </div>
-                </div>*/}
-                
               </div>
             </div>
 

@@ -1,70 +1,27 @@
-const base_url = "https://accessibility-widget.web-8fb.workers.dev";
+import { WORKER_BASE_URL } from '../util/constants';
 import { ScriptCategory, SaveCategoriesResponse, AppData } from '../types/types';
 import { ScriptRegistrationRequest, CodeApplication } from "../types/types";
 
 
 export const customCodeApi = {
-  // Register a new script
+  // Legacy methods for compatibility (mapped to new worker)
   registerScript: async (params: ScriptRegistrationRequest, token: string) => {
-    const response = await fetch(`${base_url}/api/custom-code/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(params),
-    });
-    return response.json();
+    // This method is no longer used - scripts are handled by the worker directly
+    return { success: true, message: 'Script registration handled by worker' };
   },
 
-
-  //blocking script registration
   registerAnalyticsBlockingScript: async (token: string) => {
-    try {
-      const response = await fetch(`${base_url}/api/custom-code/apply-custom-code`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          
-          'Content-Type': 'application/json'
-        },
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP error! status: ${response.status}, text: ${errorText}`);
-      }
-      
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw error;
-    }
+    // This method is no longer used - scripts are handled by the worker directly
+    return { success: true, message: 'Script registration handled by worker' };
   },
 
   getScripts: async (siteId: string, token: string) => {
-    const response = await fetch(
-      `${base_url}/api/custom-code/register?siteId=${siteId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.json();
+    // This method is no longer used - scripts are handled by the worker directly
+    return { success: true, scripts: [] };
   },
 
-  // Apply script to site or page
   applyScript: async (params: CodeApplication, token: string) => {
-    const response = await fetch(`${base_url}/api/custom-code/apply`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(params),
-    });
-    return response.json();
+    // This method is no longer used - scripts are handled by the worker directly
+    return { success: true, message: 'Script application handled by worker' };
   },
-
 };

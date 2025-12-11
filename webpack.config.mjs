@@ -10,8 +10,9 @@ export default {
     filename: "bundle.js",
     path: path.resolve(dirname, "public"),
     devtoolModuleFilenameTemplate: 'webpack:///[resource-path]',
+    globalObject: 'window', 
   },
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map', 
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"],
   },

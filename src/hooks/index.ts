@@ -24,7 +24,7 @@ export function useScriptRegistration(sessionToken: string, siteId: string) {
   const registerScript = async (
     code: string,
     isHosted: boolean
-  ): Promise<CustomCode | undefined> => {
+  ): Promise<{ success: boolean; message: string } | undefined> => {
     if (!sessionToken || !siteId) return;
 
     setIsRegistering(true);
@@ -41,7 +41,7 @@ export function useScriptRegistration(sessionToken: string, siteId: string) {
         scriptData,
       };
 
-      const { result } = await customCodeApi.registerScript(
+      const result = await customCodeApi.registerScript(
         request,
         sessionToken
       );

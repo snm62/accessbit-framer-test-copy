@@ -2,16 +2,100 @@ import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { jwtDecode } from "jwt-decode";
 import { User, DecodedToken } from "../types/types";
 import { WebflowAPI } from "../types/webflowtypes";
-import { getAuthData,setAuthData,removeAuthStorageItem,setSiteInfo,clearAuthData,setAccessBitAuthData } from "../util/authStorage";
-import { getAuthStorageItem } from "../util/authStorage";
-const base_url = "https://accessibility-widget.web-8fb.workers.dev";
+import { WORKER_BASE_URL } from '../util/constants';
 
 // Use the real Webflow API from the global scope,
 declare const webflow: WebflowAPI;
 
+let inMemorySessionToken: string | null = null;
+let inMemorySessionTokenExpiry: number | null = null;
+let sessionTokenRefreshPromise: Promise<string> | null = null;
+
+const SESSION_TOKEN_BUFFER_MS = 60 * 1000; // refresh 1 minute before expiry
+
+const setInMemorySessionToken = (token: string | null) => {
+  if (!token) {
+    inMemorySessionToken = null;
+    inMemorySessionTokenExpiry = null;
+    return;
+  }
+
+  inMemorySessionToken = token;
+  try {
+    const decoded = jwtDecode(token) as DecodedToken;
+    if (decoded?.exp) {
+      inMemorySessionTokenExpiry = decoded.exp * 1000;
+    } else {
+      inMemorySessionTokenExpiry = Date.now() + 15 * 60 * 1000;
+    }
+  } catch {
+    inMemorySessionTokenExpiry = Date.now() + 15 * 60 * 1000;
+  }
+};
+
+const clearInMemorySessionToken = () => {
+  setInMemorySessionToken(null);
+};
+
+const hasUsableSessionToken = () => {
+  if (!inMemorySessionToken) return false;
+  if (!inMemorySessionTokenExpiry) return true;
+  return inMemorySessionTokenExpiry - Date.now() > SESSION_TOKEN_BUFFER_MS;
+};
+
+const refreshSessionToken = async (): Promise<string> => {
+  if (sessionTokenRefreshPromise) {
+    return sessionTokenRefreshPromise;
+  }
+
+  sessionTokenRefreshPromise = (async () => {
+    const idToken = await webflow.getIdToken();
+    if (!idToken) {
+      throw new Error('Failed to get ID token from Webflow');
+    }
+
+    const siteInfo = await webflow.getSiteInfo();
+    if (!siteInfo?.siteId) {
+      throw new Error('No site information available');
+    }
+
+    const response = await fetch(`${WORKER_BASE_URL}/api/auth/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken, siteId: siteInfo.siteId }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(`Token exchange failed: ${data.error || 'Unknown error'}`);
+    }
+
+    if (!data.sessionToken) {
+      throw new Error('No session token received from server');
+    }
+
+    setInMemorySessionToken(data.sessionToken);
+    return data.sessionToken as string;
+  })();
+
+  try {
+    return await sessionTokenRefreshPromise;
+  } finally {
+    sessionTokenRefreshPromise = null;
+  }
+};
+
+const getValidSessionToken = async (): Promise<string> => {
+  if (hasUsableSessionToken()) {
+    return inMemorySessionToken as string;
+  }
+  return refreshSessionToken();
+};
+
 interface AuthState {
   user: User;
-  sessionToken: string;
+  
 }
 
 /**
@@ -34,7 +118,7 @@ interface AuthState {
  *
  * @returns {Object} Authentication utilities and state
  * - user: Current user information
- * - sessionToken: Active session token
+ * - sessionToken is managed in memory and never persisted
  * - isAuthLoading: Loading state
  * - exchangeAndVerifyIdToken: Exchange ID token for session token
  * - logout: Clear authentication state
@@ -55,41 +139,25 @@ export function useAuth() {
 
       // Return initial state if no stored user or logged out
       if (!storedUser || wasExplicitlyLoggedOut) {
-        return { user: { firstName: "", email: "" }, sessionToken: "" };
+        return { user: { firstName: "", email: "" } };
       }
 
       try {
         const userData = JSON.parse(storedUser);
         
-        if (!userData.sessionToken) {
-          return { user: { firstName: "", email: "" }, sessionToken: "" };
-        }
-
-        // Decode and validate token
-        const decodedToken = jwtDecode(userData.sessionToken) as DecodedToken;
-        
-        if (decodedToken.exp * 1000 <= Date.now()) {
-          // Token expired - clear storage
-          localStorage.removeItem("accessbit-userinfo");
-          localStorage.removeItem("accessbit-userinfo");
-          return { user: { firstName: "", email: "" }, sessionToken: "" };
-        }
-
-        // Return valid auth state
+        // Return valid auth state (no sessionToken stored - use getIdToken() instead)
         const authState = {
           user: {
-            firstName: decodedToken.user?.firstName || userData.firstName || "",
-            email: decodedToken.user?.email || userData.email || "",
+            firstName: userData.firstName || "",
+            email: userData.email || "",
             siteId: userData.siteId, // Include siteId from stored data
           },
-          sessionToken: userData.sessionToken,
         };
         return authState;
       } catch (error) {
         // Clear invalid data
         localStorage.removeItem("accessbit-userinfo");
-        localStorage.removeItem("accessbit-userinfo");
-        return { user: { firstName: "", email: "" }, sessionToken: "" };
+        return { user: { firstName: "", email: "" } };
       }
     },
     staleTime: Infinity, // Never consider the data stale
@@ -106,7 +174,7 @@ export function useAuth() {
       const siteInfo = await webflow.getSiteInfo();
 
       // Exchange token with backend
-      const response = await fetch(`${base_url}/api/auth/token`, {
+      const response = await fetch(`${WORKER_BASE_URL}/api/auth/token`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken: idToken, siteId: siteInfo.siteId }),
@@ -133,23 +201,41 @@ export function useAuth() {
        const decodedToken = jwtDecode(data.sessionToken) as DecodedToken;
        // Worker now sends real email, so use it directly
        const realEmail = data.email || '';
+        const siteInfoWithEmail = data.siteInfo ? { ...data.siteInfo, email: realEmail } : undefined;
+        // Get custom domain from Webflow site data
+        let customDomain: string | undefined;
+        
+        // Get production domain from domains array (custom domain)
+        if (data.siteInfo?.domains && Array.isArray(data.siteInfo.domains)) {
+          const productionDomain = data.siteInfo.domains.find(
+            (d: any) => d.stage === 'production' || d.default === true
+          );
+          if (productionDomain?.url) {
+            customDomain = `https://${productionDomain.url}`;
+          }
+        }
+        
+        // Fallback to staging domain if no production domain found
+        if (!customDomain && data.siteInfo?.shortName) {
+          customDomain = `https://${data.siteInfo.shortName}.webflow.io`;
+        }
+
+        setInMemorySessionToken(data.sessionToken);
+
         const userData = {
-          sessionToken: data.sessionToken,
+          // sessionToken is kept only in memory; do not persist
           firstName: data.firstName,
           email: realEmail,
           siteId: data.siteId, // Store the siteId from server response
-          exp: decodedToken.exp,
+          customDomain: customDomain,
+          siteInfo: siteInfoWithEmail, // store full site info under the same key
         };
 
-                 // Update sessionStorage
+                 
         localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
         localStorage.removeItem("explicitly_logged_out");
 
-        // Store site information after authentication (include normalized email)
-        if (data.siteInfo) {
-          const siteInfoWithEmail = { ...data.siteInfo, email: realEmail };
-          localStorage.setItem('siteInfo', JSON.stringify(siteInfoWithEmail));
-        }
+        // No separate siteInfo key anymore
 
         // Directly update the query data instead of invalidating
         queryClient.setQueryData<AuthState>(["auth"], {
@@ -158,7 +244,6 @@ export function useAuth() {
             email: decodedToken.user.email,
             siteId: data.siteId, // Include siteId in user data
           },
-          sessionToken: data.sessionToken,
         });
       } catch (error) {
       }
@@ -180,7 +265,7 @@ export function useAuth() {
         throw new Error('Failed to get site info from Webflow');
       }
       
-      const response = await fetch(`${base_url}/api/auth/token`, {
+      const response = await fetch(`${WORKER_BASE_URL}/api/auth/token`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json"
@@ -201,25 +286,45 @@ export function useAuth() {
         throw new Error('No session token received from server');
       }
 
-      // Store in sessionStorage
+      setInMemorySessionToken(data.sessionToken);
+      
       // Worker now sends real email, so use it directly
       const realEmail = data.email || '';
-      const userData = {
-        sessionToken: data.sessionToken,
+      const siteInfoWithEmail = siteInfo ? { ...siteInfo, email: realEmail } : undefined;
+      
+      // Get custom domain from Webflow site data
+      let customDomain: string | undefined;
+      // Prefer production domain from siteInfo.domains if present
+      try {
+        const siAny: any = siteInfo as any;
+        if (siAny?.domains && Array.isArray(siAny.domains)) {
+          const productionDomain = siAny.domains.find(
+            (d: any) => d?.stage === 'production' || d?.default === true || d?.primary === true
+          );
+          if (productionDomain?.url) {
+            customDomain = `https://${productionDomain.url}`;
+          }
+        }
+      } catch {}
+      
+      // Fallback to staging domain via shortName
+      if (!customDomain && siteInfo?.shortName) {
+        customDomain = `https://${siteInfo.shortName}.webflow.io`;
+      }
+
+        const userData = {
+        // sessionToken is kept only in memory; do not persist
         firstName: data.firstName,
         email: realEmail,
         siteId: siteInfo.siteId, // Store the siteId
-        exp: Date.now() + (24 * 60 * 60 * 1000) // 24 hours from now
+        customDomain: customDomain,
+        siteInfo: siteInfoWithEmail, // consolidate site info here
       };
 
             localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
       localStorage.removeItem("explicitly_logged_out");
 
-      // Store site information after authentication (include normalized email)
-      if (siteInfo) {
-        const siteInfoWithEmail = { ...siteInfo, email: realEmail };
-        localStorage.setItem('siteInfo', JSON.stringify(siteInfoWithEmail));
-      }
+      
 
       // Update React Query cache
       queryClient.setQueryData<AuthState>(["auth"], {
@@ -228,7 +333,6 @@ export function useAuth() {
           email: data.email,
           siteId: siteInfo.siteId
         },
-        sessionToken: data.sessionToken
       });
 
       return data;
@@ -245,9 +349,9 @@ export function useAuth() {
     // Set logout flag and clear storage
     localStorage.setItem("explicitly_logged_out", "true");
     localStorage.removeItem("accessbit-userinfo");
+    clearInMemorySessionToken();
     queryClient.setQueryData(["auth"], {
       user: { firstName: "", email: "" },
-      sessionToken: "",
     });
     queryClient.clear();
   };
@@ -257,7 +361,7 @@ export function useAuth() {
     const siteInfo = await webflow.getSiteInfo();
     
     const authWindow = window.open(
-      `${base_url}/api/auth/authorize?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`,
+      `${WORKER_BASE_URL}/api/auth/authorize?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`,
       "_blank",
       "width=600,height=600"
     );
@@ -351,7 +455,7 @@ export function useAuth() {
     // Helper function to process auth success
     const processAuthSuccess = (url: URL) => {
       try {
-        // IMPORTANT: Clear all old session data first to prevent cross-site contamination
+        
         
         localStorage.removeItem("accessbit-userinfo");
         localStorage.removeItem("accessbit-userinfo");
@@ -366,13 +470,24 @@ export function useAuth() {
         const siteName = url.searchParams.get('siteName');
         const shortName = url.searchParams.get('shortName');
         
-        // Store the session data from the OAuth popup
+        // Get custom domain - will be updated from actual siteInfo if available
+        // For now use staging domain as fallback
+        let customDomain: string | undefined;
+        if (shortName) {
+          customDomain = `https://${shortName}.webflow.io`;
+        }
+
+        if (sessionToken) {
+          setInMemorySessionToken(sessionToken);
+        }
+
+        // Store the user data from the OAuth popup (no sessionToken - use getIdToken() instead)
         const userData = {
-          sessionToken: sessionToken,
+          // sessionToken is kept only in memory; do not persist
           firstName: firstName,
           email: email || '',
           siteId: siteId,
-          exp: Date.now() + (24 * 60 * 60 * 1000), // 24 hours from now
+          customDomain: customDomain,
           siteInfo: {
             siteId: siteId,
             siteName: siteName,
@@ -383,7 +498,7 @@ export function useAuth() {
         
         
         
-        // Store in sessionStorage for persistence
+        
         localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
         localStorage.removeItem("explicitly_logged_out");
         
@@ -395,7 +510,6 @@ export function useAuth() {
             email: email || '',
             siteId: siteId
           },
-          sessionToken: sessionToken
         });
         
         // Clean up URL parameters
@@ -417,20 +531,30 @@ export function useAuth() {
     const processAuthSuccessFromData = (authData: any) => {
       try {
         
-        // IMPORTANT: Clear all old session data first to prevent cross-site contamination
+       
         
         localStorage.removeItem("accessbit-userinfo");
         localStorage.removeItem("accessbit-userinfo");
         localStorage.removeItem("explicitly_logged_out");
         localStorage.removeItem("siteInfo");
         
-        // Store the session data from the OAuth popup
+        // Get custom domain - will be updated from actual siteInfo if available
+        // For now use staging domain as fallback
+        let customDomain: string | undefined;
+        if (authData.shortName) {
+          customDomain = `https://${authData.shortName}.webflow.io`;
+        }
+
+        if (authData.sessionToken) {
+          setInMemorySessionToken(authData.sessionToken);
+        }
+
         const userData = {
-          sessionToken: authData.sessionToken,
+        // sessionToken is kept only in memory; do not persist
           firstName: authData.firstName,
           email: authData.email || '',
           siteId: authData.siteId,
-          exp: Date.now() + (24 * 60 * 60 * 1000), // 24 hours from now
+          customDomain: customDomain,
           siteInfo: {
             siteId: authData.siteId,
             siteName: authData.siteName,
@@ -441,7 +565,7 @@ export function useAuth() {
         
         
         
-        // Store in sessionStorage for persistence
+      
         localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
         localStorage.removeItem("explicitly_logged_out");
         
@@ -453,7 +577,6 @@ export function useAuth() {
             email: authData.email || '',
             siteId: authData.siteId
           },
-          sessionToken: authData.sessionToken
         });
         
         
@@ -478,7 +601,7 @@ export function useAuth() {
     try {
      
       // Check if user has basic authentication
-      if (!authState?.user?.email || !authState?.sessionToken) {
+      if (!authState?.user?.email) {
         return false;
       }
 
@@ -504,96 +627,61 @@ export function useAuth() {
 
   // Function to make authenticated API requests with bearer token
   const makeAuthenticatedRequest = async (url: string, options: RequestInit = {}) => {
-    // Try to get session token with retry mechanism
-    let sessionToken = null;
-    let attempts = 0;
-    const maxAttempts = 3;
-    
-    while (!sessionToken && attempts < maxAttempts) {
-      attempts++;
-      
-      // Try to get session token from authState first, then from sessionStorage as fallback
-      sessionToken = authState?.sessionToken;
-      
-      if (!sessionToken) {
-        // Fallback: get from sessionStorage
-        const storedUser = localStorage.getItem("accessbit-userinfo") || localStorage.getItem("accessbit-userinfo");
-        if (storedUser) {
-          const userData = JSON.parse(storedUser);
-          sessionToken = userData.sessionToken;
-        }
+    const executeRequest = async (token: string) => {
+      const headers = new Headers(options.headers as HeadersInit | undefined);
+      if (!headers.has('Content-Type') && !(options.body instanceof FormData)) {
+        headers.set('Content-Type', 'application/json');
       }
-      
-      if (!sessionToken && attempts < maxAttempts) {
-        
-        await new Promise(resolve => setTimeout(resolve, 200));
-      }
-    }
-    
-    if (!sessionToken) {
-      throw new Error('No session token available. Please authenticate first.');
-    }
+      headers.set('Authorization', `Bearer ${token}`);
 
-    
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionToken}`,
-      ...options.headers,
+      return fetch(url, {
+        ...options,
+        headers,
+      });
     };
 
-    
+    let sessionToken = await getValidSessionToken();
+    let response = await executeRequest(sessionToken);
 
-    const response = await fetch(url, {
-      ...options,
-      headers,
-    });
-
-    
-    
+    if (response.status === 401) {
+      clearInMemorySessionToken();
+      sessionToken = await refreshSessionToken();
+      response = await executeRequest(sessionToken);
+    }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
-      
       throw new Error(`API request failed: ${response.status} - ${errorData.error || 'Unknown error'}`);
     }
 
-    return response.json();
+    const text = await response.text();
+    if (!text) return null;
+    try {
+      return JSON.parse(text);
+    } catch {
+      return text;
+    }
   };
 
   // Function to publish accessibility settings and customizations
   const publishSettings = async (customizationData: any, accessibilityProfiles: any) => {
     const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
-    // IMMEDIATE AUTH CHECK
+   
     
     
     try {
-      // DEBUG: Check authentication state
-      
-      
-      // Check if user is authenticated - use fallback to sessionStorage
-      let sessionToken = authState?.sessionToken;
+      // Get user email from auth state
       let userEmail = authState?.user?.email;
       
-      if (!sessionToken || !userEmail) {
-        
-        // Fallback: get from sessionStorage
-        const storedUser = localStorage.getItem("accessbit-userinfo") || localStorage.getItem("accessbit-userinfo");
-        
-        
+      if (!userEmail) {
+        const storedUser = localStorage.getItem("accessbit-userinfo");
         if (storedUser) {
           const userData = JSON.parse(storedUser);
-          sessionToken = userData.sessionToken;
           userEmail = userData.email;
-          
         }
       }
-      
-      // No OAuth popup needed - proceed with publishing using existing session token
-
-      
+        
 
       const siteInfo = await webflow.getSiteInfo();
       if (!siteInfo?.siteId) {
@@ -639,7 +727,7 @@ export function useAuth() {
 
       
 
-      const result = await makeAuthenticatedRequest(`${base_url}/api/accessibility/publish?siteId=${siteInfo.siteId}`, {
+      const result = await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/publish?siteId=${siteInfo.siteId}`, {
         method: 'POST',
         body: JSON.stringify(publishData),
       });
@@ -689,15 +777,9 @@ export function useAuth() {
             return false; // Force silent auth for new site
           }
           
-          if (userData.sessionToken) {
-            const decodedToken = jwtDecode(userData.sessionToken) as DecodedToken;
-            // If token is not expired, don't need to refresh
-            if (decodedToken.exp * 1000 > Date.now()) {
-              
-              return true; // Already have valid token
-            } else {
-              
-            }
+          // Check if user data exists (no sessionToken check needed - use getIdToken() instead)
+          if (userData.email && userData.siteId) {
+            return true; // User data exists, can use getIdToken()
           }
         } catch (error) {
           
@@ -729,10 +811,7 @@ export function useAuth() {
   const attemptSilentAuth = async (): Promise<boolean> => {
     try {
       
-      // Attempt to get ID token silently (works if user is already authenticated with Webflow)
-      
-      
-      
+     
       
       const idToken = await webflow.getIdToken();
       
@@ -769,18 +848,15 @@ export function useAuth() {
         return false;
       }
       
-      
-      
-      
-      // Check what's currently in sessionStorage
-      const currentStoredData = localStorage.getItem('accessbit-userinfo') || localStorage.getItem('accessbit-userinfo');
-      const currentStoredData2 = localStorage.getItem('consentbit-userinfo');
+
+      const currentStoredData = localStorage.getItem('accessbit-userinfo');
+     
       
       
       
       // Try the token endpoint first (it might work now)
       
-      const response = await fetch(`${base_url}/api/auth/token`, {
+      const response = await fetch(`${WORKER_BASE_URL}/api/auth/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -798,15 +874,18 @@ export function useAuth() {
         
         
         
-        if (data.sessionToken) {
-          // Create user data object with all necessary information
-          // Worker now sends real email from KV, so use it directly
+        if (!data.sessionToken) {
+          throw new Error('No session token received from server');
+        }
+
+        setInMemorySessionToken(data.sessionToken);
+
+        if (data.firstName || data.email) {
+       
           const userData = {
-            sessionToken: data.sessionToken,
             firstName: data.firstName || 'User',
             email: data.email || '',
             siteId: siteInfo.siteId,
-            exp: data.exp,
             siteInfo: {
               siteId: siteInfo.siteId,
               siteName: siteInfo.siteName,
@@ -815,17 +894,36 @@ export function useAuth() {
             }
           };
           
+        
+          try {
+            let customDomain: string | undefined;
+            
+            // Prefer production domain from siteInfo.domains if present
+            const siAny: any = siteInfo as any;
+            if (siAny?.domains && Array.isArray(siAny.domains)) {
+              const productionDomain = siAny.domains.find(
+                (d: any) => d?.stage === 'production' || d?.default === true || d?.primary === true
+              );
+              if (productionDomain?.url) {
+                customDomain = `https://${productionDomain.url}`;
+              }
+            }
+            // Fallback to staging domain via shortName
+            if (!customDomain && siteInfo?.shortName) {
+              customDomain = `https://${siteInfo.shortName}.webflow.io`;
+            }
+            
+            if (customDomain) {
+              (userData as any).customDomain = customDomain;
+            }
+          } catch (_err) {
+            // Non-fatal: absence of domain data should not block auth
+          }
           
-          
-          // Store in sessionStorage with the correct key
           localStorage.setItem('accessbit-userinfo', JSON.stringify(userData));
           localStorage.removeItem('explicitly_logged_out');
           
-          // Also store site info separately for easy access (include email)
-          if (siteInfo) {
-            const siteInfoWithEmail = { ...siteInfo, email: data.email || '' };
-            localStorage.setItem('siteInfo', JSON.stringify(siteInfoWithEmail));
-          }
+          // Site info is now included in accessbit-userinfo above
           
           // Update React Query cache
           queryClient.setQueryData<AuthState>(["auth"], {
@@ -834,7 +932,6 @@ export function useAuth() {
               email: data.email, 
               siteId: siteInfo.siteId 
             },
-            sessionToken: data.sessionToken
           });
           
           // Verify the data was stored
@@ -876,7 +973,7 @@ export function useAuth() {
         connectedAt: new Date().toISOString(),
       };
 
-      const result = await makeAuthenticatedRequest(`${base_url}/api/accessibility/domain`, {
+      const result = await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/domain`, {
         method: 'POST',
         body: JSON.stringify(domainData),
       });
@@ -902,7 +999,7 @@ export function useAuth() {
 
 
       
-      const result = await makeAuthenticatedRequest(`${base_url}/api/accessibility/settings?siteId=${siteInfo.siteId}`, {
+      const result = await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/settings?siteId=${siteInfo.siteId}`, {
         method: 'GET',
       });
       
@@ -931,7 +1028,7 @@ export function useAuth() {
         throw new Error('No site information available');
       }
 
-      const result = await makeAuthenticatedRequest(`${base_url}/api/accessibility/settings?siteId=${siteInfo.siteId}`, {
+      const result = await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/settings?siteId=${siteInfo.siteId}`, {
         method: 'GET',
       });
 
@@ -942,7 +1039,7 @@ export function useAuth() {
     }
   };
 
-  // Function to register accessibility script
+ 
   const registerAccessibilityScript = async () => {
     try {
       // Get siteId from Webflow
@@ -951,18 +1048,20 @@ export function useAuth() {
         throw new Error('No site information available');
       }
 
-      const result = await makeAuthenticatedRequest(`${base_url}/api/accessibility/register-script?siteId=${siteInfo.siteId}`, {
-        method: 'POST',
-      });
+      // Call backend worker endpoint which calls Webflow API server-side
+      const result = await makeAuthenticatedRequest(
+        `${WORKER_BASE_URL}/api/accessibility/register-script?siteId=${siteInfo.siteId}`,
+        { method: 'POST' }
+      );
 
       return result;
     } catch (error) {
-
+      console.error('Register script error:', error);
       throw error;
     }
   };
 
-  // Function to apply accessibility script
+
   const applyAccessibilityScript = async (params: {
     targetType: 'site' | 'page';
     scriptId: string;
@@ -976,152 +1075,42 @@ export function useAuth() {
         throw new Error('No site information available');
       }
 
-      const result = await makeAuthenticatedRequest(`${base_url}/api/accessibility/apply-script?siteId=${siteInfo.siteId}`, {
-        method: 'POST',
-        body: JSON.stringify(params),
-      });
+      // Call backend worker endpoint which calls Webflow API server-side
+      const result = await makeAuthenticatedRequest(
+        `${WORKER_BASE_URL}/api/accessibility/apply-script?siteId=${siteInfo.siteId}`,
+        {
+          method: 'POST',
+          body: JSON.stringify(params),
+        }
+      );
 
       return result;
     } catch (error) {
-     
+      console.error('Apply script error:', error);
       throw error;
     }
   };
 
-  // Inject script directly into Webflow using Designer Extension API
-  const injectScriptToWebflow = async (scriptUrl: string) => {
-    try {
-     
-      // Get site info
-      const siteInfo = await webflow.getSiteInfo();
-
-      // Get access token
-      const idToken = await webflow.getIdToken();
-    
-      const availableMethods = typeof webflow !== 'undefined' ? Object.keys(webflow) : [];
-    
-
-      
-      // Try the correct Webflow Designer Extension API method for "Code added by Apps"
-      const customCode = `<script src="${scriptUrl}" async></script>`;
-
-      // Method 1: Try setCustomCode (most likely to work for "Code added by Apps")
-      if (typeof webflow !== 'undefined' && (webflow as any).setCustomCode) {
-        try {
-
-          const result = await (webflow as any).setCustomCode({
-            location: 'head',
-            code: customCode
-          });
-          
-          
-          return { success: true, message: 'Script injected using setCustomCode - should appear in "Code added by Apps"' };
-        } catch (error) {
-          
-        }
-      } else {
-       
-      }
-      
-      // Method 2: Try upsertPageCustomCode
-      if (typeof webflow !== 'undefined' && (webflow as any).upsertPageCustomCode) {
-        try {
-        
-          const result = await (webflow as any).upsertPageCustomCode({
-            location: 'head',
-            code: customCode
-          });
-          
-         
-          return { success: true, message: 'Script injected using upsertPageCustomCode - should appear in "Code added by Apps"' };
-        } catch (error) {
-         
-        }
-      }
-      
-      // Method 3: Try other potential methods
-      const otherMethods = [
-        'setPageCustomCode',
-        'addCustomCode',
-        'injectCustomCode',
-        'setHeadCode',
-        'setFooterCode',
-        'addHeadCode',
-        'addFooterCode',
-        'setSiteCustomCode',
-        'upsertSiteCustomCode'
-      ];
-      
-      for (const methodName of otherMethods) {
-        if (typeof webflow !== 'undefined' && (webflow as any)[methodName]) {
-          try {
-           
-            const result = await (webflow as any)[methodName]({
-              location: 'head',
-              code: customCode
-            });
-            
-            
-            return { success: true, message: `Script injected using ${methodName} - should appear in "Code added by Apps"` };
-          } catch (error) {
-           
-          }
-        }
-      }
-      
-      // If no Designer Extension API methods work, fall back to REST API approach
-      
-      
-      try {
-        // Step 1: Register the script
-       
-        const registerResult = await registerAccessibilityScript();
-       
-        
-        // Step 2: Apply the script
-       
-        const scriptId = registerResult.result?.id;
-        const version = registerResult.result?.version || '1.0.0';
-        
-        if (scriptId) {
-          const applyResult = await applyAccessibilityScript({
-            targetType: 'site',
-            scriptId: scriptId,
-            location: 'header',
-            version: version
-          });
-          
-         
-          return { 
-            success: true, 
-            message: 'Script applied via REST API - will appear in Custom Code section, not "Code added by Apps"',
-            note: 'Script is applied but may not appear in "Code added by Apps" section'
-          };
-        }
-      } catch (error) {
-        
-      }
-      
-      // Final fallback
-
-      return { 
-        success: true, 
-        message: 'Script registered successfully. Please manually add the script to your site\'s custom code section.',
-        manualStep: true,
-        scriptUrl: scriptUrl,
-        customCode: customCode
-      };
-    } catch (error) {
-     
-      throw error;
-    }
+  const getSessionToken = async () => {
+    return getValidSessionToken();
   };
+
+  // Expose debug helpers to window for easy inspection in browser console
+  if (typeof window !== 'undefined') {
+    (window as any).__accessbitDebug = {
+      getSessionToken: () => inMemorySessionToken,
+      getSessionTokenExpiry: () => inMemorySessionTokenExpiry,
+      hasUsableToken: hasUsableSessionToken,
+      clearToken: clearInMemorySessionToken,
+      refreshToken: refreshSessionToken
+    };
+  }
 
 
   
   return {
     user: authState?.user || { firstName: "", email: "" },
-    sessionToken: authState?.sessionToken || "",
+    // sessionToken is managed in memory and exposed via getSessionToken
     isAuthLoading,
     exchangeAndVerifyIdToken,
     logout,
@@ -1134,8 +1123,8 @@ export function useAuth() {
     checkPublishedDataExists,
     registerAccessibilityScript,
     applyAccessibilityScript,
-    injectScriptToWebflow,
     attemptSilentAuth,
-    attemptAutoRefresh
+    attemptAutoRefresh,
+    getSessionToken,
   };
 }

@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/userAuth";
+import { getSiteId, getCustomDomain } from "../util/siteId";
+import { WORKER_BASE_URL } from "../util/constants";
+import PaymentScreen from "./PaymentScreen";
+import { WebflowAPI } from "../types/webflowtypes";
 import "../styles/publish.css";
+
+
+declare const webflow: WebflowAPI;
+
 const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
 </svg>`);
@@ -41,12 +49,15 @@ type PublishScreenProps = {
 };
 
 const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData }) => {
-  const { publishSettings, user, sessionToken, registerAccessibilityScript, applyAccessibilityScript, injectScriptToWebflow } = useAuth();
+  const { publishSettings, user, registerAccessibilityScript, applyAccessibilityScript, makeAuthenticatedRequest } = useAuth();
   const [showModal, setShowModal] = useState(true);
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
   const [publishSuccess, setPublishSuccess] = useState<string | false>(false);
+  const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
+  const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
+  const [showPaymentScreen, setShowPaymentScreen] = useState(false);
   const [accessibilityProfiles, setAccessibilityProfiles] = useState({
     seizureSafe: false,
     visionImpaired: false,
@@ -91,24 +102,21 @@ const handleConfirmPublish = async () => {
     let successMessage = '';
     
     if (registerResult.success) {
-      if (!registerResult.skipApplyScript) {
-        const applyData = {
-          targetType: 'site' as const,
-          scriptId: registerResult.result?.id,
-          location: 'header' as const,
-          version: '1.0.0'
-        };
-        const applyResult = await applyAccessibilityScript(applyData);
-
-        
-        if (applyResult.success) {
-          successMessage = 'Settings published! Script has been registered and applied to your site.';
-        } else {
-          setPublishError('Settings published, but failed to apply script. Please try again.');
-          return;
-        }
+      // Always attempt to apply to head to repair manual deletions
+      const applyData = {
+        targetType: 'site' as const,
+        scriptId: registerResult.result?.id || 'contrastkit',
+        location: 'header' as const,
+        version: '1.0.0'
+      };
+      const applyResult = await applyAccessibilityScript(applyData);
+      if (applyResult.success) {
+        successMessage = applyResult.alreadyApplied
+          ? 'Settings published! Script was already active in head.'
+          : 'Settings published! Script has been registered and applied to your site.';
       } else {
-        successMessage = 'Settings published! Script is already active on your site.';
+        setPublishError('Settings published, but failed to apply script. Please try again.');
+        return;
       }
     } else {
       setPublishError('Settings published, but failed to register script. Please try again.');
@@ -159,6 +167,121 @@ const handleConfirmPublish = async () => {
     setShowModal(false);
   };
 
+
+  useEffect(() => {
+    const checkSubscriptionStatus = async () => {
+      try {
+        setIsCheckingSubscription(true);
+        
+        
+        let customDomain = getCustomDomain();
+        
+       
+        if (!customDomain) {
+          try {
+            
+            const siteId = await getSiteId();
+            const idToken = await webflow.getIdToken();
+            
+            if (siteId && idToken) {
+              
+              const response = await fetch(`https://api.webflow.com/v2/sites/${siteId}/custom_domains`, {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer ${idToken}`,
+                  'Accept': 'application/json'
+                }
+              });
+              
+              if (response.ok) {
+                const data = await response.json();
+                // Find the default/primary custom domain
+                if (data.customDomains && Array.isArray(data.customDomains)) {
+                  const defaultDomain = data.customDomains.find((d: any) => d.default === true) || data.customDomains[0];
+                  if (defaultDomain?.domain) {
+                    customDomain = defaultDomain.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+                  }
+                }
+              }
+            }
+          } catch (error) {
+            console.warn('Failed to get custom domains from Webflow REST API:', error);
+            // Fallback to publishSite API if REST API fails
+            try {
+              const publishInfo = await webflow.publishSite();
+              if (publishInfo?.customDomains && Array.isArray(publishInfo.customDomains) && publishInfo.customDomains.length > 0) {
+                customDomain = publishInfo.customDomains[0].url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+              }
+            } catch (fallbackError) {
+              console.warn('Failed to get custom domains from publishSite API:', fallbackError);
+            }
+          }
+        }
+        
+        // Step 2: Check if it's a staging domain (always allow, no payment check needed)
+        if (customDomain) {
+          const isStaging = (
+            customDomain.includes('.webflow.io') ||
+            customDomain.includes('.webflow.com') ||
+            customDomain.includes('localhost') ||
+            customDomain.includes('127.0.0.1') ||
+            customDomain.includes('staging')
+          );
+          
+          if (isStaging) {
+            // Staging domain = no payment required
+            setHasSubscription(false);
+            setIsCheckingSubscription(false);
+            return;
+          }
+        }
+        
+       
+        if (customDomain) {
+          // Normalize domain (remove protocol, www, trailing slash)
+          const normalizedDomain = customDomain
+            .replace(/^https?:\/\//, '')
+            .replace(/^www\./, '')
+            .replace(/\/$/, '')
+            .split('/')[0];
+          
+          // Call backend to check payment status
+        
+          const response = await makeAuthenticatedRequest(
+            `${WORKER_BASE_URL}/api/accessibility/check-payment-status?domain=${encodeURIComponent(normalizedDomain)}`,
+            { method: 'GET' }
+          );
+          
+          
+          if (response?.hasAccess === true && response?.isStaging !== true) {
+            setHasSubscription(true);
+          } else {
+            setHasSubscription(false);
+          }
+        } else {
+          // No custom domain = no subscription
+          setHasSubscription(false);
+        }
+      } catch (error) {
+        console.error('Error checking subscription status:', error);
+        setHasSubscription(false);
+      } finally {
+        setIsCheckingSubscription(false);
+      }
+    };
+    
+    checkSubscriptionStatus();
+  }, []); // Only run on mount
+
+  const handlePublishClick = () => {
+    handlePublish();
+  };
+
+  const handleCancelSubscription = () => {
+    // Open Stripe billing portal in new window
+    window.open('billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00', '_blank');
+  };
+
   return (
     <div className="publish-screen">
       {/* Publish Confirmation Modal */}
@@ -195,13 +318,49 @@ const handleConfirmPublish = async () => {
         <div className="app-logo">
           <span className="app-name"></span>
         </div>
-        <div className="header-buttons">
+        <div className="header-buttons" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
           <button className="back-btn" onClick={onBack}>
-            <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)' }} /> Back
+            <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
+            Back
           </button>
-          <button className="publish-btn" onClick={handlePublish}>
-            Publish <img src={whitearrow} alt="" />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {isCheckingSubscription ? (
+              <span style={{ 
+                color: '#a3a3a3', 
+                fontSize: '14px',
+                fontWeight: '500'
+              }}>
+                Checking subscription...
+              </span>
+            ) : hasSubscription === false ? (
+              <span style={{ 
+                color: 'rgba(147, 51, 234, 1)', 
+                fontSize: '14px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }} onClick={() => setShowPaymentScreen(true)}>
+                You need a subscription to publish the production
+              </span>
+            ) : hasSubscription === true ? (
+              <span style={{ 
+                color: 'rgba(147, 51, 234, 1)', 
+                fontSize: '14px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }} onClick={handleCancelSubscription}>
+                Cancel Subscription
+              </span>
+            ) : null}
+            <button 
+              className="publish-btn" 
+              onClick={handlePublishClick}
+            >
+              Publish
+              <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -215,7 +374,7 @@ const handleConfirmPublish = async () => {
           borderRadius: '4px',
           border: '1px solid #c8e6c9'
         }}>
-          ✅ {typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!'}
+          {typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!'}
         </div>
       )}
 
@@ -228,12 +387,8 @@ const handleConfirmPublish = async () => {
           <span className="step-number">STEP 1</span>
           <span className="step-name">Customization</span>
         </div>
-        <div className="step completed">
-          <span className="step-number">STEP 2</span>
-          <span className="step-name">Payment</span>
-        </div>
         <div className="step active">
-          <span className="step-number">STEP 3</span>
+          <span className="step-number">STEP 2</span>
           <span className="step-name">Publish</span>
         </div>
       </div>
@@ -440,6 +595,35 @@ const handleConfirmPublish = async () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Screen Modal/Overlay */}
+      {showPaymentScreen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          zIndex: 10000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            width: '100%',
+            height: '100%',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            position: 'relative'
+          }}>
+            <PaymentScreen
+              onBack={() => setShowPaymentScreen(false)}
+              customizationData={customizationData || {}}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
