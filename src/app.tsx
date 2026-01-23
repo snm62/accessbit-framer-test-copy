@@ -17,7 +17,7 @@ const App: React.FC = () => {
   const [customizationData, setCustomizationData] = useState<any>(null);
   const [isLoadingExistingData, setIsLoadingExistingData] = useState(false);
  
-  const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, attemptSilentAuth, checkPublishedDataExists, getSessionToken } = useAuth();
+  const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, attemptSilentAuth, checkPublishedDataExists, getSessionToken, makeAuthenticatedRequest, user } = useAuth();
  
   const [isAppInitializing, setIsAppInitializing] = useState(true);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -34,45 +34,28 @@ const App: React.FC = () => {
         if (!userData) return;
 
         const parsed = JSON.parse(userData);
-        const { siteId, email, siteInfo } = parsed;
+        const { siteId, siteInfo } = parsed;
         
-        if (!siteId || !email) return;
-
-        // Get session token (in-memory) for authentication
-        let token: string;
-        try {
-          token = await getSessionToken();
-        } catch (error) {
-          console.error('Failed to get session token:', error);
-          return;
-        }
+        // SECURITY FIX: Email removed from localStorage (PII)
+        // Only siteId is required, email is retrieved from session token when needed
+        if (!siteId) return;
 
         // Check if installation already exists on server
         // Try to get the installation record directly from KV
         let installationExists = false;
         try {
-          const installationCheckResponse = await fetch(`${WORKER_BASE_URL}/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
+          const checkData = await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`, {
+            method: 'GET'
           });
-          
-          if (installationCheckResponse.ok) {
-            const checkData = await installationCheckResponse.json();
-            installationExists = checkData.exists === true;
-            
-          } else if (installationCheckResponse.status === 404) {
+          installationExists = checkData?.exists === true;
+        } catch (checkError: any) {
+          // If endpoint doesn't exist or returns 404, assume first install
+          if (checkError?.message?.includes('404') || checkError?.message?.includes('not found')) {
             installationExists = false;
-            
           } else {
-            // If endpoint doesn't exist or returns error, assume first install
-            
+            // For other errors, assume first install
             installationExists = false;
           }
-        } catch (checkError) {
-          // If endpoint doesn't exist, assume first install
-          
-          installationExists = false;
         }
         
         // Only send email on first install
@@ -84,16 +67,20 @@ const App: React.FC = () => {
           const shortName = siteInfo?.shortName || null;
           const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
           
+          // SECURITY FIX: Get email from auth state (session token) instead of localStorage
+          // Email is PII and should not be stored in localStorage
+          const userEmail = user?.email || ''; // Get from auth state (decoded from session token)
+          
           const installationPayload = {
             siteId: siteId,
             userId: parsed.userId || siteId, // Use siteId as fallback if userId not available
-            userEmail: email,
+            userEmail: userEmail, // Get from auth state, not localStorage
             siteName: siteInfo?.siteName || 'Unknown Site',
             installationData: {
               timestamp: new Date().toISOString(),
               source: 'webflow_app',
               firstName: parsed.firstName || 'User',
-              email: email,
+              email: userEmail, // Get from auth state, not localStorage
               customDomain: parsed.customDomain || null,
               stagingUrl: stagingUrl, // Include staging URL if available
               exp: parsed.exp || null,
@@ -108,22 +95,13 @@ const App: React.FC = () => {
           
           
           // Send installation data to worker
-          const response = await fetch(`${WORKER_BASE_URL}/api/webflow/app-installed`, {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(installationPayload)
-          });
-
-          const responseText = await response.text();
-          
-
-          if (!response.ok) {
-            
-          } else {
-            
+          try {
+            await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/webflow/app-installed`, {
+              method: 'POST',
+              body: JSON.stringify(installationPayload)
+            });
+          } catch (error) {
+            // Silent fail - installation data send failed
           }
         } else {
          
@@ -149,32 +127,24 @@ const App: React.FC = () => {
           const siteId = stored ? (JSON.parse(stored)?.siteId || '') : '';
           if (!siteId) return;
           
-          // Get ID token from Webflow
-          let token: string;
-          try {
-            token = await webflow.getIdToken();
-            if (!token) return;
-          } catch (error) {
-            console.error('Failed to get ID token:', error);
-            return;
-          }
           const base = WORKER_BASE_URL.replace(/\/+$/,'');
           
-          const regRes = await fetch(`${base}/api/accessibility/register-script?siteId=${encodeURIComponent(siteId)}`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
+          try {
+            await makeAuthenticatedRequest(`${base}/api/accessibility/register-script?siteId=${encodeURIComponent(siteId)}`, {
+              method: 'POST'
+            });
+          } catch (error) {
+            // Silent fail; user can use Publish to repair
+          }
           
-          await fetch(`${base}/api/accessibility/apply-script?siteId=${encodeURIComponent(siteId)}`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ targetType: 'site', scriptId: 'contrastkit', location: 'header', version: '1.0.0' })
-          });
+          try {
+            await makeAuthenticatedRequest(`${base}/api/accessibility/apply-script?siteId=${encodeURIComponent(siteId)}`, {
+              method: 'POST',
+              body: JSON.stringify({ targetType: 'site', scriptId: 'accessbit', location: 'header', version: '1.0.0' })
+            });
+          } catch (error) {
+            // Silent fail; user can use Publish to repair
+          }
         } catch (e) {
           // Silent fail; user can use Publish to repair
         }
@@ -281,12 +251,84 @@ const App: React.FC = () => {
   const handleAuthorize = async () => {
    
     try {
-
       await openAuthScreen();
+   
+      
+      // Listen for auth success to update state
+      const handleAuthSuccess = () => {
+  
+        // Check localStorage to verify auth data was saved
+        const userData = localStorage.getItem('accessbit-userinfo');
+        if (userData) {
+          try {
+            const parsed = JSON.parse(userData);
+           
+            if (parsed.siteId) {
+             
+              setIsAuthenticated(true);
+              // Force React Query to refetch auth state
+              window.dispatchEvent(new Event('storage'));
+            } else {
+           
+            }
+          } catch (e) {
+      
+          }
+        } else {
+       
+        }
+      };
+      
+      // Set up listeners BEFORE auth completes (in case it's fast)
+      window.addEventListener('accessbit-auth-success', handleAuthSuccess, false);
      
-    } catch (error) {
+      
+      // Also listen for storage events as fallback
+      const handleStorageChange = (e: StorageEvent) => {
+        if (e.key === 'accessbit-userinfo' && e.newValue) {
+        
+          handleAuthSuccess();
+        }
+      };
+      window.addEventListener('storage', handleStorageChange, false);
+      
+      
+      // Fallback: Poll localStorage every second for 2 minutes
+      let pollCount = 0;
+      const maxPolls = 120; // 2 minutes
+      const pollInterval = setInterval(() => {
+        pollCount++;
+        const stored = localStorage.getItem('accessbit-userinfo');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (parsed.siteId) {
+             
+              clearInterval(pollInterval);
+              handleAuthSuccess();
+            }
+          } catch (e) {
+            // Ignore
+          }
+        }
+        if (pollCount >= maxPolls) {
+       
+          clearInterval(pollInterval);
+        }
+      }, 1000);
+      
+      // Cleanup listeners after 5 minutes
+      const cleanup = () => {
+        window.removeEventListener('accessbit-auth-success', handleAuthSuccess);
+        window.removeEventListener('storage', handleStorageChange);
+        clearInterval(pollInterval);
+        
+      };
+      setTimeout(cleanup, 5 * 60 * 1000);
      
-      alert(`Authentication failed: ${error.message}`);
+    } catch (error: any) {
+
+      
     }
   };
   // (kept) data loader above handles auth + loading state

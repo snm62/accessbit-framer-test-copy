@@ -1,27 +1,18 @@
-import { WORKER_BASE_URL } from '../util/constants';
 import { ScriptCategory, SaveCategoriesResponse, AppData } from '../types/types';
-import { ScriptRegistrationRequest, CodeApplication } from "../types/types";
+import { ScriptRegistrationRequest, CodeApplication } from '../types/types';
 
-
+// Legacy stub: script registration is handled by the worker now.
 export const customCodeApi = {
-  // Legacy methods for compatibility (mapped to new worker)
-  registerScript: async (params: ScriptRegistrationRequest, token: string) => {
-    // This method is no longer used - scripts are handled by the worker directly
+  registerScript: async (_params: ScriptRegistrationRequest, _token: string) => {
     return { success: true, message: 'Script registration handled by worker' };
   },
-
-  registerAnalyticsBlockingScript: async (token: string) => {
-    // This method is no longer used - scripts are handled by the worker directly
+  registerAnalyticsBlockingScript: async (_token: string) => {
     return { success: true, message: 'Script registration handled by worker' };
   },
-
-  getScripts: async (siteId: string, token: string) => {
-    // This method is no longer used - scripts are handled by the worker directly
+  getScripts: async (_siteId: string, _token: string) => {
     return { success: true, scripts: [] };
   },
-
-  applyScript: async (params: CodeApplication, token: string) => {
-    // This method is no longer used - scripts are handled by the worker directly
+  applyScript: async (_params: CodeApplication, _token: string) => {
     return { success: true, message: 'Script application handled by worker' };
   },
 };

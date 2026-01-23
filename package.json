@@ -4,11 +4,18 @@
   "scripts": {
     "dev": "npm install && concurrently \"webflow extension serve\" \"npm run watch-webpack\"",
     "dev:localhost": "webpack serve --config webpack.config.mjs --mode development",
-    "build": "npm run build-webpack && npm run postbuild-webpack && webflow extension bundle",
+    "build": "npm run build-webpack && npm run remove-function-constructor && webflow extension bundle",
     "watch-webpack": "webpack --config webpack.config.mjs --mode development --watch",
     "build-webpack": "webpack --config webpack.prod.config.mjs",
-    "postbuild-webpack": "node scripts/remove-function-constructor.js",
-    "lint": "eslint . --ext .ts,.tsx"
+    "remove-function-constructor": "node scripts/remove-function-constroctor.js",
+    "remove-sourcemap": "node -e \"const fs = require('fs'); const path = require('path'); const mapPath = path.join(__dirname, 'public', 'bundle.js.map'); if (fs.existsSync(mapPath)) { fs.unlinkSync(mapPath); console.log('Removed bundle.js.map'); }\"",
+    "lint": "eslint . --ext .ts,.tsx",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "wrangler deploy",
+    "worker:deploy:staging": "wrangler deploy --env staging",
+    "worker:deploy:prod": "wrangler deploy --env production",
+    "kv:create": "wrangler kv namespace create ACCESSIBILITY_AUTH",
+    "kv:list": "wrangler kv namespace list"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.2",
@@ -41,11 +48,7 @@
   },
   "babel": {
     "presets": [
-      ["@babel/preset-env", {
-        "useBuiltIns": false,
-        "corejs": false,
-        "modules": false
-      }],
+      "@babel/preset-env",
       "@babel/preset-react"
     ]
   }

@@ -47,6 +47,8 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const [mobileTriggerShape, setMobileTriggerShape] = useState("Rounded");
   const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = useState("3");
   const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = useState("3");
+  const [selectedIcon, setSelectedIcon] = useState("accessibility");
+  const [selectedIconName, setSelectedIconName] = useState("Accessibility");
 
   // colorpicker
   const [btnOpen, setBtnOpen] = useState(false);
@@ -75,6 +77,8 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       setMobileTriggerShape(existingCustomizationData.mobileTriggerShape || "Rounded");
       setMobileTriggerHorizontalOffset(existingCustomizationData.mobileTriggerHorizontalOffset || "0");
       setMobileTriggerVerticalOffset(existingCustomizationData.mobileTriggerVerticalOffset || "0");
+      setSelectedIcon(existingCustomizationData.selectedIcon || "accessibility");
+      setSelectedIconName(existingCustomizationData.selectedIconName || "Accessibility");
     }
   }, [existingCustomizationData]);
 
@@ -227,8 +231,8 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
         triggerHorizontalOffset: triggerHorizontalOffset,
         triggerVerticalOffset: triggerVerticalOffset,
         hideTriggerButton: hideTriggerButton,
-        selectedIcon: 'accessibility', // Default icon
-        selectedIconName: 'Accessibility', // Default icon name
+        selectedIcon: selectedIcon,
+        selectedIconName: selectedIconName,
         showOnMobile: showOnMobile,
         mobileTriggerButtonColor: btnColor, // Use same color as desktop
         mobileTriggerShape: mobileTriggerShape,
@@ -243,7 +247,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       onNext(customizationData);
     } catch (error) {
 
-      alert('An error occurred while preparing data. Please try again.');
+      
     }
   };
 

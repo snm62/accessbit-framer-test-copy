@@ -35,7 +35,7 @@ export const getCustomDomain = (): string | null => {
         return domain;
       }
     } catch (error) {
-      console.warn('Failed to parse accessbit-userinfo:', error);
+      
     }
   }
   

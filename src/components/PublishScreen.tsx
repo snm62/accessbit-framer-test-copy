@@ -105,7 +105,7 @@ const handleConfirmPublish = async () => {
       // Always attempt to apply to head to repair manual deletions
       const applyData = {
         targetType: 'site' as const,
-        scriptId: registerResult.result?.id || 'contrastkit',
+        scriptId: registerResult.result?.id || 'accessbit',
         location: 'header' as const,
         version: '1.0.0'
       };
@@ -127,7 +127,6 @@ const handleConfirmPublish = async () => {
     
     // Set success message immediately
     setPublishSuccess(successMessage);
-
     
     setShowPublishModal(false);
     
@@ -181,31 +180,27 @@ const handleConfirmPublish = async () => {
           try {
             
             const siteId = await getSiteId();
-            const idToken = await webflow.getIdToken();
             
-            if (siteId && idToken) {
+            if (siteId) {
+              // Use backend proxy endpoint instead of calling Webflow API directly
+              // This prevents idToken leakage and uses accessToken stored during OAuth
+              const base = WORKER_BASE_URL.replace(/\/+$/, '');
+              const data = await makeAuthenticatedRequest(
+                `${base}/api/accessibility/custom-domains?siteId=${encodeURIComponent(siteId)}`,
+                { method: 'GET' }
+              );
               
-              const response = await fetch(`https://api.webflow.com/v2/sites/${siteId}/custom_domains`, {
-                method: 'GET',
-                headers: {
-                  'Authorization': `Bearer ${idToken}`,
-                  'Accept': 'application/json'
-                }
-              });
-              
-              if (response.ok) {
-                const data = await response.json();
+              // makeAuthenticatedRequest returns JSON directly (not Response object)
+              if (data && data.customDomains && Array.isArray(data.customDomains)) {
                 // Find the default/primary custom domain
-                if (data.customDomains && Array.isArray(data.customDomains)) {
-                  const defaultDomain = data.customDomains.find((d: any) => d.default === true) || data.customDomains[0];
-                  if (defaultDomain?.domain) {
-                    customDomain = defaultDomain.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-                  }
+                const defaultDomain = data.customDomains.find((d: any) => d.default === true) || data.customDomains[0];
+                if (defaultDomain?.domain) {
+                  customDomain = defaultDomain.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
                 }
               }
             }
           } catch (error) {
-            console.warn('Failed to get custom domains from Webflow REST API:', error);
+            
             // Fallback to publishSite API if REST API fails
             try {
               const publishInfo = await webflow.publishSite();
@@ -213,7 +208,7 @@ const handleConfirmPublish = async () => {
                 customDomain = publishInfo.customDomains[0].url.replace(/^https?:\/\//, '').replace(/\/$/, '');
               }
             } catch (fallbackError) {
-              console.warn('Failed to get custom domains from publishSite API:', fallbackError);
+             
             }
           }
         }
@@ -263,7 +258,7 @@ const handleConfirmPublish = async () => {
           setHasSubscription(false);
         }
       } catch (error) {
-        console.error('Error checking subscription status:', error);
+        
         setHasSubscription(false);
       } finally {
         setIsCheckingSubscription(false);
@@ -279,11 +274,11 @@ const handleConfirmPublish = async () => {
 
   const handleCancelSubscription = () => {
     // Open Stripe billing portal in new window
-    window.open('billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00', '_blank');
+    window.open('https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00', '_blank');
   };
 
   return (
-    <div className="publish-screen">
+    <div className="publish-screen" style={{ paddingTop: '0' }}>
       {/* Publish Confirmation Modal */}
       {showPublishModal && (
         <div className="publish-modal-overlay">
@@ -312,69 +307,85 @@ const handleConfirmPublish = async () => {
         </div>
       )}
 
-
       {/* Header */}
       <div className="publish-header">
-        <div className="app-logo">
-          <span className="app-name"></span>
-        </div>
-        <div className="header-buttons" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <button className="back-btn" onClick={onBack}>
-            <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
-            Back
-          </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {isCheckingSubscription ? (
-              <span style={{ 
-                color: '#a3a3a3', 
-                fontSize: '14px',
-                fontWeight: '500'
-              }}>
-                Checking subscription...
-              </span>
-            ) : hasSubscription === false ? (
-              <span style={{ 
-                color: 'rgba(147, 51, 234, 1)', 
-                fontSize: '14px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                textDecoration: 'underline'
-              }} onClick={() => setShowPaymentScreen(true)}>
-                You need a subscription to publish the production
-              </span>
-            ) : hasSubscription === true ? (
-              <span style={{ 
-                color: 'rgba(147, 51, 234, 1)', 
-                fontSize: '14px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                textDecoration: 'underline'
-              }} onClick={handleCancelSubscription}>
-                Cancel Subscription
-              </span>
-            ) : null}
-            <button 
-              className="publish-btn" 
-              onClick={handlePublishClick}
-            >
-              Publish
-              <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
+          <div className="app-logo">
+            <span className="app-name"></span>
+          </div>
+          <div className="header-buttons" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+            <button className="back-btn" onClick={onBack}>
+              <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
+              Back
             </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {isCheckingSubscription ? (
+                <span style={{ 
+                  color: '#a3a3a3', 
+                  fontSize: '14px',
+                  fontWeight: '500'
+                }}>
+                  Checking subscription...
+                </span>
+              ) : hasSubscription === false ? (
+                <span style={{ 
+                  color: 'rgba(147, 51, 234, 1)', 
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }} onClick={() => setShowPaymentScreen(true)}>
+                  You need a subscription to publish the production
+                </span>
+              ) : hasSubscription === true ? (
+                <span style={{ 
+                  color: 'rgba(147, 51, 234, 1)', 
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }} onClick={handleCancelSubscription}>
+                  Cancel Subscription
+                </span>
+              ) : null}
+              <button 
+                className="publish-btn" 
+                onClick={handlePublishClick}
+              >
+                Publish
+                <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Success Message */}
+      {/* Success Toast Notification - Top Right */}
       {publishSuccess && (
-        <div className="success-banner" style={{ 
-          backgroundColor: '#e8f5e8', 
-          color: '#2e7d32', 
-          padding: '10px 20px', 
-          margin: '10px 0',
-          borderRadius: '4px',
-          border: '1px solid #c8e6c9'
+        <div className="success-toast" style={{ 
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          backgroundColor: 'rgba(10, 8, 27, 1)',
+          color: '#ffffff',
+          padding: '16px 20px',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
+          zIndex: 10000,
+          maxWidth: '400px',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          animation: 'slideInRight 0.3s ease-out'
         }}>
-          {typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ 
+              width: '8px', 
+              height: '8px', 
+              borderRadius: '50%', 
+              backgroundColor: '#10b981',
+              flexShrink: 0
+            }}></div>
+            <span style={{ fontSize: '14px', lineHeight: '1.5' }}>
+              {typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!'}
+            </span>
+          </div>
         </div>
       )}
 

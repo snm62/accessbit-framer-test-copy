@@ -43,18 +43,55 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthorize, onNeedHelp ,
   }, [authenticated]);
 
  
+  // Listen for auth completion when authorizing
   useEffect(() => {
-    const checkSessionStorage = () => {
+    if (!isAuthorizing) return;
+
+    const checkAuthCompletion = () => {
       const userinfo = localStorage.getItem("accessbit-userinfo");
       const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
       
-      if (hasData && isAuthorizing) {
+      if (hasData) {
         // OAuth completed successfully
         setHasUserData(true);
         setIsAuthorizing(false);
       }
     };
 
+    // Check immediately
+    checkAuthCompletion();
+
+    // Listen for storage events (when popup stores data)
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'accessbit-userinfo' && event.newValue) {
+        checkAuthCompletion();
+      }
+    };
+
+    // Listen for custom event (when postMessage is received)
+    const handleAuthSuccess = () => {
+      // Force immediate check and state update
+      const userinfo = localStorage.getItem("accessbit-userinfo");
+      const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
+      if (hasData) {
+        setHasUserData(true);
+        setIsAuthorizing(false);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('accessbit-auth-success', handleAuthSuccess);
+
+    // Poll for changes (fallback if events don't fire)
+    const pollInterval = setInterval(() => {
+      checkAuthCompletion();
+    }, 500);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('accessbit-auth-success', handleAuthSuccess);
+      clearInterval(pollInterval);
+    };
   }, [isAuthorizing]);
 
   const handleAuthorizeClick = () => {

@@ -50,14 +50,14 @@ module.exports = setAttributesWithoutAttributes;
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.customization-screen {
   min-height: 100vh;
@@ -940,7 +940,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.customization-screen {
 .offset-input:focus {
   outline: none;
   border-color: rgba(140, 121, 255, 1);
-}`, ""]);
+}`, "",{"version":3,"sources":["webpack://./src/styles/customization.css"],"names":[],"mappings":"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","sourcesContent":[".customization-screen {\r\n  min-height: 100vh;\r\n  width: 800px;\r\n  background: rgba(10, 8, 27, 1);\r\n  color: #ffffff;\r\n  font-family: 'DM Sans', sans-serif;\r\n}\r\n\r\n/* Header */\r\n.customization-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 30px;\r\n}\r\n\r\n.app-name {\r\n  font-size: 24px;\r\n  font-weight: bold;\r\n  color: #ffffff;\r\n}\r\n\r\n.header-buttons {\r\n  display: flex;\r\n  gap: 15px;\r\n}\r\n\r\n.back-btn,\r\n.next-btn,\r\n.publish-btn {\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: all 0.3s ease;\r\n  display: flex;\r\n  gap: 8px;\r\n}\r\n\r\n.back-btn {\r\n  background: rgba(21, 19, 40, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.next-btn,\r\n.publish-btn {\r\n  background: rgba(38, 46, 132, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.next-btn:hover,\r\n.publish-btn:hover {\r\n  background: #2563eb;\r\n}\r\n\r\n.arrow-left,\r\n.arrow-right {\r\n  margin: 0 5px;\r\n}\r\n\r\n/* Step Navigation */\r\n.step-navigation {\r\n  display: flex;\r\n  margin: 10px 30px 0px 27px;\r\n  padding: 0px;\r\n  gap: 60px;\r\n  border-bottom: 1px solid #EFEEEC14;\r\n  font-weight: 400;\r\n}\r\n\r\n.step {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 4px;\r\n  position: relative;\r\n  cursor: pointer;\r\n  transition: color 0.3s ease;\r\n  font-weight: 400;\r\n  padding-bottom: 17px;\r\n}\r\n\r\n.step-number {\r\n  font-size: 12px;\r\n  color: #999;\r\n}\r\n\r\n.step-name {\r\n  font-size: 16px;\r\n  color: #999;\r\n}\r\n\r\n.step.active .step-number {\r\n  color: #ffffff;\r\n}\r\n\r\n.step.active .step-name {\r\n  color: #ffffff;\r\n}\r\n\r\n.step:not(.active) .step-name {\r\n  color: rgba(255, 255, 255, 0.7);\r\n}\r\n\r\n.step.completed .step-number {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n.step.completed .step-name {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n/* Main Content */\r\n.main-content {\r\n  display: flex;\r\n  height: calc(100vh - 200px);\r\n  align-items: flex-start\r\n}\r\n\r\n/* Left Panel */\r\n.left-panel {\r\n  flex: 1;\r\n  background: rgba(29, 26, 49, 0.6);\r\n  border-right: 1px solid #333;\r\n  overflow-y: auto;\r\n  padding: 0;\r\n  min-width: 516px;\r\n  height: 420px;\r\n  border-radius: 12px;\r\n  /* margin: 20px; */\r\n  margin-right: 10px;\r\n  scrollbar-width: thin;\r\n  scrollbar-color: #4a4a5d transparent;\r\n  scroll-behavior: smooth;\r\n  border: 1px solid hsla(249, 92%, 72%, 0.3)\r\n}\r\n\r\n.panel-content {\r\n  padding:30px;\r\n  max-height: 360px;\r\n  overflow-y: auto;\r\n\r\n}\r\n\r\n.section {\r\n  margin-bottom: 40px;\r\n}\r\n\r\n.section h3 {\r\n  color: rgba(140, 121, 255, 1);\r\n  font-size: 12px;\r\n  font-weight: 400;\r\n  margin-bottom: 20px;\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 5px;\r\n}\r\n\r\n.section h3::after {\r\n  content: '';\r\n  flex: 1;\r\n  height: 1px;\r\n  background: rgba(140, 121, 255, 1);\r\n}\r\n\r\n.form-group {\r\n  margin-bottom: 25px;\r\n}\r\n\r\n.form-group label {\r\n  display: block;\r\n  color: rgba(255, 255, 255, 0.6);\r\n  font-size: 12px;\r\n  margin-bottom: 8px;\r\n  font-weight: 500;\r\n}\r\n\r\n.form-group input,\r\n.form-group select {\r\n  width: 100%;\r\n  max-width: 175px;\r\n  padding: 12px;\r\n  background: rgba(217, 217, 217, 0.02);\r\n  border: 1px solid rgb(46 43 69);\r\n  border-radius: 6px;\r\n  color: #ffffff;\r\n  font-size: 12px;\r\n  max-height: 4px;\r\n  transition: border-color 0.3s ease;\r\n}\r\n\r\n.form-group input:focus,\r\n.form-group select:focus {\r\n  outline: none;\r\n  border-color: #737a86;\r\n}\r\n\r\n.color-input-group {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 10px;\r\n}\r\n\r\n.color-input {\r\n  flex: 1;\r\n}\r\n\r\n.input-with-settings {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 10px;\r\n}\r\n\r\n.input-with-settings input,\r\n.input-with-settings select {\r\n  flex: 1;\r\n}\r\n\r\n.settings-btn {\r\n  width: 35px;\r\n  height: 35px;\r\n  border-radius: 50%;\r\n  background: #3b82f6;\r\n  color: #ffffff;\r\n  border: none;\r\n  cursor: pointer;\r\n  font-size: 12px;\r\n  font-weight: bold;\r\n  transition: background 0.3s ease;\r\n}\r\n\r\n.settings-btn:hover {\r\n  background: #2563eb;\r\n}\r\n\r\n/* Custom Dropdown Styles */\r\n.custom-select-container {\r\n  flex: 1;\r\n}\r\n\r\n.custom-select {\r\n  position: relative;\r\n  width: 100%;\r\n}\r\n\r\n.custom-select .selected {\r\n  width: 100%;\r\n  max-width: 175px;\r\n  padding: 10px;\r\n  max-height: 8px;\r\n  background: rgba(217, 217, 217, 0.02);\r\n  border: 1px solid rgba(46, 43, 69, 1);\r\n  border-radius: 3px;\r\n  color: rgba(255, 255, 255, 0.6);\r\n  font-size: 12px;\r\n  cursor: pointer;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  transition: border-color 0.3s ease;\r\n}\r\n\r\n.custom-select .selected:hover {\r\n  border-color: #23334e;\r\n}\r\n\r\n.custom-select.open .selected {\r\n  border-color: #23334e;\r\n}\r\n\r\n.dropdown-icon {\r\n  color: #ffffff;\r\n  transition: transform 0.3s ease;\r\n}\r\n\r\n.custom-select.open .dropdown-icon {\r\n  transform: rotate(180deg);\r\n}\r\n\r\n.custom-select .options {\r\n  position: absolute;\r\n  top: 105%;\r\n  left: 0;\r\n  right: 0;\r\n  background: rgba(50, 44, 90, 0.6);\r\n  border: 1px solid rgba(46, 43, 69, 1);\r\n  border-top: none;\r\n  border-radius: 0 0 6px 6px;\r\n  max-height: 120px;\r\n  min-width: 195px;\r\n  overflow-y: auto;\r\n  z-index: 1000;\r\n  list-style: none;\r\n  margin: 0;\r\n  padding: 0;\r\n  backdrop-filter: blur(30.7px);\r\n}\r\n\r\n.custom-select .options li {\r\n  padding: 12px;\r\n  font-size: 12px;\r\n  color: #ffffff;\r\n  cursor: pointer;\r\n  transition: background-color 0.3s ease;\r\n  /* border-bottom: 1px solid #333; */\r\n}\r\n\r\n.custom-select .options li:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.custom-select .options li:hover {\r\n  background-color: #342a5e;\r\n}\r\n\r\n/* Interface Grid Layout */\r\n.interface-grid {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 20px 55px;\r\n  margin-bottom: 30px;\r\n}\r\n\r\n.interface-grid .form-group {\r\n  margin-bottom: 0;\r\n}\r\n\r\n/* Trigger Grid Layout */\r\n.trigger-grid {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 20px 55px;\r\n  margin-bottom: 30px;\r\n}\r\n\r\n.trigger-grid .form-group {\r\n  margin-bottom: 0;\r\n}\r\n\r\n.trigger-icon-section {\r\n  margin-top: 20px;\r\n}\r\n\r\n.trigger-icon-section h3 {\r\n  color: rgba(140, 121, 255, 1);\r\n  font-size: 12px;\r\n  font-weight: 400;\r\n  margin-bottom: 20px;\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 15px;\r\n}\r\n\r\n.trigger-icon-section h3::after {\r\n  content: '';\r\n  flex: 1;\r\n  height: 1px;\r\n  background: rgba(140, 121, 255, 1);\r\n}\r\n\r\n.icon-grid {\r\n  display: grid;\r\n  grid-template-columns: repeat(8, 1fr);\r\n  gap: 10px;\r\n  margin-top: 15px;\r\n}\r\n\r\n.icon-option {\r\n  width: 40px;\r\n  height: 40px;\r\n  background: rgba(46, 43, 69, 1);\r\n  border: 2px solid rgba(46, 43, 69, 1);\r\n  border-radius: 6px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n}\r\n\r\n.icon-option:hover {\r\n  border-color: #a855f7;\r\n}\r\n\r\n.icon-option.selected {\r\n  border: 2px solid rgba(140, 121, 255, 1);\r\n}\r\n\r\n.icon-symbol {\r\n  font-size: 16px;\r\n  color: #ffffff;\r\n}\r\n\r\n/* Mobile Grid Layout */\r\n.mobile-grid {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 20px 55px;\r\n  margin-bottom: 30px;\r\n}\r\n\r\n.mobile-grid .form-group {\r\n  margin-bottom: 0;\r\n}\r\n\r\n/* Right Panel */\r\n.right-panel {\r\n  flex: 1;\r\n  background: rgba(29, 26, 49, 0.6);\r\n  padding: 0px;\r\n  border-radius: 12px;\r\n  height: 265px;\r\n  border: 1px solid hsla(249, 92%, 72%, 0.3)\r\n}\r\n\r\n.preview-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: left;\r\n  margin-bottom: 20px;\r\n  flex-direction: column;\r\n  gap: 5px;\r\n}\r\n\r\n.preview-header h3 {\r\n  color: rgba(255, 255, 255, 1);\r\n  font-size: 16px;\r\n  margin: 6px;\r\n  font-weight: 400;\r\n  margin-left: 10px;\r\n}\r\n\r\n.device-selector {\r\n  display: flex;\r\n  gap: 0px;\r\n  background: rgba(10, 8, 27, 1);\r\n  width: 100%;\r\n  height: 56px;\r\n  flex-direction: row;\r\n  align-content: flex-start;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n}\r\n\r\n.device-btn {\r\n  width: 40px;\r\n  height: 56px;\r\n  border: 1px solid rgba(10, 8, 27, 1);\r\n  background: transparent;\r\n  cursor: pointer;\r\n  width: 100%;\r\n  font-size: 16px;\r\n  transition: all 0.3s ease;\r\n}\r\n\r\n.device-btn.active {\r\n  border-color: rgba(10, 8, 27, 1);\r\n  border-bottom: 2px solid white;\r\n}\r\n\r\n.device-btn:hover {\r\n  background: #1f1934;\r\n  /* border-bottom: 2px solid #1f1934; */\r\n}\r\n\r\n/* .device-btn.active:hover {\r\n  background: #2563eb;\r\n} */\r\n\r\n/* Preview Window */\r\n.preview-window {\r\n  background: #2d1b69;\r\n  border-radius: 4px;\r\n  height: 130px;\r\n  padding: 0;\r\n  overflow: hidden;\r\n  background-size: cover;\r\n}\r\n\r\n.preview-window.desktop-preview {\r\n  background: #2d1b69;\r\n  border-radius: 8px;\r\n  height: 130px;\r\n  padding: 0;\r\n  overflow: hidden;\r\n}\r\n\r\n.preview-window.mobile-preview {\r\n  background: #1a1822;\r\n  border-radius: 12px;\r\n  height: 132px;\r\n  display: flex;\r\n  width: 80px;\r\n  justify-content: center;\r\n  margin-left: 33%;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Browser Window Styles */\r\n.browser-window {\r\n  background: #ffffff;\r\n  border-radius: 8px;\r\n  height: 100%;\r\n  position: relative;\r\n  overflow: hidden;\r\n  /* border: 1px solid #333; */\r\n}\r\n\r\n.browser-controls {\r\n  background: #86858D;\r\n  padding: 5px 6px;\r\n  border-radius: 8px 8px 0 0;\r\n}\r\n\r\n.traffic-lights {\r\n  display: flex;\r\n  gap: 4px;\r\n}\r\n\r\n.traffic-light {\r\n  width: 7px;\r\n  height: 7px;\r\n  border-radius: 50%;\r\n}\r\n\r\n.traffic-light.red {\r\n  background: #ff5f57;\r\n}\r\n\r\n.traffic-light.yellow {\r\n  background: #ffbd2e;\r\n}\r\n\r\n.traffic-light.green {\r\n  background: #28ca42;\r\n}\r\n\r\n.browser-content {\r\n  height: calc(100% - 20px);\r\n  background: #1F1D2E;\r\n  position: relative;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n/* Accessibility Widget */\r\n.trigger-widget {\r\n  position: absolute;\r\n  bottom: 15px;\r\n  left: 10px;\r\n  z-index: 5;\r\n}\r\n\r\n.widget-trigger {\r\n  width: 30px;\r\n  height: 30px;\r\n  border-radius: 50%;\r\n  background: #3b82f6;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: 20px;\r\n  color: #ffffff;\r\n  cursor: pointer;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\r\n  transition: transform 0.3s ease;\r\n  border: none;\r\n}\r\n\r\n.widget-trigger:hover {\r\n  transform: scale(1.1);\r\n}\r\n\r\n.widget-icon {\r\n  width: 16px;\r\n  height: 16px;\r\n  filter: brightness(0) invert(1);\r\n  /* Makes the icon white */\r\n}\r\n\r\n/* Button Shape Styles */\r\n.widget-trigger.circle {\r\n  border-radius: 50%;\r\n}\r\n\r\n.widget-trigger.square {\r\n  border-radius: 0;\r\n}\r\n\r\n.widget-trigger.rounded {\r\n  border-radius: 8px;\r\n}\r\n\r\n/* Button Size Styles */\r\n.widget-trigger.small {\r\n  width: 24px;\r\n  height: 24px;\r\n}\r\n\r\n.widget-trigger.medium {\r\n  width: 30px;\r\n  height: 30px;\r\n}\r\n\r\n.widget-trigger.large {\r\n  width: 36px;\r\n  height: 36px;\r\n}\r\n\r\n/* Adjust icon size based on button size */\r\n.widget-trigger.small .widget-icon {\r\n  width: 12px;\r\n  height: 12px;\r\n}\r\n\r\n.widget-trigger.medium .widget-icon {\r\n  width: 16px;\r\n  height: 16px;\r\n}\r\n\r\n.widget-trigger.large .widget-icon {\r\n  width: 20px;\r\n  height: 20px;\r\n}\r\n\r\n/* Mobile Browser Window Styles */\r\n.mobile-browser-window {\r\n  background: #ffffff;\r\n  border-radius: 12px;\r\n  height: 100%;\r\n  width: 100%;\r\n  position: relative;\r\n  overflow: hidden;\r\n  border: 1px solid #333;\r\n}\r\n\r\n.mobile-browser-content {\r\n  height: 100%;\r\n  background: #1F1D2E;\r\n  position: relative;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  border-radius: 12px;\r\n}\r\n\r\n.mobile-trigger-widget {\r\n  position: absolute;\r\n  bottom: 10px;\r\n  left: 8px;\r\n  z-index: 5;\r\n}\r\n\r\n.mobile-widget-trigger {\r\n  width: 20px;\r\n  height: 20px;\r\n  border-radius: 50%;\r\n  background: #3b82f6;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  cursor: pointer;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);\r\n  transition: transform 0.3s ease;\r\n  border: none;\r\n}\r\n\r\n.mobile-widget-trigger:hover {\r\n  transform: scale(1.1);\r\n}\r\n\r\n.mobile-widget-icon {\r\n  width: 10px;\r\n  height: 10px;\r\n  filter: brightness(0) invert(1);\r\n  /* Makes the icon white */\r\n}\r\n\r\n/* Mobile Button Shape Styles */\r\n.mobile-widget-trigger.circle {\r\n  border-radius: 50%;\r\n}\r\n\r\n.mobile-widget-trigger.square {\r\n  border-radius: 0;\r\n}\r\n\r\n.mobile-widget-trigger.round {\r\n  border-radius: 6px;\r\n}\r\n\r\n/* Mobile Button Size Styles */\r\n.mobile-widget-trigger.small {\r\n  width: 16px;\r\n  height: 16px;\r\n}\r\n\r\n.mobile-widget-trigger.medium {\r\n  width: 20px;\r\n  height: 20px;\r\n}\r\n\r\n.mobile-widget-trigger.large {\r\n  width: 24px;\r\n  height: 24px;\r\n}\r\n\r\n/* Adjust icon size based on button size */\r\n.mobile-widget-trigger.small .mobile-widget-icon {\r\n  width: 8px;\r\n  height: 8px;\r\n}\r\n\r\n.mobile-widget-trigger.medium .mobile-widget-icon {\r\n  width: 10px;\r\n  height: 10px;\r\n}\r\n\r\n.mobile-widget-trigger.large .mobile-widget-icon {\r\n  width: 12px;\r\n  height: 12px;\r\n}\r\n\r\n.trigger-widget {\r\n  position: absolute;\r\n  z-index: 10;\r\n}\r\n\r\n.widget-trigger {\r\n  width: 50px;\r\n  height: 50px;\r\n  border-radius: 50%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: 20px;\r\n  color: #ffffff;\r\n  cursor: pointer;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\r\n  transition: transform 0.3s ease;\r\n}\r\n\r\n.widget-trigger:hover {\r\n  transform: scale(1.1);\r\n}\r\n\r\n/* Scrollbar Styling */\r\n.left-panel::-webkit-scrollbar {\r\n  width: 8px;\r\n}\r\n\r\n.left-panel::-webkit-scrollbar-track {\r\n  background: #1a1a1a;\r\n}\r\n\r\n.left-panel::-webkit-scrollbar-thumb {\r\n  background: #444;\r\n  border-radius: 4px;\r\n}\r\n\r\n.left-panel::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\r\n}\r\n\r\n\r\n.color-picker-dropdown {\r\n  position: relative;\r\n  width: 118px;\r\n  margin-top: 12px;\r\n  /* margin-bottom: 16px; */\r\n}\r\n\r\n.color-picker-button {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  width: 195px;\r\n  padding: 10px;\r\n  border: 1px solid rgba(57, 53, 83, 1);\r\n  border-radius: 3px;\r\n  background: #D9D9D905;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  height: 25px;\r\n}\r\n\r\n.color-preview {\r\n  width: 12px;\r\n  height: 12px;\r\n  border-radius: 10.5px;\r\n  border: 0.3px solid #FFFFFF\r\n}\r\n\r\n.color-text {\r\n  margin-left: 10px;\r\n  /* flex-grow: 1; */\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 300;\r\n  font-size: 12px;\r\n  line-height: 100%;\r\n  letter-spacing: -3%;\r\n  color: rgba(255, 255, 255, 0.6);\r\n  ;\r\n\r\n}\r\n\r\n.dropdown-arrow {\r\n  font-size: 12px;\r\n}\r\n\r\n.color-picker-container {\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 0;\r\n  z-index: 10;\r\n  background: rgba(46, 43, 69, 1);\r\n  padding: 10px;\r\n  width: 173px;\r\n  border-radius: 5px;\r\n  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);\r\n  margin-top: 5px;\r\n  display: none;\r\n  /* Default hidden */\r\n\r\n}\r\n\r\n.IroColorPicker {\r\n  display: flex;\r\n  align-content: flex-end;\r\n  justify-content: center;\r\n  flex-wrap: nowrap;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n.color-picker-container.visible {\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column;\r\n}\r\n\r\n\r\n/* Responsive Design */\r\n@media (max-width: 768px) {\r\n  .main-content {\r\n    flex-direction: column;\r\n    height: auto;\r\n  }\r\n\r\n  .left-panel,\r\n  .right-panel {\r\n    flex: none;\r\n    height: 50vh;\r\n  }\r\n\r\n  .customization-header {\r\n    padding: 15px 20px;\r\n  }\r\n\r\n  .step-navigation {\r\n    padding: 15px 20px;\r\n  }\r\n}\r\n\r\n/* Offset Input Styles */\r\n.offset-input {\r\n  width: 100%;\r\n  max-width: 175px;\r\n  padding: 12px;\r\n  background: rgba(217, 217, 217, 0.02);\r\n  border: 1px solid rgb(46 43 69);\r\n  border-radius: 6px;\r\n  color: #ffffff;\r\n  font-size: 14px;\r\n}\r\n\r\n.offset-input:focus {\r\n  outline: none;\r\n  border-color: rgba(140, 121, 255, 1);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1107,14 +1107,14 @@ module.exports = __webpack_require__.p + "b83cd2f7adef1fc4000c.svg";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `/* Welcome Screen Styles */
 .welcome-screen {
@@ -1336,7 +1336,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* Welcome Screen Styles */
 .welcome-authorize-btn:hover {
   background: #7A6BFF;
   transform: translateY(-2px);
-}`, ""]);
+}`, "",{"version":3,"sources":["webpack://./src/styles/welcomescreen.css"],"names":[],"mappings":"AAAA,0BAA0B;AAC1B;EACE,kBAAkB;EAClB,YAAY;EACZ,aAAa;EACb,yBAAyB;EACzB,gBAAgB;EAChB,aAAa;EACb,sBAAsB;EACtB,kCAAkC;EAClC,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,kBAAkB;EAClB,WAAW;EACX,YAAY;EACZ,aAAa;EACb,sBAAsB;EACtB,UAAU;AACZ;;AAEA,2BAA2B;AAC3B;EACE,kBAAkB;EAClB,OAAO;EACP,WAAW;EACX,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,UAAU;EACV,oBAAoB;AACtB;;AAEA;EACE,kBAAkB;EAClB,QAAQ;EACR,WAAW;EACX,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,UAAU;EACV,oBAAoB;AACtB;;AAEA,sBAAsB;AACtB;;EAEE;;IAEE,UAAU;IACV,gBAAgB;EAClB;;EAEA;IACE,eAAe;EACjB;;EAEA;IACE,eAAe;IACf,eAAe;EACjB;AACF;;AAEA;;EAEE;;IAEE,UAAU;IACV,gBAAgB;EAClB;;EAEA;IACE,iBAAiB;EACnB;;EAEA;IACE,iBAAiB;IACjB,eAAe;EACjB;;EAEA;IACE,kBAAkB;EACpB;AACF;;AAEA,WAAW;AACX;EACE,aAAa;EACb,yBAAyB;EACzB,mBAAmB;EACnB,WAAW;EACX,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,QAAQ;EACR,YAAY;EACZ,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;EACX,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,QAAQ;EACR,+BAA+B;EAC/B,eAAe;EACf,eAAe;EACf,2BAA2B;EAC3B,UAAU;AACZ;;AAEA;EACE,+BAA+B;AACjC;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,YAAY;AACd;;AAEA,iBAAiB;AACjB;EACE,kBAAkB;EAClB,QAAQ;EACR,SAAS;EACT,gCAAgC;EAChC,aAAa;EACb,sBAAsB;EACtB,uBAAuB;EACvB,mBAAmB;EACnB,kBAAkB;EAClB,UAAU;EACV,WAAW;EACX,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,uBAAuB;EACvB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;;AAErB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,sBAAsB;EACtB,cAAc;;AAEhB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,kBAAkB;EAClB,+BAA+B;EAC/B,gBAAgB;EAChB,qBAAqB;EACrB,UAAU;AACZ;;AAEA;EACE,kBAAkB;EAClB,mBAAmB;EACnB,YAAY;EACZ,YAAY;EACZ,SAAS;EACT,SAAS;EACT,UAAU;EACV,QAAQ;EACR,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,YAAY;EACZ,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,eAAe;EACf,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,mBAAmB;EACnB,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,SAAS;AACX;;AAEA;EACE,mBAAmB;EACnB,2BAA2B;AAC7B","sourcesContent":["/* Welcome Screen Styles */\r\n.welcome-screen {\r\n  position: relative;\r\n  width: 800px;\r\n  height: 600px;\r\n  background-color: #0A081B;\r\n  overflow: hidden;\r\n  display: flex;\r\n  flex-direction: column;\r\n  font-family: 'DM Sans', sans-serif;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n.welcome-main-content {\r\n  position: relative;\r\n  width: 100%;\r\n  height: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  z-index: 2;\r\n}\r\n\r\n/* Background line images */\r\n.welcome-bg-lines-left {\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: 25%;\r\n  width: 40%;\r\n  max-width: 300px;\r\n  height: auto;\r\n  z-index: 1;\r\n  opacity: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n.welcome-bg-lines-right {\r\n  position: absolute;\r\n  right: 0;\r\n  bottom: 25%;\r\n  width: 40%;\r\n  max-width: 300px;\r\n  height: auto;\r\n  z-index: 1;\r\n  opacity: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n/* Responsive styles */\r\n@media (max-width: 768px) {\r\n\r\n  .welcome-bg-lines-left,\r\n  .welcome-bg-lines-right {\r\n    width: 30%;\r\n    max-width: 200px;\r\n  }\r\n\r\n  .welcome-title {\r\n    font-size: 2rem;\r\n  }\r\n\r\n  .welcome-instructions {\r\n    font-size: 1rem;\r\n    padding: 0 20px;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n\r\n  .welcome-bg-lines-left,\r\n  .welcome-bg-lines-right {\r\n    width: 35%;\r\n    max-width: 150px;\r\n  }\r\n\r\n  .welcome-title {\r\n    font-size: 1.5rem;\r\n  }\r\n\r\n  .welcome-instructions {\r\n    font-size: 0.9rem;\r\n    padding: 0 15px;\r\n  }\r\n\r\n  .welcome-header {\r\n    padding: 20px 15px;\r\n  }\r\n}\r\n\r\n/* Header */\r\n.welcome-header {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  z-index: 10;\r\n  position: relative;\r\n  padding-right: 15px;\r\n}\r\n\r\n.welcome-logo {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 8px;\r\n  color: white;\r\n  font-weight: 500;\r\n  font-size: 18px;\r\n}\r\n\r\n.welcome-logo img {\r\n  width: 24px;\r\n  height: 24px;\r\n}\r\n\r\n.welcome-help {\r\n  position: absolute;\r\n  top: 22px;\r\n  left: 685px;\r\n  width: 91px;\r\n  height: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 2px;\r\n  color: rgba(255, 255, 255, 0.6);\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  transition: color 0.2s ease;\r\n  opacity: 1;\r\n}\r\n\r\n.welcome-help:hover {\r\n  color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.welcome-help img {\r\n  width: 16px;\r\n  height: 16px;\r\n  opacity: 0.6;\r\n}\r\n\r\n/* Main content */\r\n.welcome-content {\r\n  position: absolute;\r\n  top: 35%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  z-index: 9;\r\n  width: 100%;\r\n  max-width: 600px;\r\n  padding: 0 40px;\r\n}\r\n\r\n.welcome-title {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-style: 9pt Regular;\r\n  font-size: 20px;\r\n  line-height: 100%;\r\n  letter-spacing: -3%;\r\n\r\n}\r\n\r\n.welcome-title-highlight {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-size: 20px;\r\n  line-height: 1.2;\r\n  letter-spacing: -0.6px;\r\n  color: #59AAFB;\r\n\r\n}\r\n\r\n.welcome-instructions {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  text-align: center;\r\n  color: rgba(255, 255, 255, 0.8);\r\n  max-width: 500px;\r\n  margin: 20px 0 30px 0;\r\n  opacity: 1;\r\n}\r\n\r\n.welcome-authorize-btn {\r\n  position: absolute;\r\n  background: #262E84;\r\n  width: 200px;\r\n  height: 28px;\r\n  top: 111%;\r\n  left: 35%;\r\n  opacity: 1;\r\n  gap: 8px;\r\n  padding: 10px 51px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  color: white;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n  text-align: center;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.welcome-authorize-btn.scan-project {\r\n  width: 200px;\r\n  left: 35%;\r\n}\r\n\r\n.welcome-authorize-btn:hover {\r\n  background: #7A6BFF;\r\n  transform: translateY(-2px);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1482,6 +1482,28 @@ if (true) {
 
 /***/ }),
 
+/***/ 354:
+/***/ ((module) => {
+
+
+
+module.exports = function (item) {
+  var content = item[1];
+  var cssMapping = item[3];
+  if (!cssMapping) {
+    return content;
+  }
+  if (typeof btoa === "function") {
+    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
+    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+    var sourceMapping = "/*# ".concat(data, " */");
+    return [content].concat([sourceMapping]).join("\n");
+  }
+  return [content].join("\n");
+};
+
+/***/ }),
+
 /***/ 417:
 /***/ ((module) => {
 
@@ -1520,8 +1542,8 @@ module.exports = function (url, options) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(417);
@@ -1531,7 +1553,7 @@ module.exports = function (url, options) {
 
 
 var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(44), __webpack_require__.b);
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.payment-screen {
@@ -1955,7 +1977,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.payment-screen {
     font-size: 48px;
     line-height: 46px;
   }
-}`, ""]);
+}`, "",{"version":3,"sources":["webpack://./src/styles/payment.css"],"names":[],"mappings":"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","sourcesContent":[".payment-screen {\r\n  min-height: 100vh;\r\n  width: 800px;\r\n  background: rgba(10, 8, 27, 1);\r\n  color: #ffffff;\r\n  font-family: 'DM Sans', sans-serif;\r\n}\r\n\r\n/* Notification animations */\r\n@keyframes slideInRight {\r\n  from {\r\n    transform: translateX(100%);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateX(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n/* Header */\r\n.payment-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 30px;\r\n}\r\n\r\n.app-name {\r\n  font-size: 24px;\r\n  font-weight: bold;\r\n  color: #ffffff;\r\n}\r\n\r\n.header-buttons {\r\n  display: flex;\r\n  gap: 15px;\r\n}\r\n\r\n.back-btn,\r\n.next-btn {\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: all 0.3s ease;\r\n  display: flex;\r\n  gap: 8px;\r\n}\r\n\r\n.back-btn {\r\n  background: rgba(21, 19, 40, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.back-btn:disabled {\r\n  opacity: 0.6;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.next-btn {\r\n  background: rgba(38, 46, 132, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.next-btn:hover:not(:disabled) {\r\n  background: #2563eb;\r\n}\r\n\r\n.next-btn:disabled {\r\n  opacity: 0.6;\r\n  cursor: not-allowed;\r\n}\r\n\r\n/* Step Navigation */\r\n.step-navigation {\r\n  display: flex;\r\n  margin: 10px 30px 0px 27px;\r\n  padding: 0px;\r\n  gap: 100px;\r\n  border-bottom: 1px solid #EFEEEC14;\r\n  font-weight: 400;\r\n}\r\n\r\n.step {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 4px;\r\n  position: relative;\r\n  cursor: pointer;\r\n  transition: color 0.3s ease;\r\n  font-weight: 400;\r\n  padding-bottom: 17px;\r\n}\r\n\r\n.step-number {\r\n  font-size: 12px;\r\n  color: #999;\r\n}\r\n\r\n.step-name {\r\n  font-size: 16px;\r\n  color: #999;\r\n}\r\n\r\n.step.active .step-number {\r\n  color: #ffffff;\r\n}\r\n\r\n.step.active .step-name {\r\n  color: #ffffff;\r\n}\r\n\r\n.step:not(.active) .step-name {\r\n  color: rgba(255, 255, 255, 0.7);\r\n}\r\n\r\n.step.completed .step-number {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n.step.completed .step-name {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n/* Main Content */\r\n.payment-screen .main-content {\r\n  display: flex;\r\n  justify-content: center;\r\n  /* align-items: center; */\r\n  height: calc(100vh - 200px);\r\n  padding: 20px;\r\n  text-align: left;\r\n  align-items: flex-start\r\n}\r\n\r\n.payment-card {\r\n  /* background: linear-gradient(29.71deg, #0B091D 18.17%, #2E2B45 127.91%); */\r\n  border-radius: 12px;\r\n  border: 1px solid #EFEEEC14;\r\n  padding: 40px;\r\n  width: 720px;\r\n  height: 220px;\r\n  position: relative;\r\n  overflow: hidden;\r\n  opacity: 1;\r\n  background: left;\r\n  background-size: 800px;\r\n  background-repeat: no-repeat;\r\n  background-image: url(\"../assets/bgpay.png\");\r\n}\r\n\r\n.payment-card::before {\r\n  content: '';\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);\r\n  border-radius: 12px;\r\n  z-index: -1;\r\n}\r\n\r\n.payment-screen .pricing-flex {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: 40px;\r\n  width: 100%;\r\n  height: 200px;\r\n}\r\n\r\n.payment-screen .pricing-left {\r\n  text-align: center;\r\n  flex: 1;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n.main-price {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.price-number {\r\n  font-family: 'Funnel Display', sans-serif;\r\n  font-weight: 700;\r\n  font-style: bold;\r\n  font-size: 66px;\r\n  line-height: 64px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: white;\r\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\r\n}\r\n\r\n.price-period {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-style: medium;\r\n  font-size: 12px;\r\n  line-height: 12px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: white;\r\n  margin-top: 28px;\r\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\r\n  opacity: 1;\r\n}\r\n\r\n.payment-screen .pricing-right {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: 21px;\r\n  flex: 1;\r\n  text-align: center;\r\n  height: 100px;\r\n  position: relative;\r\n  min-width: 180px;\r\n}\r\n\r\n.secondary-price {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-style: medium;\r\n  font-size: 12px;\r\n  line-height: 12px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: #FFFFFF;\r\n  width: 160px;\r\n  height: 12px;\r\n  opacity: 1;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  flex-shrink: 0;\r\n  min-height: 12px;\r\n  white-space: nowrap;\r\n  overflow: visible;\r\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\r\n}\r\n\r\n.payment-toggle {\r\n  display: flex;\r\n  width: 188px;\r\n  height: 40px;\r\n  background: #FEF1F11C;\r\n  border: 1px solid #FFFFFF47;\r\n  border-radius: 8px;\r\n  padding: 4px;\r\n  position: relative;\r\n  margin: 0 auto;\r\n}\r\n\r\n.payment-toggle::before {\r\n  content: '';\r\n  position: absolute;\r\n  top: 4px;\r\n  left: 4px;\r\n  width: calc(50% - 4px);\r\n  height: calc(100% - 8px);\r\n  background: #3CB4E5;\r\n  border-radius: 6px;\r\n  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);\r\n  z-index: 1;\r\n}\r\n\r\n.payment-toggle.monthly::before {\r\n  transform: translateX(0);\r\n}\r\n\r\n.payment-toggle.annually::before {\r\n  transform: translateX(100%);\r\n}\r\n\r\n.toggle-option {\r\n  flex: 1;\r\n  padding: 0;\r\n  border: none;\r\n  border-radius: 6px;\r\n  background: transparent;\r\n  color: #ffffff;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 700;\r\n  font-style: bold;\r\n  font-size: 14.88px;\r\n  line-height: 22.4px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  cursor: pointer;\r\n  transition: color 0.3s ease;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  position: relative;\r\n  z-index: 2;\r\n}\r\n\r\n.toggle-option.active {\r\n  color: #262E84;\r\n}\r\n\r\n.toggle-option:not(.active) {\r\n  color: #EFEEEC;\r\n}\r\n\r\n.toggle-option:not(.active):hover {\r\n  color: #ffffff;\r\n}\r\n\r\n.savings-info {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 300;\r\n  font-style: light;\r\n  font-size: 15px;\r\n  line-height: 12px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: #ffffffAB;\r\n  opacity: 0.67;\r\n  width: 95px;\r\n  height: 12px;\r\n  margin-top: 21px;\r\n  margin-left: auto;\r\n  margin-right: auto;\r\n  transition: opacity 0.3s ease, visibility 0.3s ease;\r\n}\r\n\r\n.purchase-btn {\r\n  background: #262E84;\r\n  color: #FFFFFF;\r\n  border: none;\r\n  border-radius: 3px;\r\n  padding: 10px 51px;\r\n  width: 120px;\r\n  height: 28px;\r\n  gap: 8px;\r\n  opacity: 1;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-style: normal;\r\n  font-size: 12px;\r\n  line-height: 100%;\r\n  letter-spacing: -3%;\r\n  white-space: nowrap;\r\n  flex-shrink: 0;\r\n  min-height: 28px;\r\n  box-sizing: border-box;\r\n  position: relative;\r\n}\r\n\r\n.purchase-btn:hover:not(:disabled) {\r\n  background: #2563eb;\r\n  transform: translateY(-1px);\r\n}\r\n\r\n.purchase-btn:disabled {\r\n  opacity: 0.6;\r\n  cursor: not-allowed;\r\n  transform: none;\r\n}\r\n\r\n/* Responsive Design */\r\n@media (max-width: 768px) {\r\n  .payment-screen {\r\n    width: 100%;\r\n  }\r\n\r\n  .payment-header {\r\n    padding: 15px 20px;\r\n  }\r\n\r\n  .step-navigation {\r\n    margin: 10px 20px 0px 20px;\r\n    gap: 50px;\r\n  }\r\n\r\n  .payment-screen .main-content {\r\n    padding: 20px;\r\n  }\r\n\r\n  .payment-card {\r\n    padding: 30px 20px;\r\n  }\r\n\r\n  .payment-screen .pricing-flex {\r\n    flex-direction: column;\r\n    gap: 30px;\r\n  }\r\n\r\n  .payment-screen .pricing-right {\r\n    align-items: center;\r\n  }\r\n\r\n  .secondary-price {\r\n    text-align: center;\r\n  }\r\n\r\n  .price-number {\r\n    font-size: 48px;\r\n    line-height: 46px;\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2358,17 +2380,6 @@ exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!ol(c))throw Er
 
 /***/ }),
 
-/***/ 601:
-/***/ ((module) => {
-
-
-
-module.exports = function (i) {
-  return i[1];
-};
-
-/***/ }),
-
 /***/ 659:
 /***/ ((module) => {
 
@@ -2429,14 +2440,14 @@ module.exports = __webpack_require__.p + "b74b76db66ee85d2ac89.svg";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(601);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.publish-screen {
   min-height: 100vh;
@@ -2445,6 +2456,14 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.publish-screen {
   color: #ffffff;
   font-family: 'DM Sans', sans-serif;
   position: relative;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* Success Banner - ensure it doesn't affect header position */
+.success-banner {
+  position: relative;
+  z-index: 0;
 }
 
 /* Publish Modal */
@@ -3081,7 +3100,23 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.publish-screen {
   .step-navigation {
     padding: 15px 20px;
   }
-}`, ""]);
+}
+
+/* Success Toast Animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.success-toast {
+  animation: slideInRight 0.3s ease-out;
+}`, "",{"version":3,"sources":["webpack://./src/styles/publish.css"],"names":[],"mappings":"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","sourcesContent":[".publish-screen {\r\n  min-height: 100vh;\r\n  width: 800px;\r\n  background: rgba(10, 8, 27, 1);\r\n  color: #ffffff;\r\n  font-family: 'DM Sans', sans-serif;\r\n  position: relative;\r\n  padding-top: 0;\r\n  margin-top: 0;\r\n}\r\n\r\n/* Success Banner - ensure it doesn't affect header position */\r\n.success-banner {\r\n  position: relative;\r\n  z-index: 0;\r\n}\r\n\r\n/* Publish Modal */\r\n.publish-modal-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background: rgba(0, 0, 0, 0.3);\r\n  backdrop-filter: blur(5.7px);\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  z-index: 1000;\r\n}\r\n\r\n.publish-modal {\r\n  background: #262144;\r\n  border-radius: 12px;\r\n  padding: 20px;\r\n  max-width: 400px;\r\n  width: 90%;\r\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);\r\n}\r\n\r\n.publish-modal-content {\r\n  text-align: left;\r\n}\r\n\r\n.publish-modal-content p {\r\n  color: #ffffff;\r\n  font-size: 12px;\r\n  line-height: 1.5;\r\n  margin: 0 0 16px 0;\r\n}\r\n\r\n.publish-modal-content p:last-of-type {\r\n  margin-bottom: 32px;\r\n}\r\n\r\n.publish-modal-buttons {\r\n  display: flex;\r\n  gap: 12px;\r\n  justify-content: flex-end;\r\n}\r\n\r\n.confirm-btn,\r\n.cancel-btn {\r\n  padding: 12px 24px;\r\n  border-radius: 8px;\r\n  font-size: 12px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  width: 100%;\r\n  transition: all 0.3s ease;\r\n  border: none;\r\n}\r\n\r\n.confirm-btn {\r\n  background: rgba(38, 46, 132, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.confirm-btn:hover {\r\n  background: rgba(38, 46, 132, 0.8);\r\n}\r\n\r\n.cancel-btn {\r\n  background: transparent;\r\n  color: #ffffff;\r\n  border: 1px solid #ffffff;\r\n}\r\n\r\n.cancel-btn:hover {\r\n  background: rgba(255, 255, 255, 0.1);\r\n}\r\n\r\n/* Header */\r\n.publish-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 30px;\r\n}\r\n\r\n.app-logo {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 10px;\r\n}\r\n\r\n.logo-icon {\r\n  width: 30px;\r\n  height: 30px;\r\n  background: #10b981;\r\n  border-radius: 50%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  color: white;\r\n  font-weight: bold;\r\n  font-size: 16px;\r\n}\r\n\r\n.app-name {\r\n  font-size: 24px;\r\n  font-weight: bold;\r\n  color: #ffffff;\r\n}\r\n\r\n.header-buttons {\r\n  display: flex;\r\n  gap: 15px;\r\n}\r\n\r\n.back-btn,\r\n.publish-btn {\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  cursor: pointer;\r\n  display: flex;\r\n  gap: 8px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: all 0.3s ease;\r\n}\r\n\r\n.back-btn {\r\n  background: rgba(21, 19, 40, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.publish-btn {\r\n  background: rgba(38, 46, 132, 1);\r\n  color: #ffffff;\r\n  display: flex;\r\n  /* align-content: center; */\r\n  align-items: center;\r\n  /* justify-content: space-around; */\r\n  /* flex-wrap: wrap; */\r\n  /* flex-direction: row; */\r\n  gap: 8px;\r\n}\r\n\r\n.publish-btn:hover {\r\n  background: #2563eb;\r\n}\r\n\r\n.arrow-left,\r\n.arrow-right {\r\n  margin: 0 5px;\r\n}\r\n\r\n/* Step Navigation */\r\n.step-navigation {\r\n  display: flex;\r\n  margin: 10px 30px 0px 27px;\r\n  padding: 0px;\r\n  gap: 60px;\r\n  border-bottom: 1px solid #EFEEEC14;\r\n  font-weight: 400;\r\n}\r\n\r\n.step {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 4px;\r\n  position: relative;\r\n  cursor: pointer;\r\n  transition: color 0.3s ease;\r\n  font-weight: 400;\r\n}\r\n\r\n.step-number {\r\n  font-size: 12px;\r\n  color: #999;\r\n}\r\n\r\n.step-name {\r\n  font-size: 16px;\r\n  color: #999;\r\n}\r\n\r\n.step.active .step-number {\r\n  color: #ffffff;\r\n}\r\n\r\n.step.active .step-name {\r\n  color: #ffffff;\r\n}\r\n\r\n.step.active {\r\n  border-bottom: 1px solid #ffffff;\r\n}\r\n\r\n.step:not(.active) .step-name {\r\n  color: rgba(255, 255, 255, 0.7);\r\n}\r\n\r\n.step.completed .step-number {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n.step.completed .step-name {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n/* Main Content */\r\n.main-content {\r\n  display: flex;\r\n  height: calc(100vh - 200px);\r\n  padding: 20px;\r\n  align-items: flex-start\r\n}\r\n\r\n/* Panels */\r\n.preview-panel {\r\n  flex: 1;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  height: 420px;\r\n}\r\n\r\n.panel-header {\r\n  padding: 9px;\r\n  font-weight: 400;\r\n}\r\n\r\n.panel-header h3 {\r\n  color: #ffffff;\r\n  font-size: 16px;\r\n  margin: 0;\r\n  font-weight: 400;\r\n}\r\n\r\n.preview-window1 {\r\n  height: 376px;\r\n}\r\n\r\n/* Browser Window */\r\n.browser-window {\r\n  background: #ffffff;\r\n  border-radius: 8px;\r\n  height: 100%;\r\n  position: relative;\r\n  overflow: hidden;\r\n}\r\n\r\n.browser-controls {\r\n  background: #86858D;\r\n  padding: 5px 15px;\r\n}\r\n\r\n.traffic-lights {\r\n  display: flex;\r\n  gap: 8px;\r\n}\r\n\r\n.traffic-light {\r\n  width: 12px;\r\n  height: 12px;\r\n  border-radius: 50%;\r\n}\r\n\r\n.traffic-light.red {\r\n  background: #ff5f57;\r\n}\r\n\r\n.traffic-light.yellow {\r\n  background: #ffbd2e;\r\n}\r\n\r\n.traffic-light.green {\r\n  background: #28ca42;\r\n}\r\n\r\n.browser-content {\r\n  height: calc(100% - 20px);\r\n  background: #1F1D2E;\r\n  position: relative;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n/* Accessibility Modal */\r\n.accessibility-modal {\r\n    background: linear-gradient(90deg, hsla(235, 55%, 33%, 1) 0%, hsla(204, 88%, 56%, 1) 100%);  border-radius: 8px;\r\n  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);\r\n  width: 231px;\r\n  height: 320px;\r\n  overflow-y: auto;\r\n  position: absolute;\r\n  border: 2px solid white;\r\n  top: 50%;\r\n  z-index: 10;\r\n  scrollbar-width: thin;\r\n}\r\n\r\n.accessibility-modal.position-left {\r\n  left: 8%;\r\n  transform: translateY(-50%);\r\n  animation: slideInFromLeft 0.6s ease-out;\r\n}\r\n\r\n.accessibility-modal.position-right {\r\n  right: 8%;\r\n  transform: translateY(-50%);\r\n  animation: slideInFromRight 0.6s ease-out;\r\n}\r\n\r\n.accessibility-modal.position-center {\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  animation: slideInFromLeft 0.6s ease-out;\r\n}\r\n\r\n@keyframes slideInFromLeft {\r\n  from {\r\n    transform: translate(-150%, -50%);\r\n    opacity: 0;\r\n  }\r\n\r\n  to {\r\n    transform: translateY(-50%);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n@keyframes slideInFromRight {\r\n  from {\r\n    transform: translate(150%, -50%);\r\n    opacity: 0;\r\n  }\r\n\r\n  to {\r\n    transform: translateY(-50%);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n@keyframes slideInFromCenter {\r\n  from {\r\n    transform: translate(-50%, -150%);\r\n    opacity: 0;\r\n  }\r\n\r\n  to {\r\n    transform: translate(-50%, -50%);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.modal-header {\r\n  background: linear-gradient(135deg, hsla(235, 55%, 33%, 1) 0%, hsla(204, 88%, 56%, 1) 100%);\r\n  color: white;\r\n  padding: 20px;\r\n  border-radius: 12px 12px 0 0;\r\n  padding-bottom: 9px;\r\n  position: relative;\r\n}\r\n\r\n.close-btn {\r\n  position: absolute;\r\n  top: 0px;\r\n  left: 0px;\r\n  background: none;\r\n  border: none;\r\n  color: white;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  width: 30px;\r\n  height: 30px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  border-radius: 50%;\r\n  transition: background 0.3s ease;\r\n}\r\n\r\n.close-btn:hover {\r\n  background: rgba(255, 255, 255, 0.2);\r\n}\r\n\r\n.modal-header h2 {\r\n  margin: 0;\r\n  font-size: 12px;\r\n  font-weight: 600;\r\n  text-align: center;\r\n}\r\n\r\n.modal-buttons {\r\n  padding: 7px 4px;\r\n  /* background: #f8f9fa; */\r\n  /* border-bottom: 1px solid #e9ecef; */\r\n  display: flex;\r\n  justify-content: center;\r\n  gap: 10px;\r\n}\r\n\r\n.modal-btn {\r\n  padding: 5px 12px;\r\n  background: hsla(0, 0%, 85%, 0.3);\r\n  color: white;\r\n  border: none;\r\n  border-radius: 30px;\r\n  cursor: pointer;\r\n  font-size: 8px;\r\n  transition: background 0.3s ease;\r\n  border: 0px solid hsla(0, 0%, 85%, 0.3);\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 5px;\r\n}\r\n\r\n.modal-btn:hover {\r\n  background: #2563eb;\r\n}\r\n\r\n.modal-content {\r\n  padding: 12px;\r\n  border-radius: 8px 8px 0 0;\r\n  background: white;\r\n}\r\n\r\n.modal-intro {\r\n  color: hsla(247, 23%, 15%, 1);\r\n  margin-bottom: 20px;\r\n  font-size: 9px;\r\n  font-weight: 500;\r\n  margin-top: 0;\r\n}\r\n\r\n.profile-list {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n\r\n.profile-item {\r\n  display: flex;\r\n  padding: 3px;\r\n  /* background: #f8f9fa; */\r\n  /* border-radius: 8px; */\r\n  border-bottom: 1px solid #e9ecef;\r\n  margin-bottom: 10px;\r\n  gap: 15px;\r\n}\r\n\r\n.profile-info h4 {\r\n  margin: 0 0 5px 0;\r\n  color: hsla(247, 23%, 15%, 1);\r\n  font-size: 9px;\r\n  font-weight: 400;\r\n}\r\n\r\n.profile-info p {\r\n  margin: 0;\r\n  color: hsla(247, 23%, 15%, 0.5);\r\n  font-size: 9px;\r\n}\r\n\r\n/* Toggle Switch */\r\n.toggle-switch {\r\n  position: relative;\r\n  margin-top: -11px;\r\n}\r\n\r\n.toggle-switch input[type=\"checkbox\"] {\r\n  opacity: 0;\r\n  width: 0;\r\n  height: 0;\r\n  display: none;\r\n  visibility: hidden;\r\n}\r\n\r\n.toggle-label {\r\n  display: block;\r\n  width: 47px;\r\n  height: 20px;\r\n  top: 15px;\r\n  background: #e5e7eb;\r\n  border-radius: 12px;\r\n  position: relative;\r\n  cursor: pointer;\r\n  transition: background 0.3s ease;\r\n}\r\n\r\n.toggle-label::after {\r\n  content: '';\r\n  position: absolute;\r\n  top: 2px;\r\n  left: 2px;\r\n  width: 22px;\r\n  height: 16px;\r\n  background: white;\r\n  border-radius: 50%;\r\n  transition: transform 0.3s ease;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n.toggle-switch input[type=\"checkbox\"]:checked+.toggle-label {\r\n  background: #10b981;\r\n}\r\n\r\n.toggle-switch input[type=\"checkbox\"]:checked+.toggle-label::after {\r\n  transform: translateX(26px);\r\n}\r\n\r\n/* Toggle Labels */\r\n.toggle-off {\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 26%;\r\n  transform: translate(-50%, -50%);\r\n  color: black;\r\n  font-size: 6px;\r\n  font-weight: 700;\r\n  z-index: 2;\r\n  pointer-events: none;\r\n}\r\n\r\n.toggle-on {\r\n  position: absolute;\r\n  top: 50%;\r\n  right: 8px;\r\n  transform: translateY(-50%);\r\n  color: black;\r\n  font-size: 8px;\r\n  font-weight: 700;\r\n  z-index: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n/* Hide ON label when toggle is OFF */\r\n.toggle-switch input[type=\"checkbox\"]:not(:checked) + .toggle-label .toggle-on {\r\n  opacity: 0.3;\r\n}\r\n\r\n/* Hide OFF label when toggle is ON */\r\n.toggle-switch input[type=\"checkbox\"]:checked + .toggle-label .toggle-off {\r\n  opacity: 0;\r\n}\r\n\r\n.toggle-switch input[type=\"checkbox\"]:checked + .toggle-label .toggle-on {\r\n  opacity: 1;\r\n}\r\n\r\n\r\n/* Accessibility Widget */\r\n.accessibility-widget {\r\n  position: absolute;\r\n  bottom: 20px;\r\n  left: 20px;\r\n  z-index: 5;\r\n}\r\n\r\n.widget-trigger {\r\n  width: 30px;\r\n  height: 30px;\r\n  border-radius: 50%;\r\n  background: #3b82f6;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: 20px;\r\n  color: #ffffff;\r\n  cursor: pointer;\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\r\n  transition: transform 0.3s ease;\r\n  border: none;\r\n}\r\n\r\n.widget-trigger:hover {\r\n  transform: scale(1.1);\r\n}\r\n\r\n.widget-icon {\r\n  width: 16px;\r\n  height: 16px;\r\n  filter: brightness(0) invert(1);\r\n  /* Makes the icon white */\r\n}\r\n\r\n/* Button Shape Styles */\r\n.widget-trigger.circle {\r\n  border-radius: 50%;\r\n}\r\n\r\n.widget-trigger.square {\r\n  border-radius: 0;\r\n}\r\n\r\n.widget-trigger.rounded {\r\n  border-radius: 8px;\r\n}\r\n\r\n/* Scrollbar Styling */\r\n.accessibility-modal::-webkit-scrollbar {\r\n  width: 8px;\r\n}\r\n\r\n.accessibility-modal::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\r\n}\r\n\r\n.accessibility-modal::-webkit-scrollbar-thumb {\r\n  background: #c1c1c1;\r\n  border-radius: 4px;\r\n}\r\n\r\n.accessibility-modal::-webkit-scrollbar-thumb:hover {\r\n  background: #a8a8a8;\r\n}\r\n\r\n/* Responsive Design */\r\n@media (max-width: 768px) {\r\n  .main-content {\r\n    flex-direction: column;\r\n    height: auto;\r\n  }\r\n\r\n  .preview-panel,\r\n  .right-panel {\r\n    flex: none;\r\n    height: 50vh;\r\n  }\r\n\r\n  .publish-header {\r\n    padding: 15px 20px;\r\n  }\r\n\r\n  .step-navigation {\r\n    padding: 15px 20px;\r\n  }\r\n}\r\n\r\n/* Success Toast Animation */\r\n@keyframes slideInRight {\r\n  from {\r\n    transform: translateX(100%);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateX(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.success-toast {\r\n  animation: slideInRight 0.3s ease-out;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7093,15 +7128,47 @@ const WelcomeScreen = ({ onAuthorize, onNeedHelp, authenticated, handleWelcomeSc
             setIsAuthorizing(false);
         }
     }, [authenticated]);
+    // Listen for auth completion when authorizing
     (0,react.useEffect)(() => {
-        const checkSessionStorage = () => {
+        if (!isAuthorizing)
+            return;
+        const checkAuthCompletion = () => {
             const userinfo = localStorage.getItem("accessbit-userinfo");
             const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
-            if (hasData && isAuthorizing) {
+            if (hasData) {
                 // OAuth completed successfully
                 setHasUserData(true);
                 setIsAuthorizing(false);
             }
+        };
+        // Check immediately
+        checkAuthCompletion();
+        // Listen for storage events (when popup stores data)
+        const handleStorageChange = (event) => {
+            if (event.key === 'accessbit-userinfo' && event.newValue) {
+                checkAuthCompletion();
+            }
+        };
+        // Listen for custom event (when postMessage is received)
+        const handleAuthSuccess = () => {
+            // Force immediate check and state update
+            const userinfo = localStorage.getItem("accessbit-userinfo");
+            const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
+            if (hasData) {
+                setHasUserData(true);
+                setIsAuthorizing(false);
+            }
+        };
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('accessbit-auth-success', handleAuthSuccess);
+        // Poll for changes (fallback if events don't fire)
+        const pollInterval = setInterval(() => {
+            checkAuthCompletion();
+        }, 500);
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('accessbit-auth-success', handleAuthSuccess);
+            clearInterval(pollInterval);
         };
     }, [isAuthorizing]);
     const handleAuthorizeClick = () => {
@@ -8971,6 +9038,8 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
     const [mobileTriggerShape, setMobileTriggerShape] = (0,react.useState)("Rounded");
     const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = (0,react.useState)("3");
     const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = (0,react.useState)("3");
+    const [selectedIcon, setSelectedIcon] = (0,react.useState)("accessibility");
+    const [selectedIconName, setSelectedIconName] = (0,react.useState)("Accessibility");
     // colorpicker
     const [btnOpen, setBtnOpen] = (0,react.useState)(false);
     const btnPickerInstance = (0,react.useRef)(null);
@@ -8995,6 +9064,8 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
             setMobileTriggerShape(existingCustomizationData.mobileTriggerShape || "Rounded");
             setMobileTriggerHorizontalOffset(existingCustomizationData.mobileTriggerHorizontalOffset || "0");
             setMobileTriggerVerticalOffset(existingCustomizationData.mobileTriggerVerticalOffset || "0");
+            setSelectedIcon(existingCustomizationData.selectedIcon || "accessibility");
+            setSelectedIconName(existingCustomizationData.selectedIconName || "Accessibility");
         }
     }, [existingCustomizationData]);
     (0,react.useEffect)(() => {
@@ -9121,8 +9192,8 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
                 triggerHorizontalOffset: triggerHorizontalOffset,
                 triggerVerticalOffset: triggerVerticalOffset,
                 hideTriggerButton: hideTriggerButton,
-                selectedIcon: 'accessibility', // Default icon
-                selectedIconName: 'Accessibility', // Default icon name
+                selectedIcon: selectedIcon,
+                selectedIconName: selectedIconName,
                 showOnMobile: showOnMobile,
                 mobileTriggerButtonColor: btnColor, // Use same color as desktop
                 mobileTriggerShape: mobileTriggerShape,
@@ -9136,7 +9207,6 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
             onNext(customizationData);
         }
         catch (error) {
-            alert('An error occurred while preparing data. Please try again.');
         }
     });
     const handleBack = () => {
@@ -9360,7 +9430,7 @@ function jwtDecode(token, options) {
 
 ;// ./src/util/constants.ts
 // Shared constants to avoid duplication
-const WORKER_BASE_URL = "https://accessibility-widget.web-8fb.workers.dev";
+const WORKER_BASE_URL = "https://app.accessbit.io";
 
 ;// ./src/hooks/userAuth.ts
 var userAuth_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -9414,10 +9484,6 @@ const refreshSessionToken = () => userAuth_awaiter(void 0, void 0, void 0, funct
         return sessionTokenRefreshPromise;
     }
     sessionTokenRefreshPromise = (() => userAuth_awaiter(void 0, void 0, void 0, function* () {
-        const idToken = yield webflow.getIdToken();
-        if (!idToken) {
-            throw new Error('Failed to get ID token from Webflow');
-        }
         const siteInfo = yield webflow.getSiteInfo();
         if (!(siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId)) {
             throw new Error('No site information available');
@@ -9425,7 +9491,7 @@ const refreshSessionToken = () => userAuth_awaiter(void 0, void 0, void 0, funct
         const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idToken, siteId: siteInfo.siteId }),
+            body: JSON.stringify({ siteId: siteInfo.siteId }),
         });
         const data = yield response.json().catch(() => ({}));
         if (!response.ok) {
@@ -9452,28 +9518,7 @@ const getValidSessionToken = () => userAuth_awaiter(void 0, void 0, void 0, func
 });
 /**
  * Custom hook for managing authentication state and token exchange.
- *
- * Authentication Flow:
- * 1. User initiates auth -> exchangeAndVerifyIdToken()
- *    - Gets ID token from Webflow (Designer APIs)
- *    - Exchanges it for a session token via API
- *
- * 2. Token Exchange -> tokenMutation
- *    - Sends ID token to Data Client
- *    - Data Client validates and returns session token
- *    - On success, decodes and stores token + user data
- *
- * 3. Session Management -> useQuery for token validation
- *    - Automatically checks for existing valid session
- *    - Handles token expiration
- *    - Manages loading states
- *
  * @returns {Object} Authentication utilities and state
- * - user: Current user information
- * - sessionToken is managed in memory and never persisted
- * - isAuthLoading: Loading state
- * - exchangeAndVerifyIdToken: Exchange ID token for session token
- * - logout: Clear authentication state
  */
 function useAuth() {
     const queryClient = QueryClientProvider_useQueryClient();
@@ -9490,11 +9535,10 @@ function useAuth() {
             }
             try {
                 const userData = JSON.parse(storedUser);
-                // Return valid auth state (no sessionToken stored - use getIdToken() instead)
                 const authState = {
                     user: {
                         firstName: userData.firstName || "",
-                        email: userData.email || "",
+                        email: "", // Email removed from localStorage - retrieve from session token when needed
                         siteId: userData.siteId, // Include siteId from stored data
                     },
                 };
@@ -9506,22 +9550,21 @@ function useAuth() {
                 return { user: { firstName: "", email: "" } };
             }
         }),
-        staleTime: Infinity, // Never consider the data stale
+        staleTime: Infinity,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
         gcTime: 1000 * 60 * 60, // Cache for 1 hour
     });
-    // Mutation for exchanging ID token for session token
+    // Mutation for requesting session token from backend
     const tokenMutation = useMutation({
-        mutationFn: (idToken) => userAuth_awaiter(this, void 0, void 0, function* () {
-            // Get site info from Webflow
+        mutationFn: () => userAuth_awaiter(this, void 0, void 0, function* () {
+            // Get site info from Webflow (Designer Extension API - allowed)
             const siteInfo = yield webflow.getSiteInfo();
-            // Exchange token with backend
             const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ idToken: idToken, siteId: siteInfo.siteId }),
+                body: JSON.stringify({ siteId: siteInfo.siteId }),
             });
             if (!response.ok) {
                 const errorData = yield response.json();
@@ -9556,13 +9599,16 @@ function useAuth() {
                     customDomain = `https://${data.siteInfo.shortName}.webflow.io`;
                 }
                 setInMemorySessionToken(data.sessionToken);
+                // SECURITY FIX: Remove email (PII) from localStorage per Webflow Marketplace requirements
+                // Email should be retrieved from session token or API when needed, not stored in localStorage
                 const userData = {
                     // sessionToken is kept only in memory; do not persist
                     firstName: data.firstName,
-                    email: realEmail,
+                    // email removed - PII should not be stored in localStorage
                     siteId: data.siteId, // Store the siteId from server response
                     customDomain: customDomain,
-                    siteInfo: siteInfoWithEmail, // store full site info under the same key
+                    // siteInfo stored without email
+                    siteInfo: data.siteInfo ? Object.assign({}, data.siteInfo) : undefined, // Remove email from siteInfo
                 };
                 localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
                 localStorage.removeItem("explicitly_logged_out");
@@ -9580,27 +9626,32 @@ function useAuth() {
             }
         },
     });
-    // Function to initiate token exchange process
+    // Function to request session token from backend
+    // SECURITY: idToken is NOT sent to worker - it's only used for client-side identity verification
+    // Worker uses stored access_token from OAuth to verify identity and make Webflow API calls
     const exchangeAndVerifyIdToken = () => userAuth_awaiter(this, void 0, void 0, function* () {
         try {
-            // Get new ID token from Webflow
+            // Get fresh ID token for client-side identity verification (short-lived, ~15 minutes)
+            // This is used locally to verify the user is authenticated, but NOT sent to worker
             const idToken = yield webflow.getIdToken();
             if (!idToken) {
                 throw new Error('Failed to get ID token from Webflow');
             }
-            // Get site info from Webflow
+            // Get site info from Webflow (Designer Extension API - allowed)
             const siteInfo = yield webflow.getSiteInfo();
             if (!siteInfo || !siteInfo.siteId) {
                 throw new Error('Failed to get site info from Webflow');
             }
+            // SECURITY: Do NOT send idToken to worker
+            // Worker will use stored access_token from OAuth to verify identity and make API calls
             const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    idToken,
                     siteId: siteInfo.siteId
+                    // idToken is NOT sent - worker uses stored access_token from OAuth
                 }),
             });
             const data = yield response.json();
@@ -9631,13 +9682,15 @@ function useAuth() {
             if (!customDomain && (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName)) {
                 customDomain = `https://${siteInfo.shortName}.webflow.io`;
             }
+            // SECURITY FIX: Remove email (PII) from localStorage per Webflow Marketplace requirements
             const userData = {
                 // sessionToken is kept only in memory; do not persist
                 firstName: data.firstName,
-                email: realEmail,
+                // email removed - PII should not be stored in localStorage
                 siteId: siteInfo.siteId, // Store the siteId
                 customDomain: customDomain,
-                siteInfo: siteInfoWithEmail, // consolidate site info here
+                // siteInfo stored without email
+                siteInfo: siteInfo ? Object.assign({}, siteInfo) : undefined, // Remove email from siteInfo
             };
             localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
             localStorage.removeItem("explicitly_logged_out");
@@ -9671,30 +9724,161 @@ function useAuth() {
     const openAuthScreen = () => userAuth_awaiter(this, void 0, void 0, function* () {
         // Get current site info first
         const siteInfo = yield webflow.getSiteInfo();
-        const authWindow = window.open(`${WORKER_BASE_URL}/api/auth/authorize?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`, "_blank", "width=600,height=600");
-        if (!authWindow) {
+        const authUrl = `${WORKER_BASE_URL}/api/auth/authorize?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`;
+        // Try to open popup
+        let authWindow = null;
+        try {
+            authWindow = window.open(authUrl, "accessbit_auth", "width=600,height=700,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=yes");
+        }
+        catch (e) {
             return;
         }
+        if (!authWindow || authWindow.closed) {
+            return;
+        }
+        // Check if popup navigates away from about:blank
+        let checkCount = 0;
+        const checkNavigation = setInterval(() => {
+            checkCount++;
+            try {
+                if (authWindow && !authWindow.closed) {
+                    const popupUrl = authWindow.location.href;
+                    if (popupUrl && popupUrl !== 'about:blank' && !popupUrl.startsWith('about:')) {
+                        clearInterval(checkNavigation);
+                    }
+                    else if (checkCount > 10) {
+                        clearInterval(checkNavigation);
+                        if (authWindow && !authWindow.closed) {
+                            authWindow.close();
+                        }
+                    }
+                }
+                else {
+                    clearInterval(checkNavigation);
+                }
+            }
+            catch (e) {
+                // Cross-origin error is expected once popup navigates to different domain
+                if (checkCount > 5) {
+                    clearInterval(checkNavigation);
+                }
+            }
+        }, 1000);
         // Monitor popup window for completion and URL changes
-        const checkPopupClosed = setInterval(() => {
+        const checkPopupClosed = setInterval(() => userAuth_awaiter(this, void 0, void 0, function* () {
             if (authWindow.closed) {
                 clearInterval(checkPopupClosed);
                 // Check for auth success when popup closes
                 const url = new URL(window.location.href);
                 const authSuccess = url.searchParams.get('auth_success');
                 if (authSuccess === 'true') {
-                    processAuthSuccess(url);
+                    yield processAuthSuccess(url);
+                }
+                else {
+                    // Check localStorage as fallback when popup closes
+                    const stored = localStorage.getItem('accessbit-userinfo');
+                    if (stored) {
+                        try {
+                            const parsed = JSON.parse(stored);
+                            if (parsed.siteId) {
+                                // Trigger success
+                                window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail: parsed }));
+                            }
+                            else {
+                            }
+                        }
+                        catch (e) {
+                        }
+                    }
+                    else {
+                    }
                 }
             }
-        }, 1000);
+            else {
+                // Popup still open - try to check its URL (may fail due to cross-origin)
+                try {
+                    if (authWindow.location) {
+                        const popupUrl = authWindow.location.href;
+                        if (popupUrl.includes('auth-success')) {
+                        }
+                        else if (popupUrl.includes('oauth/authorize')) {
+                        }
+                        else if (popupUrl === 'about:blank' || !popupUrl) {
+                        }
+                        else {
+                        }
+                    }
+                }
+                catch (e) {
+                    // Expected - can't access popup URL due to cross-origin
+                    // This is normal when popup is on different domain
+                    if (e.message && e.message.includes('cross-origin')) {
+                        // This is expected and normal
+                    }
+                    else {
+                    }
+                }
+            }
+        }), 1000);
         // Listen for postMessage from popup
         const handleMessage = (event) => {
-            if (event.data && event.data.type === 'oauth-success') {
+            // Log ALL messages for debugging (will help identify if message is received)
+            // SECURITY: Do NOT log sessionToken - it's sensitive
+            const safeData = event.data ? Object.assign({}, event.data) : null;
+            if (safeData && safeData.sessionToken) {
+                safeData.sessionToken = '[REDACTED]'; // Remove sensitive token from logs
+            }
+            const allowedOrigin = 'https://app.accessbit.io';
+            // Normalize origin for comparison (remove trailing slashes, lowercase)
+            const normalizeOrigin = (origin) => origin.replace(/\/+$/, '').toLowerCase();
+            const normalizedEventOrigin = normalizeOrigin(event.origin);
+            const normalizedAllowedOrigin = normalizeOrigin(allowedOrigin);
+            // STRICT validation: event.origin must EXACTLY match our worker domain
+            // This is secure because event.origin is set by browser to actual sender origin
+            if (normalizedEventOrigin !== normalizedAllowedOrigin) {
+                return; // REJECT message - do not process
+            }
+            // Additional validation: Ensure origin is exactly our worker domain
+            // Double-check to be extra safe
+            if (!event.origin || !event.origin.includes('app.accessbit.io')) {
+                return;
+            }
+            // Only process AUTH_SUCCESS messages
+            if (event.data && event.data.type === 'AUTH_SUCCESS') {
                 clearInterval(checkPopupClosed);
                 clearInterval(checkUrlChange);
+                // Close popup immediately to prevent app UI from loading in it
+                try {
+                    if (authWindow && !authWindow.closed) {
+                        authWindow.close();
+                    }
+                }
+                catch (e) {
+                    // Ignore if we can't close the window
+                }
                 // Process the auth success with the data from the popup
-                const authData = event.data.data;
-                processAuthSuccessFromData(authData);
+                const { sessionToken, user, siteInfo } = event.data;
+                // Ensure we have required data - be more lenient with user data
+                if (!siteInfo || !siteInfo.siteId) {
+                    return;
+                }
+                // Convert worker data format to our internal format
+                const authData = {
+                    sessionToken: sessionToken || '',
+                    firstName: (user === null || user === void 0 ? void 0 : user.firstName) || (user === null || user === void 0 ? void 0 : user.name) || '',
+                    email: (user === null || user === void 0 ? void 0 : user.email) || '',
+                    siteId: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId) || '',
+                    siteName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteName) || '',
+                    shortName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName) || ''
+                };
+                // Process if we have siteId
+                if (authData.siteId) {
+                    processAuthSuccessFromData(authData);
+                }
+                else {
+                }
+            }
+            else {
             }
         };
         // Listen for storage events (when popup stores data)
@@ -9710,21 +9894,73 @@ function useAuth() {
                 }
             }
         };
-        window.addEventListener('message', handleMessage);
-        window.addEventListener('storage', handleStorageChange);
+        // Store cleanup function to remove listeners later
+        const cleanup = () => {
+            window.removeEventListener('message', handleMessage);
+            window.removeEventListener('storage', handleStorageChange);
+        };
+        // Add global message listener (will catch ALL postMessages)
+        // Use capture phase to catch messages early
+        window.addEventListener('message', handleMessage, true);
+        window.addEventListener('storage', handleStorageChange, false);
+        // Also add a direct window.message listener as backup (bubble phase)
+        const backupHandler = (event) => {
+            // SECURITY: Redact sessionToken from logs
+            const safeData = event.data ? Object.assign({}, event.data) : null;
+            if (safeData && safeData.sessionToken) {
+                safeData.sessionToken = '[REDACTED]';
+            }
+            handleMessage(event);
+        };
+        window.addEventListener('message', backupHandler, false);
+        // Debug: Log all message events (even if not handled)
+        const debugHandler = (event) => {
+            var _a;
+            if (((_a = event.data) === null || _a === void 0 ? void 0 : _a.type) !== 'AUTH_SUCCESS') {
+                // SECURITY: Redact any sensitive data from logs
+                const safeData = event.data ? Object.assign({}, event.data) : null;
+                if (safeData && safeData.sessionToken) {
+                    safeData.sessionToken = '[REDACTED]';
+                }
+            }
+        };
+        window.addEventListener('message', debugHandler, false);
+        // Also add a fallback: check localStorage periodically in case postMessage fails
+        const checkLocalStorage = setInterval(() => {
+            const stored = localStorage.getItem('accessbit-userinfo');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (parsed.siteId) {
+                        clearInterval(checkLocalStorage);
+                        clearInterval(checkPopupClosed);
+                        clearInterval(checkUrlChange);
+                        // Trigger the success handler
+                        window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail: parsed }));
+                    }
+                }
+                catch (e) {
+                    // Ignore parse errors
+                }
+            }
+        }, 1000);
+        // Clean up localStorage checker after 2 minutes
+        setTimeout(() => clearInterval(checkLocalStorage), 2 * 60 * 1000);
+        // Cleanup after 5 minutes
+        setTimeout(cleanup, 5 * 60 * 1000);
         // Also monitor for URL changes in the main window (in case popup redirects back)
-        const checkUrlChange = setInterval(() => {
+        const checkUrlChange = setInterval(() => userAuth_awaiter(this, void 0, void 0, function* () {
             const url = new URL(window.location.href);
             const authSuccess = url.searchParams.get('auth_success');
             if (authSuccess === 'true') {
                 clearInterval(checkUrlChange);
                 clearInterval(checkPopupClosed);
                 // Process auth success using helper function
-                processAuthSuccess(url);
+                yield processAuthSuccess(url);
             }
-        }, 500);
+        }), 500);
         // Check immediately for auth success (in case popup already completed)
-        const checkImmediateAuth = () => {
+        const checkImmediateAuth = () => userAuth_awaiter(this, void 0, void 0, function* () {
             try {
                 const url = new URL(window.location.href);
                 const authSuccess = url.searchParams.get('auth_success');
@@ -9733,21 +9969,20 @@ function useAuth() {
                     clearInterval(checkUrlChange);
                     clearInterval(checkPopupClosed);
                     // Process auth success (same logic as above)
-                    processAuthSuccess(url);
+                    yield processAuthSuccess(url);
                 }
             }
             catch (error) {
             }
-        };
+        });
         // Helper function to process auth success
-        const processAuthSuccess = (url) => {
+        const processAuthSuccess = (url) => userAuth_awaiter(this, void 0, void 0, function* () {
             try {
                 localStorage.removeItem("accessbit-userinfo");
                 localStorage.removeItem("accessbit-userinfo");
                 localStorage.removeItem("explicitly_logged_out");
                 localStorage.removeItem("siteInfo");
-                // Get auth data from URL parameters
-                const sessionToken = url.searchParams.get('sessionToken');
+                // Get auth data from URL parameters (sessionToken removed for security - use postMessage instead)
                 const firstName = url.searchParams.get('firstName');
                 const email = url.searchParams.get('email');
                 const siteId = url.searchParams.get('siteId');
@@ -9759,21 +9994,31 @@ function useAuth() {
                 if (shortName) {
                     customDomain = `https://${shortName}.webflow.io`;
                 }
-                if (sessionToken) {
-                    setInMemorySessionToken(sessionToken);
+                // Get sessionToken via token exchange instead of URL (more secure)
+                // This ensures sessionToken never appears in browser history or server logs
+                try {
+                    const sessionToken = yield refreshSessionToken();
+                    if (sessionToken) {
+                        setInMemorySessionToken(sessionToken);
+                    }
                 }
-                // Store the user data from the OAuth popup (no sessionToken - use getIdToken() instead)
+                catch (error) {
+                    // If token exchange fails, continue without sessionToken
+                    // User may need to re-authenticate
+                }
+                // SECURITY FIX: Remove email (PII) from localStorage
+                // Store the user data from the OAuth popup
                 const userData = {
                     // sessionToken is kept only in memory; do not persist
                     firstName: firstName,
-                    email: email || '',
+                    // email removed - PII should not be stored in localStorage
                     siteId: siteId,
                     customDomain: customDomain,
                     siteInfo: {
                         siteId: siteId,
                         siteName: siteName,
-                        shortName: shortName,
-                        email: email || ''
+                        shortName: shortName
+                        // email removed from siteInfo
                     }
                 };
                 localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
@@ -9787,6 +10032,8 @@ function useAuth() {
                         siteId: siteId
                     },
                 });
+                // Dispatch custom event immediately after localStorage is set
+                window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail: userData }));
                 // Clean up URL parameters
                 const cleanUrl = new URL(window.location.href);
                 cleanUrl.searchParams.delete('auth_success');
@@ -9800,11 +10047,10 @@ function useAuth() {
             }
             catch (error) {
             }
-        };
+        });
         // Helper function to process auth success from data object
         const processAuthSuccessFromData = (authData) => {
             try {
-                localStorage.removeItem("accessbit-userinfo");
                 localStorage.removeItem("accessbit-userinfo");
                 localStorage.removeItem("explicitly_logged_out");
                 localStorage.removeItem("siteInfo");
@@ -9819,15 +10065,14 @@ function useAuth() {
                 }
                 const userData = {
                     // sessionToken is kept only in memory; do not persist
-                    firstName: authData.firstName,
-                    email: authData.email || '',
-                    siteId: authData.siteId,
+                    firstName: authData.firstName || '',
+                    siteId: authData.siteId || '',
                     customDomain: customDomain,
                     siteInfo: {
-                        siteId: authData.siteId,
-                        siteName: authData.siteName,
-                        shortName: authData.shortName,
-                        email: authData.email || ''
+                        siteId: authData.siteId || '',
+                        siteName: authData.siteName || '',
+                        shortName: authData.shortName || ''
+                        // email removed from siteInfo
                     }
                 };
                 localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
@@ -9836,11 +10081,14 @@ function useAuth() {
                 queryClient.clear();
                 queryClient.setQueryData(["auth"], {
                     user: {
-                        firstName: authData.firstName,
+                        firstName: authData.firstName || '',
                         email: authData.email || '',
-                        siteId: authData.siteId
+                        siteId: authData.siteId || ''
                     },
                 });
+                // Dispatch custom event immediately after localStorage is set
+                const customEvent = new CustomEvent('accessbit-auth-success', { detail: userData });
+                window.dispatchEvent(customEvent);
             }
             catch (error) {
             }
@@ -9993,9 +10241,9 @@ function useAuth() {
                         localStorage.removeItem('siteInfo');
                         return false; // Force silent auth for new site
                     }
-                    // Check if user data exists (no sessionToken check needed - use getIdToken() instead)
+                    // Check if user data exists
                     if (userData.email && userData.siteId) {
-                        return true; // User data exists, can use getIdToken()
+                        return true; // User data exists
                     }
                 }
                 catch (error) {
@@ -10020,38 +10268,25 @@ function useAuth() {
     // Function to attempt silent authorization without user interaction
     const attemptSilentAuth = () => userAuth_awaiter(this, void 0, void 0, function* () {
         try {
-            const idToken = yield webflow.getIdToken();
-            if (idToken) {
-                // Decode and log the ID token payload for debugging
-                try {
-                    const tokenParts = idToken.split('.');
-                    if (tokenParts.length === 3) {
-                        const payload = JSON.parse(atob(tokenParts[1]));
-                    }
-                }
-                catch (error) {
-                }
-            }
-            if (!idToken) {
-                return false;
-            }
-            // Get site info from Webflow
+            // Get site info from Webflow (Designer Extension API - allowed)
             const siteInfo = yield webflow.getSiteInfo();
             if (!siteInfo || !siteInfo.siteId) {
                 return false;
             }
             const currentStoredData = localStorage.getItem('accessbit-userinfo');
-            // Try the token endpoint first (it might work now)
             const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    idToken,
                     siteId: siteInfo.siteId
                 }),
             });
+            // If 400 or 401, user hasn't completed OAuth yet - this is expected
+            if (!response.ok && (response.status === 400 || response.status === 401)) {
+                return false;
+            }
             if (response.ok) {
                 const data = yield response.json();
                 if (!data.sessionToken) {
@@ -10059,15 +10294,16 @@ function useAuth() {
                 }
                 setInMemorySessionToken(data.sessionToken);
                 if (data.firstName || data.email) {
+                    // SECURITY FIX: Remove email (PII) from localStorage
                     const userData = {
                         firstName: data.firstName || 'User',
-                        email: data.email || '',
+                        // email removed - PII should not be stored in localStorage
                         siteId: siteInfo.siteId,
                         siteInfo: {
                             siteId: siteInfo.siteId,
                             siteName: siteInfo.siteName,
-                            shortName: siteInfo.shortName,
-                            email: data.email || ''
+                            shortName: siteInfo.shortName
+                            // email removed from siteInfo
                         }
                     };
                     try {
@@ -10191,7 +10427,6 @@ function useAuth() {
             return result;
         }
         catch (error) {
-            console.error('Register script error:', error);
             throw error;
         }
     });
@@ -10210,26 +10445,14 @@ function useAuth() {
             return result;
         }
         catch (error) {
-            console.error('Apply script error:', error);
             throw error;
         }
     });
     const getSessionToken = () => userAuth_awaiter(this, void 0, void 0, function* () {
         return getValidSessionToken();
     });
-    // Expose debug helpers to window for easy inspection in browser console
-    if (typeof window !== 'undefined') {
-        window.__accessbitDebug = {
-            getSessionToken: () => inMemorySessionToken,
-            getSessionTokenExpiry: () => inMemorySessionTokenExpiry,
-            hasUsableToken: hasUsableSessionToken,
-            clearToken: clearInMemorySessionToken,
-            refreshToken: refreshSessionToken
-        };
-    }
     return {
         user: (authState === null || authState === void 0 ? void 0 : authState.user) || { firstName: "", email: "" },
-        // sessionToken is managed in memory and exposed via getSessionToken
         isAuthLoading,
         exchangeAndVerifyIdToken,
         logout,
@@ -10289,7 +10512,6 @@ const getCustomDomain = () => {
             }
         }
         catch (error) {
-            console.warn('Failed to parse accessbit-userinfo:', error);
         }
     }
     return null;
@@ -10549,7 +10771,7 @@ const PublishScreen = ({ onBack, customizationData }) => {
                 // Always attempt to apply to head to repair manual deletions
                 const applyData = {
                     targetType: 'site',
-                    scriptId: ((_a = registerResult.result) === null || _a === void 0 ? void 0 : _a.id) || 'contrastkit',
+                    scriptId: ((_a = registerResult.result) === null || _a === void 0 ? void 0 : _a.id) || 'accessbit',
                     location: 'header',
                     version: '1.0.0'
                 };
@@ -10608,29 +10830,22 @@ const PublishScreen = ({ onBack, customizationData }) => {
                 if (!customDomain) {
                     try {
                         const siteId = yield getSiteId();
-                        const idToken = yield webflow.getIdToken();
-                        if (siteId && idToken) {
-                            const response = yield fetch(`https://api.webflow.com/v2/sites/${siteId}/custom_domains`, {
-                                method: 'GET',
-                                headers: {
-                                    'Authorization': `Bearer ${idToken}`,
-                                    'Accept': 'application/json'
-                                }
-                            });
-                            if (response.ok) {
-                                const data = yield response.json();
+                        if (siteId) {
+                            // Use backend proxy endpoint instead of calling Webflow API directly
+                            // This prevents idToken leakage and uses accessToken stored during OAuth
+                            const base = WORKER_BASE_URL.replace(/\/+$/, '');
+                            const data = yield makeAuthenticatedRequest(`${base}/api/accessibility/custom-domains?siteId=${encodeURIComponent(siteId)}`, { method: 'GET' });
+                            // makeAuthenticatedRequest returns JSON directly (not Response object)
+                            if (data && data.customDomains && Array.isArray(data.customDomains)) {
                                 // Find the default/primary custom domain
-                                if (data.customDomains && Array.isArray(data.customDomains)) {
-                                    const defaultDomain = data.customDomains.find((d) => d.default === true) || data.customDomains[0];
-                                    if (defaultDomain === null || defaultDomain === void 0 ? void 0 : defaultDomain.domain) {
-                                        customDomain = defaultDomain.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-                                    }
+                                const defaultDomain = data.customDomains.find((d) => d.default === true) || data.customDomains[0];
+                                if (defaultDomain === null || defaultDomain === void 0 ? void 0 : defaultDomain.domain) {
+                                    customDomain = defaultDomain.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
                                 }
                             }
                         }
                     }
                     catch (error) {
-                        console.warn('Failed to get custom domains from Webflow REST API:', error);
                         // Fallback to publishSite API if REST API fails
                         try {
                             const publishInfo = yield webflow.publishSite();
@@ -10639,7 +10854,6 @@ const PublishScreen = ({ onBack, customizationData }) => {
                             }
                         }
                         catch (fallbackError) {
-                            console.warn('Failed to get custom domains from publishSite API:', fallbackError);
                         }
                     }
                 }
@@ -10679,7 +10893,6 @@ const PublishScreen = ({ onBack, customizationData }) => {
                 }
             }
             catch (error) {
-                console.error('Error checking subscription status:', error);
                 setHasSubscription(false);
             }
             finally {
@@ -10693,9 +10906,9 @@ const PublishScreen = ({ onBack, customizationData }) => {
     };
     const handleCancelSubscription = () => {
         // Open Stripe billing portal in new window
-        window.open('billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00', '_blank');
+        window.open('https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00', '_blank');
     };
-    return (react.createElement("div", { className: "publish-screen" },
+    return (react.createElement("div", { className: "publish-screen", style: { paddingTop: '0' } },
         showPublishModal && (react.createElement("div", { className: "publish-modal-overlay" },
             react.createElement("div", { className: "publish-modal" },
                 react.createElement("div", { className: "publish-modal-content" },
@@ -10732,14 +10945,29 @@ const PublishScreen = ({ onBack, customizationData }) => {
                     react.createElement("button", { className: "publish-btn", onClick: handlePublishClick },
                         "Publish",
                         react.createElement("img", { src: PublishScreen_whitearrow, alt: "", style: { width: '14px', height: '15px', marginLeft: '8px' } }))))),
-        publishSuccess && (react.createElement("div", { className: "success-banner", style: {
-                backgroundColor: '#e8f5e8',
-                color: '#2e7d32',
-                padding: '10px 20px',
-                margin: '10px 0',
-                borderRadius: '4px',
-                border: '1px solid #c8e6c9'
-            } }, typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!')),
+        publishSuccess && (react.createElement("div", { className: "success-toast", style: {
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                backgroundColor: 'rgba(10, 8, 27, 1)',
+                color: '#ffffff',
+                padding: '16px 20px',
+                borderRadius: '8px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
+                zIndex: 10000,
+                maxWidth: '400px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                animation: 'slideInRight 0.3s ease-out'
+            } },
+            react.createElement("div", { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
+                react.createElement("div", { style: {
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        backgroundColor: '#10b981',
+                        flexShrink: 0
+                    } }),
+                react.createElement("span", { style: { fontSize: '14px', lineHeight: '1.5' } }, typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!')))),
         react.createElement("div", { className: "step-navigation" },
             react.createElement("div", { className: "step completed" },
                 react.createElement("span", { className: "step-number" }, "STEP 1"),
@@ -10883,7 +11111,7 @@ const App = () => {
     const [currentScreen, setCurrentScreen] = (0,react.useState)('welcome');
     const [customizationData, setCustomizationData] = (0,react.useState)(null);
     const [isLoadingExistingData, setIsLoadingExistingData] = (0,react.useState)(false);
-    const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, attemptSilentAuth, checkPublishedDataExists, getSessionToken } = useAuth();
+    const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, attemptSilentAuth, checkPublishedDataExists, getSessionToken, makeAuthenticatedRequest, user } = useAuth();
     const [isAppInitializing, setIsAppInitializing] = (0,react.useState)(true);
     const [isCheckingAuth, setIsCheckingAuth] = (0,react.useState)(true);
     const [isAuthenticated, setIsAuthenticated] = (0,react.useState)(false);
@@ -10893,47 +11121,35 @@ const App = () => {
         if (!isAuthenticated || isAuthLoading)
             return;
         const detectAppInstallation = () => app_awaiter(void 0, void 0, void 0, function* () {
+            var _a, _b;
             try {
                 const userData = localStorage.getItem('accessbit-userinfo');
                 if (!userData)
                     return;
                 const parsed = JSON.parse(userData);
-                const { siteId, email, siteInfo } = parsed;
-                if (!siteId || !email)
+                const { siteId, siteInfo } = parsed;
+                // SECURITY FIX: Email removed from localStorage (PII)
+                // Only siteId is required, email is retrieved from session token when needed
+                if (!siteId)
                     return;
-                // Get session token (in-memory) for authentication
-                let token;
-                try {
-                    token = yield getSessionToken();
-                }
-                catch (error) {
-                    console.error('Failed to get session token:', error);
-                    return;
-                }
                 // Check if installation already exists on server
                 // Try to get the installation record directly from KV
                 let installationExists = false;
                 try {
-                    const installationCheckResponse = yield fetch(`${WORKER_BASE_URL}/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
+                    const checkData = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`, {
+                        method: 'GET'
                     });
-                    if (installationCheckResponse.ok) {
-                        const checkData = yield installationCheckResponse.json();
-                        installationExists = checkData.exists === true;
-                    }
-                    else if (installationCheckResponse.status === 404) {
+                    installationExists = (checkData === null || checkData === void 0 ? void 0 : checkData.exists) === true;
+                }
+                catch (checkError) {
+                    // If endpoint doesn't exist or returns 404, assume first install
+                    if (((_a = checkError === null || checkError === void 0 ? void 0 : checkError.message) === null || _a === void 0 ? void 0 : _a.includes('404')) || ((_b = checkError === null || checkError === void 0 ? void 0 : checkError.message) === null || _b === void 0 ? void 0 : _b.includes('not found'))) {
                         installationExists = false;
                     }
                     else {
-                        // If endpoint doesn't exist or returns error, assume first install
+                        // For other errors, assume first install
                         installationExists = false;
                     }
-                }
-                catch (checkError) {
-                    // If endpoint doesn't exist, assume first install
-                    installationExists = false;
                 }
                 // Only send email on first install
                 // If installation already exists, skip webhook
@@ -10941,16 +11157,19 @@ const App = () => {
                     // Construct staging URL from shortName if available
                     const shortName = (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName) || null;
                     const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
+                    // SECURITY FIX: Get email from auth state (session token) instead of localStorage
+                    // Email is PII and should not be stored in localStorage
+                    const userEmail = (user === null || user === void 0 ? void 0 : user.email) || ''; // Get from auth state (decoded from session token)
                     const installationPayload = {
                         siteId: siteId,
                         userId: parsed.userId || siteId, // Use siteId as fallback if userId not available
-                        userEmail: email,
+                        userEmail: userEmail, // Get from auth state, not localStorage
                         siteName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteName) || 'Unknown Site',
                         installationData: {
                             timestamp: new Date().toISOString(),
                             source: 'webflow_app',
                             firstName: parsed.firstName || 'User',
-                            email: email,
+                            email: userEmail, // Get from auth state, not localStorage
                             customDomain: parsed.customDomain || null,
                             stagingUrl: stagingUrl, // Include staging URL if available
                             exp: parsed.exp || null,
@@ -10961,18 +11180,14 @@ const App = () => {
                         }
                     };
                     // Send installation data to worker
-                    const response = yield fetch(`${WORKER_BASE_URL}/api/webflow/app-installed`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify(installationPayload)
-                    });
-                    const responseText = yield response.text();
-                    if (!response.ok) {
+                    try {
+                        yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/webflow/app-installed`, {
+                            method: 'POST',
+                            body: JSON.stringify(installationPayload)
+                        });
                     }
-                    else {
+                    catch (error) {
+                        // Silent fail - installation data send failed
                     }
                 }
                 else {
@@ -10997,32 +11212,24 @@ const App = () => {
                     const siteId = stored ? (((_a = JSON.parse(stored)) === null || _a === void 0 ? void 0 : _a.siteId) || '') : '';
                     if (!siteId)
                         return;
-                    // Get ID token from Webflow
-                    let token;
+                    const base = WORKER_BASE_URL.replace(/\/+$/, '');
                     try {
-                        token = yield webflow.getIdToken();
-                        if (!token)
-                            return;
+                        yield makeAuthenticatedRequest(`${base}/api/accessibility/register-script?siteId=${encodeURIComponent(siteId)}`, {
+                            method: 'POST'
+                        });
                     }
                     catch (error) {
-                        console.error('Failed to get ID token:', error);
-                        return;
+                        // Silent fail; user can use Publish to repair
                     }
-                    const base = WORKER_BASE_URL.replace(/\/+$/, '');
-                    const regRes = yield fetch(`${base}/api/accessibility/register-script?siteId=${encodeURIComponent(siteId)}`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                    yield fetch(`${base}/api/accessibility/apply-script?siteId=${encodeURIComponent(siteId)}`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ targetType: 'site', scriptId: 'contrastkit', location: 'header', version: '1.0.0' })
-                    });
+                    try {
+                        yield makeAuthenticatedRequest(`${base}/api/accessibility/apply-script?siteId=${encodeURIComponent(siteId)}`, {
+                            method: 'POST',
+                            body: JSON.stringify({ targetType: 'site', scriptId: 'accessbit', location: 'header', version: '1.0.0' })
+                        });
+                    }
+                    catch (error) {
+                        // Silent fail; user can use Publish to repair
+                    }
                 }
                 catch (e) {
                     // Silent fail; user can use Publish to repair
@@ -11111,9 +11318,67 @@ const App = () => {
     const handleAuthorize = () => app_awaiter(void 0, void 0, void 0, function* () {
         try {
             yield openAuthScreen();
+            // Listen for auth success to update state
+            const handleAuthSuccess = () => {
+                // Check localStorage to verify auth data was saved
+                const userData = localStorage.getItem('accessbit-userinfo');
+                if (userData) {
+                    try {
+                        const parsed = JSON.parse(userData);
+                        if (parsed.siteId) {
+                            setIsAuthenticated(true);
+                            // Force React Query to refetch auth state
+                            window.dispatchEvent(new Event('storage'));
+                        }
+                        else {
+                        }
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                }
+            };
+            // Set up listeners BEFORE auth completes (in case it's fast)
+            window.addEventListener('accessbit-auth-success', handleAuthSuccess, false);
+            // Also listen for storage events as fallback
+            const handleStorageChange = (e) => {
+                if (e.key === 'accessbit-userinfo' && e.newValue) {
+                    handleAuthSuccess();
+                }
+            };
+            window.addEventListener('storage', handleStorageChange, false);
+            // Fallback: Poll localStorage every second for 2 minutes
+            let pollCount = 0;
+            const maxPolls = 120; // 2 minutes
+            const pollInterval = setInterval(() => {
+                pollCount++;
+                const stored = localStorage.getItem('accessbit-userinfo');
+                if (stored) {
+                    try {
+                        const parsed = JSON.parse(stored);
+                        if (parsed.siteId) {
+                            clearInterval(pollInterval);
+                            handleAuthSuccess();
+                        }
+                    }
+                    catch (e) {
+                        // Ignore
+                    }
+                }
+                if (pollCount >= maxPolls) {
+                    clearInterval(pollInterval);
+                }
+            }, 1000);
+            // Cleanup listeners after 5 minutes
+            const cleanup = () => {
+                window.removeEventListener('accessbit-auth-success', handleAuthSuccess);
+                window.removeEventListener('storage', handleStorageChange);
+                clearInterval(pollInterval);
+            };
+            setTimeout(cleanup, 5 * 60 * 1000);
         }
         catch (error) {
-            alert(`Authentication failed: ${error.message}`);
         }
     });
     // (kept) data loader above handles auth + loading state
@@ -11158,3 +11423,4 @@ root.render(react.createElement(react.StrictMode, null,
 
 /******/ })()
 ;
+//# sourceMappingURL=bundle.js.map
