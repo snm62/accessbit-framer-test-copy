@@ -225,19 +225,131 @@
 /* Main Content */
 .main-content {
   display: flex;
+  flex-direction: row;
+  gap: 24px;
   height: calc(100vh - 200px);
   padding: 20px;
-  align-items: flex-start
+  align-items: flex-start;
 }
 
-/* Panels */
-.preview-panel {
-  flex: 1;
+/* Panels - Preview and Subscription same size (equal width and height) */
+.preview-panel,
+.publish-page-payment-panel {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0; /* with flex: 1 1 0 ensures equal width distribution */
   border-radius: 8px;
   overflow: hidden;
   height: 420px;
+  max-height: 420px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
+.preview-panel .panel-header,
+.publish-page-payment-panel .panel-header {
+  flex-shrink: 0;
+}
+
+.publish-page-payment-panel .panel-header {
+  padding: 9px;
+  font-weight: 400;
+}
+
+.publish-page-payment-window {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.publish-page-payment-panel .publish-page-payment-card {
+  width: 100%;
+  flex: 1;
+  max-width: none;
+  padding: 24px;
+  height: auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.publish-page-payment-panel .publish-page-pricing-flex {
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Single column: price, toggle, savings, secondary price, button – all centered */
+.publish-page-payment-panel .pricing-single-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  gap: 0;
+}
+
+.publish-page-payment-panel .pricing-single-column .main-price {
+  margin-bottom: 16px;
+}
+
+.publish-page-payment-panel .pricing-single-column .payment-toggle {
+  margin-bottom: 0;
+}
+
+.publish-page-payment-panel .pricing-single-column .savings-info {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.publish-page-payment-panel .pricing-single-column .secondary-price {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.publish-page-payment-panel .pricing-single-column .purchase-btn {
+  margin: 0 auto;
+}
+
+.publish-page-payment-panel .price-number {
+  font-size: 48px;
+  line-height: 48px;
+}
+
+.publish-page-payment-panel .main-price {
+  margin-bottom: 16px;
+}
+
+.publish-page-payment-panel .savings-info {
+  margin-top: 20px;   /* space above "You Save 20%" (below Monthly/Annually toggle) */
+  margin-bottom: 10px; /* space below "You Save 20%" before right-column content */
+  display: block;
+}
+
+/* Cancel Subscription: link style (not button) */
+.cancel-subscription-link {
+  color: rgba(147, 51, 234, 1);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.cancel-subscription-link:hover {
+  color: rgba(167, 71, 254, 1);
+}
+
+/* Shared panel headings: Preview and Subscription must match exactly */
 .panel-header {
   padding: 9px;
   font-weight: 400;
@@ -246,12 +358,30 @@
 .panel-header h3 {
   color: #ffffff;
   font-size: 16px;
+  line-height: 1.25;
   margin: 0;
   font-weight: 400;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0;
+}
+
+/* Ensure Subscription heading matches Preview (same as .panel-header h3) */
+.preview-panel .panel-header h3,
+.publish-page-payment-panel .panel-header h3 {
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.25;
+  margin: 0;
+  font-weight: 400;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0;
 }
 
 .preview-window1 {
-  height: 376px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Browser Window */
@@ -302,16 +432,24 @@
 
 /* Accessibility Modal */
 .accessibility-modal {
-    background: linear-gradient(90deg, hsla(235, 55%, 33%, 1) 0%, hsla(204, 88%, 56%, 1) 100%);  border-radius: 8px;
+  background: transparent;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  width: 231px;
-  height: 320px;
+  width: min(231px, calc(100% - 24px));
+  height: min(320px, calc(100% - 24px));
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   position: absolute;
-  border: 2px solid white;
+  border: none;
   top: 50%;
   z-index: 10;
-  scrollbar-width: thin;
+  border-radius: 15px;
+}
+
+.accessibility-modal::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .accessibility-modal.position-left {
@@ -368,86 +506,6 @@
   }
 }
 
-.modal-header {
-  background: linear-gradient(135deg, hsla(235, 55%, 33%, 1) 0%, hsla(204, 88%, 56%, 1) 100%);
-  color: white;
-  padding: 20px;
-  border-radius: 12px 12px 0 0;
-  padding-bottom: 9px;
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background 0.3s ease;
-}
-
-.close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.modal-header h2 {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.modal-buttons {
-  padding: 7px 4px;
-  /* background: #f8f9fa; */
-  /* border-bottom: 1px solid #e9ecef; */
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.modal-btn {
-  padding: 5px 12px;
-  background: hsla(0, 0%, 85%, 0.3);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 8px;
-  transition: background 0.3s ease;
-  border: 0px solid hsla(0, 0%, 85%, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.modal-btn:hover {
-  background: #2563eb;
-}
-
-.modal-content {
-  padding: 12px;
-  border-radius: 8px 8px 0 0;
-  background: white;
-}
-
-.modal-intro {
-  color: hsla(247, 23%, 15%, 1);
-  margin-bottom: 20px;
-  font-size: 9px;
-  font-weight: 500;
-  margin-top: 0;
-}
-
 .profile-list {
   display: flex;
   flex-direction: column;
@@ -474,92 +532,6 @@
   margin: 0;
   color: hsla(247, 23%, 15%, 0.5);
   font-size: 9px;
-}
-
-/* Toggle Switch */
-.toggle-switch {
-  position: relative;
-  margin-top: -11px;
-}
-
-.toggle-switch input[type="checkbox"] {
-  opacity: 0;
-  width: 0;
-  height: 0;
-  display: none;
-  visibility: hidden;
-}
-
-.toggle-label {
-  display: block;
-  width: 47px;
-  height: 20px;
-  top: 15px;
-  background: #e5e7eb;
-  border-radius: 12px;
-  position: relative;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.toggle-label::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 22px;
-  height: 16px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.toggle-switch input[type="checkbox"]:checked+.toggle-label {
-  background: #10b981;
-}
-
-.toggle-switch input[type="checkbox"]:checked+.toggle-label::after {
-  transform: translateX(26px);
-}
-
-/* Toggle Labels */
-.toggle-off {
-  position: absolute;
-  top: 50%;
-  left: 26%;
-  transform: translate(-50%, -50%);
-  color: black;
-  font-size: 6px;
-  font-weight: 700;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.toggle-on {
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  transform: translateY(-50%);
-  color: black;
-  font-size: 8px;
-  font-weight: 700;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Hide ON label when toggle is OFF */
-.toggle-switch input[type="checkbox"]:not(:checked) + .toggle-label .toggle-on {
-  opacity: 0.3;
-}
-
-/* Hide OFF label when toggle is ON */
-.toggle-switch input[type="checkbox"]:checked + .toggle-label .toggle-off {
-  opacity: 0;
-}
-
-.toggle-switch input[type="checkbox"]:checked + .toggle-label .toggle-on {
-  opacity: 1;
 }
 
 
@@ -611,24 +583,6 @@
   border-radius: 8px;
 }
 
-/* Scrollbar Styling */
-.accessibility-modal::-webkit-scrollbar {
-  width: 8px;
-}
-
-.accessibility-modal::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.accessibility-modal::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
-}
-
-.accessibility-modal::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-content {
@@ -637,9 +591,21 @@
   }
 
   .preview-panel,
-  .right-panel {
+  .right-panel,
+  .publish-page-payment-panel {
     flex: none;
-    height: 50vh;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .publish-page-payment-panel .publish-page-payment-card {
+    max-width: 100%;
+  }
+
+  .publish-page-payment-panel .publish-page-pricing-flex {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .publish-header {
@@ -649,6 +615,11 @@
   .step-navigation {
     padding: 15px 20px;
   }
+}
+
+/* Mobile-specific widget adjustments */
+@media (max-width: 480px) {
+  /* No special preview overrides on mobile */
 }
 
 /* Success Toast Animation */
@@ -665,4 +636,371 @@
 
 .success-toast {
   animation: slideInRight 0.3s ease-out;
+}
+
+/* test.js-like preview panel UI */
+.ab-preview-header {
+  position: relative;
+  background: #34A2AB;
+  padding: 14px 12px 12px;
+  border-radius: 15px 15px 0 0;
+  overflow: hidden;
+}
+
+.ab-preview-close-btn {
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ab-preview-close-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 6px;
+  border-bottom-right-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  box-sizing: border-box;
+}
+.ab-preview-close-container .ab-preview-close-btn {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.ab-preview-lang {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 22px;
+  min-width: 48px;
+  padding: 0 6px;
+  border-bottom-left-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 500;
+  gap: 4px;
+}
+
+.ab-preview-lang-text {
+  display: inline-block;
+  line-height: 1;
+}
+
+.ab-preview-header h2 {
+  margin: 18px 0 0;
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ab-preview-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.ab-preview-actions-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.ab-preview-actions-row--center {
+  justify-content: center;
+}
+
+.ab-preview-actions .action-btn {
+  height: 22px;
+  border-radius: 12px;
+  border: 1px solid #FFFFFF4D;
+  background: #FFFFFF33;
+  color: #FFFFFF;
+  padding: 0 10px;
+  font-size: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ab-preview-actions .action-btn .reset-settings-icon,
+.ab-preview-actions .action-btn .statement-btn-icon,
+.ab-preview-actions .action-btn .hide-interface-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.ab-preview-content {
+  background: #eaecf2;
+  border-radius: 0;
+  padding: 12px;
+  height: auto;
+  overflow: visible;
+}
+
+.ab-preview-title {
+  margin: 0 0 12px;
+  color: #524072;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.accessibility-modal .profile-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.accessibility-modal .profile-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #FFFFFF;
+  border-radius: 7px;
+  border: 2px solid transparent;
+}
+
+.accessibility-modal .profile-item.is-on {
+  border: 2px solid #01CE9C;
+}
+
+.accessibility-modal .profile-item.is-on + .profile-item {
+  margin-top: 6px;
+}
+
+.accessibility-modal .panel-footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  background: #FFFFFF !important;
+  color: #1E2939;
+  padding: 6px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  flex-wrap: nowrap;
+  border-radius: 0 0 8px 8px !important;
+  z-index: 1001;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.accessibility-modal .panel-footer .panel-footer-link {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  justify-content: center;
+  overflow: visible;
+  line-height: 0;
+}
+
+.accessibility-modal .panel-footer .panel-footer-link svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 10px;
+}
+
+.accessibility-modal .panel-footer .panel-footer-link--brand { width: 82px; }
+.accessibility-modal .panel-footer .panel-footer-link--powered { width: 60px; margin-left: auto; }
+.accessibility-modal .panel-footer .panel-footer-link--brand svg { max-height: 9px; }
+
+.ab-profile-item-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #ececed;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accessibility-modal .ab-profile-item-icon.keyboard-icon,
+.accessibility-modal .ab-profile-item-icon.blind-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  flex: 0 0 24px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  overflow: hidden;
+}
+.accessibility-modal .ab-profile-item-icon.keyboard-icon svg,
+.accessibility-modal .ab-profile-item-icon.blind-icon svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.ab-profile-item-icon svg {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: visible;
+}
+
+.accessibility-modal .profile-item .profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.accessibility-modal .profile-item .profile-info h4 {
+  margin: 0 0 4px;
+  font-size: 9px;
+  color: #171a2a;
+  font-weight: 500;
+}
+
+.accessibility-modal .profile-item .profile-info p {
+  margin: 0;
+  font-size: 7px;
+  color: #70758a;
+}
+
+.ab-toggle-switch {
+  position: relative;
+  width: 38px;
+  height: 20px;
+  flex-shrink: 0;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.ab-toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ab-slider {
+  position: absolute;
+  inset: 0;
+  background: #e4e7ec;
+  border-radius: 99px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ab-slider::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.ab-toggle-switch input:checked + .ab-slider {
+  background: #d9f8f0;
+  border-color: rgba(1, 206, 156, 0.6);
+}
+
+.ab-toggle-switch input:checked + .ab-slider::before {
+  transform: translate(18px, -50%);
+  border-color: #01ce9c;
+}
+
+/* ON state: icon recolor (keyboard/blind use inner rings; ADHD is stroke-only, see below) */
+.profile-item.is-on .ab-profile-item-icon:not(.keyboard-icon):not(.blind-icon):not(.ab-icon-adhd):not(.vision-impaired-icon) {
+  background: #D9F8F0;
+  border-color: #01CE9C;
+}
+.profile-item.is-on .ab-profile-item-icon:not(.keyboard-icon):not(.blind-icon):not(.ab-icon-adhd):not(.vision-impaired-icon) svg path,
+.profile-item.is-on .ab-profile-item-icon:not(.keyboard-icon):not(.blind-icon):not(.ab-icon-adhd):not(.vision-impaired-icon) svg rect {
+  stroke: #01CE9C !important;
+  fill: #01CE9C !important;
+}
+
+/* ADHD ON: green border/strokes only — keep icon interior unfilled */
+.profile-item.is-on .ab-profile-item-icon.ab-icon-adhd {
+  background: #ececed;
+  border-color: #01CE9C;
+}
+.profile-item.is-on .ab-icon-adhd svg path,
+.profile-item.is-on .ab-icon-adhd svg rect {
+  fill: none !important;
+  stroke: #01CE9C !important;
+}
+
+/* Vision Impaired icon: keep icon background neutral (avoid “filled eye” look) */
+.profile-item.is-on .ab-profile-item-icon.vision-impaired-icon {
+  background: #ececed !important;
+  border-color: #01CE9C !important;
+}
+
+/* Vision Impaired icon: override generic ON fill — keep outline stroke-only */
+.profile-item.is-on .ab-profile-item-icon.vision-impaired-icon svg path {
+  fill: none !important;
+  stroke: #01CE9C !important;
+}
+
+/* Vision Impaired ON: pupil only — same accent as outline (does not affect other icons) */
+.profile-item.is-on .ab-profile-item-icon.vision-impaired-icon svg .vision-impaired-pupil {
+  fill: #01CE9C !important;
+}
+
+/* Keyboard + Blind rings should only show green when ON */
+.kb-ring-on,
+.blind-ring-on {
+  display: none;
+}
+.profile-item.is-on .kb-ring-on,
+.profile-item.is-on .blind-ring-on {
+  display: block;
+}
+.profile-item.is-on .kb-ring-off,
+.profile-item.is-on .blind-ring-off {
+  display: none;
+}
+.profile-item.is-on .kb-path,
+.profile-item.is-on .blind-path {
+  fill: #01CE9C !important;
 }
