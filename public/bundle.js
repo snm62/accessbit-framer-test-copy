@@ -2,7 +2,110 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 20:
+/***/ 540:
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function insertStyleElement(options) {
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
+}
+module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ 938:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4417);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(1240), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(5550), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(9974), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(5820), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* dm-sans-latin-ext-400-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_0___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_1___}) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* dm-sans-latin-400-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_3___}) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}`, "",{"version":3,"sources":["webpack://./node_modules/@fontsource/dm-sans/400.css"],"names":[],"mappings":"AAAA,iCAAiC;AACjC;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAmI;EACnI,iMAAiM;AACnM;;AAEA,6BAA6B;AAC7B;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAA2H;EAC3H,uKAAuK;AACzK","sourcesContent":["/* dm-sans-latin-ext-400-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 400;\n  src: url(./files/dm-sans-latin-ext-400-normal.woff2) format('woff2'), url(./files/dm-sans-latin-ext-400-normal.woff) format('woff');\n  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;\n}\n\n/* dm-sans-latin-400-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 400;\n  src: url(./files/dm-sans-latin-400-normal.woff2) format('woff2'), url(./files/dm-sans-latin-400-normal.woff) format('woff');\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 961:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (false) // removed by dead control flow
+{}
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (true) {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(2551);
+} else // removed by dead control flow
+{}
+
+
+/***/ }),
+
+/***/ 1020:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 var __webpack_unused_export__;
@@ -15,44 +118,21 @@ var __webpack_unused_export__;
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var f=__webpack_require__(540),k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
+var f=__webpack_require__(6540),k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
 function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return{$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}__webpack_unused_export__=l;exports.jsx=q;__webpack_unused_export__=q;
 
 
 /***/ }),
 
-/***/ 44:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "cc718b52279699cff4c2.png";
-
-/***/ }),
-
-/***/ 56:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-
-
-/* istanbul ignore next  */
-function setAttributesWithoutAttributes(styleElement) {
-  var nonce =  true ? __webpack_require__.nc : 0;
-  if (nonce) {
-    styleElement.setAttribute("nonce", nonce);
-  }
-}
-module.exports = setAttributesWithoutAttributes;
-
-/***/ }),
-
-/***/ 59:
+/***/ 1059:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -947,104 +1027,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.customization-screen {
 
 /***/ }),
 
-/***/ 72:
-/***/ ((module) => {
-
-
-
-var stylesInDOM = [];
-function getIndexByIdentifier(identifier) {
-  var result = -1;
-  for (var i = 0; i < stylesInDOM.length; i++) {
-    if (stylesInDOM[i].identifier === identifier) {
-      result = i;
-      break;
-    }
-  }
-  return result;
-}
-function modulesToDom(list, options) {
-  var idCountMap = {};
-  var identifiers = [];
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i];
-    var id = options.base ? item[0] + options.base : item[0];
-    var count = idCountMap[id] || 0;
-    var identifier = "".concat(id, " ").concat(count);
-    idCountMap[id] = count + 1;
-    var indexByIdentifier = getIndexByIdentifier(identifier);
-    var obj = {
-      css: item[1],
-      media: item[2],
-      sourceMap: item[3],
-      supports: item[4],
-      layer: item[5]
-    };
-    if (indexByIdentifier !== -1) {
-      stylesInDOM[indexByIdentifier].references++;
-      stylesInDOM[indexByIdentifier].updater(obj);
-    } else {
-      var updater = addElementStyle(obj, options);
-      options.byIndex = i;
-      stylesInDOM.splice(i, 0, {
-        identifier: identifier,
-        updater: updater,
-        references: 1
-      });
-    }
-    identifiers.push(identifier);
-  }
-  return identifiers;
-}
-function addElementStyle(obj, options) {
-  var api = options.domAPI(options);
-  api.update(obj);
-  var updater = function updater(newObj) {
-    if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
-        return;
-      }
-      api.update(obj = newObj);
-    } else {
-      api.remove();
-    }
-  };
-  return updater;
-}
-module.exports = function (list, options) {
-  options = options || {};
-  list = list || [];
-  var lastIdentifiers = modulesToDom(list, options);
-  return function update(newList) {
-    newList = newList || [];
-    for (var i = 0; i < lastIdentifiers.length; i++) {
-      var identifier = lastIdentifiers[i];
-      var index = getIndexByIdentifier(identifier);
-      stylesInDOM[index].references--;
-    }
-    var newLastIdentifiers = modulesToDom(newList, options);
-    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
-      var _identifier = lastIdentifiers[_i];
-      var _index = getIndexByIdentifier(_identifier);
-      if (stylesInDOM[_index].references === 0) {
-        stylesInDOM[_index].updater();
-        stylesInDOM.splice(_index, 1);
-      }
-    }
-    lastIdentifiers = newLastIdentifiers;
-  };
-};
-
-/***/ }),
-
-/***/ 83:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "315988554fb8c9a6ef02.svg";
-
-/***/ }),
-
-/***/ 113:
+/***/ 1113:
 /***/ ((module) => {
 
 
@@ -1064,425 +1047,28 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 114:
+/***/ 1114:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__.p + "767243c19641dd480729.svg";
 
 /***/ }),
 
-/***/ 134:
+/***/ 1240:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "e6960da1d895f76d2033.svg";
+module.exports = __webpack_require__.p + "2d149d08ff5a20db3296.woff2";
 
 /***/ }),
 
-/***/ 159:
-/***/ ((module) => {
-
-
-
-/* istanbul ignore next  */
-function insertStyleElement(options) {
-  var element = document.createElement("style");
-  options.setAttributes(element, options.attributes);
-  options.insert(element, options.options);
-  return element;
-}
-module.exports = insertStyleElement;
-
-/***/ }),
-
-/***/ 212:
+/***/ 1308:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "b83cd2f7adef1fc4000c.svg";
+module.exports = __webpack_require__.p + "f5a963e83cdf4660b80d.woff";
 
 /***/ }),
 
-/***/ 252:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, `/* Welcome Screen Styles */
-.welcome-screen {
-  position: relative;
-  width: 800px;
-  height: 600px;
-  background-color: #0A081B;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  font-family: 'DM Sans', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-.welcome-main-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 2;
-}
-
-/* Background line images */
-.welcome-bg-lines-left {
-  position: absolute;
-  left: 0;
-  bottom: 25%;
-  width: 40%;
-  max-width: 300px;
-  height: auto;
-  z-index: 1;
-  opacity: 1;
-  pointer-events: none;
-}
-
-.welcome-bg-lines-right {
-  position: absolute;
-  right: 0;
-  bottom: 25%;
-  width: 40%;
-  max-width: 300px;
-  height: auto;
-  z-index: 1;
-  opacity: 1;
-  pointer-events: none;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-
-  .welcome-bg-lines-left,
-  .welcome-bg-lines-right {
-    width: 30%;
-    max-width: 200px;
-  }
-
-  .welcome-title {
-    font-size: 2rem;
-  }
-
-  .welcome-instructions {
-    font-size: 1rem;
-    padding: 0 20px;
-  }
-}
-
-@media (max-width: 480px) {
-
-  .welcome-bg-lines-left,
-  .welcome-bg-lines-right {
-    width: 35%;
-    max-width: 150px;
-  }
-
-  .welcome-title {
-    font-size: 1.5rem;
-  }
-
-  .welcome-instructions {
-    font-size: 0.9rem;
-    padding: 0 15px;
-  }
-
-  .welcome-header {
-    padding: 20px 15px;
-  }
-}
-
-/* Header */
-.welcome-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  z-index: 10;
-  position: relative;
-  padding-right: 15px;
-}
-
-.welcome-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: white;
-  font-weight: 500;
-  font-size: 18px;
-}
-
-.welcome-logo img {
-  width: 24px;
-  height: 24px;
-}
-
-.welcome-help {
-  position: absolute;
-  top: 22px;
-  left: 685px;
-  width: 91px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  opacity: 1;
-}
-
-.welcome-help:hover {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.welcome-help img {
-  width: 16px;
-  height: 16px;
-  opacity: 0.6;
-}
-
-/* Main content */
-.welcome-content {
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 9;
-  width: 100%;
-  max-width: 600px;
-  padding: 0 40px;
-}
-
-.welcome-title {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  font-style: 9pt Regular;
-  font-size: 20px;
-  line-height: 100%;
-  letter-spacing: -3%;
-
-}
-
-.welcome-title-highlight {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 1.2;
-  letter-spacing: -0.6px;
-  color: #59AAFB;
-
-}
-
-.welcome-instructions {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 500px;
-  margin: 20px 0 30px 0;
-  opacity: 1;
-}
-
-.welcome-authorize-btn {
-  position: absolute;
-  background: #262E84;
-  width: 200px;
-  height: 28px;
-  top: 111%;
-  left: 35%;
-  opacity: 1;
-  gap: 8px;
-  padding: 10px 51px;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.welcome-authorize-btn.scan-project {
-  width: 200px;
-  left: 35%;
-}
-
-.welcome-authorize-btn:hover {
-  background: #7A6BFF;
-  transform: translateY(-2px);
-}`, "",{"version":3,"sources":["webpack://./src/styles/welcomescreen.css"],"names":[],"mappings":"AAAA,0BAA0B;AAC1B;EACE,kBAAkB;EAClB,YAAY;EACZ,aAAa;EACb,yBAAyB;EACzB,gBAAgB;EAChB,aAAa;EACb,sBAAsB;EACtB,kCAAkC;EAClC,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,kBAAkB;EAClB,WAAW;EACX,YAAY;EACZ,aAAa;EACb,sBAAsB;EACtB,UAAU;AACZ;;AAEA,2BAA2B;AAC3B;EACE,kBAAkB;EAClB,OAAO;EACP,WAAW;EACX,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,UAAU;EACV,oBAAoB;AACtB;;AAEA;EACE,kBAAkB;EAClB,QAAQ;EACR,WAAW;EACX,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,UAAU;EACV,oBAAoB;AACtB;;AAEA,sBAAsB;AACtB;;EAEE;;IAEE,UAAU;IACV,gBAAgB;EAClB;;EAEA;IACE,eAAe;EACjB;;EAEA;IACE,eAAe;IACf,eAAe;EACjB;AACF;;AAEA;;EAEE;;IAEE,UAAU;IACV,gBAAgB;EAClB;;EAEA;IACE,iBAAiB;EACnB;;EAEA;IACE,iBAAiB;IACjB,eAAe;EACjB;;EAEA;IACE,kBAAkB;EACpB;AACF;;AAEA,WAAW;AACX;EACE,aAAa;EACb,yBAAyB;EACzB,mBAAmB;EACnB,WAAW;EACX,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,QAAQ;EACR,YAAY;EACZ,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;EACX,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,QAAQ;EACR,+BAA+B;EAC/B,eAAe;EACf,eAAe;EACf,2BAA2B;EAC3B,UAAU;AACZ;;AAEA;EACE,+BAA+B;AACjC;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,YAAY;AACd;;AAEA,iBAAiB;AACjB;EACE,kBAAkB;EAClB,QAAQ;EACR,SAAS;EACT,gCAAgC;EAChC,aAAa;EACb,sBAAsB;EACtB,uBAAuB;EACvB,mBAAmB;EACnB,kBAAkB;EAClB,UAAU;EACV,WAAW;EACX,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,uBAAuB;EACvB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;;AAErB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,sBAAsB;EACtB,cAAc;;AAEhB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,kBAAkB;EAClB,+BAA+B;EAC/B,gBAAgB;EAChB,qBAAqB;EACrB,UAAU;AACZ;;AAEA;EACE,kBAAkB;EAClB,mBAAmB;EACnB,YAAY;EACZ,YAAY;EACZ,SAAS;EACT,SAAS;EACT,UAAU;EACV,QAAQ;EACR,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,YAAY;EACZ,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,eAAe;EACf,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,mBAAmB;EACnB,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,SAAS;AACX;;AAEA;EACE,mBAAmB;EACnB,2BAA2B;AAC7B","sourcesContent":["/* Welcome Screen Styles */\r\n.welcome-screen {\r\n  position: relative;\r\n  width: 800px;\r\n  height: 600px;\r\n  background-color: #0A081B;\r\n  overflow: hidden;\r\n  display: flex;\r\n  flex-direction: column;\r\n  font-family: 'DM Sans', sans-serif;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n.welcome-main-content {\r\n  position: relative;\r\n  width: 100%;\r\n  height: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  z-index: 2;\r\n}\r\n\r\n/* Background line images */\r\n.welcome-bg-lines-left {\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: 25%;\r\n  width: 40%;\r\n  max-width: 300px;\r\n  height: auto;\r\n  z-index: 1;\r\n  opacity: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n.welcome-bg-lines-right {\r\n  position: absolute;\r\n  right: 0;\r\n  bottom: 25%;\r\n  width: 40%;\r\n  max-width: 300px;\r\n  height: auto;\r\n  z-index: 1;\r\n  opacity: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n/* Responsive styles */\r\n@media (max-width: 768px) {\r\n\r\n  .welcome-bg-lines-left,\r\n  .welcome-bg-lines-right {\r\n    width: 30%;\r\n    max-width: 200px;\r\n  }\r\n\r\n  .welcome-title {\r\n    font-size: 2rem;\r\n  }\r\n\r\n  .welcome-instructions {\r\n    font-size: 1rem;\r\n    padding: 0 20px;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n\r\n  .welcome-bg-lines-left,\r\n  .welcome-bg-lines-right {\r\n    width: 35%;\r\n    max-width: 150px;\r\n  }\r\n\r\n  .welcome-title {\r\n    font-size: 1.5rem;\r\n  }\r\n\r\n  .welcome-instructions {\r\n    font-size: 0.9rem;\r\n    padding: 0 15px;\r\n  }\r\n\r\n  .welcome-header {\r\n    padding: 20px 15px;\r\n  }\r\n}\r\n\r\n/* Header */\r\n.welcome-header {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  z-index: 10;\r\n  position: relative;\r\n  padding-right: 15px;\r\n}\r\n\r\n.welcome-logo {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 8px;\r\n  color: white;\r\n  font-weight: 500;\r\n  font-size: 18px;\r\n}\r\n\r\n.welcome-logo img {\r\n  width: 24px;\r\n  height: 24px;\r\n}\r\n\r\n.welcome-help {\r\n  position: absolute;\r\n  top: 22px;\r\n  left: 685px;\r\n  width: 91px;\r\n  height: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 2px;\r\n  color: rgba(255, 255, 255, 0.6);\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  transition: color 0.2s ease;\r\n  opacity: 1;\r\n}\r\n\r\n.welcome-help:hover {\r\n  color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.welcome-help img {\r\n  width: 16px;\r\n  height: 16px;\r\n  opacity: 0.6;\r\n}\r\n\r\n/* Main content */\r\n.welcome-content {\r\n  position: absolute;\r\n  top: 35%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  z-index: 9;\r\n  width: 100%;\r\n  max-width: 600px;\r\n  padding: 0 40px;\r\n}\r\n\r\n.welcome-title {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-style: 9pt Regular;\r\n  font-size: 20px;\r\n  line-height: 100%;\r\n  letter-spacing: -3%;\r\n\r\n}\r\n\r\n.welcome-title-highlight {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-size: 20px;\r\n  line-height: 1.2;\r\n  letter-spacing: -0.6px;\r\n  color: #59AAFB;\r\n\r\n}\r\n\r\n.welcome-instructions {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  text-align: center;\r\n  color: rgba(255, 255, 255, 0.8);\r\n  max-width: 500px;\r\n  margin: 20px 0 30px 0;\r\n  opacity: 1;\r\n}\r\n\r\n.welcome-authorize-btn {\r\n  position: absolute;\r\n  background: #262E84;\r\n  width: 200px;\r\n  height: 28px;\r\n  top: 111%;\r\n  left: 35%;\r\n  opacity: 1;\r\n  gap: 8px;\r\n  padding: 10px 51px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  color: white;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n  text-align: center;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.welcome-authorize-btn.scan-project {\r\n  width: 200px;\r\n  left: 35%;\r\n}\r\n\r\n.welcome-authorize-btn:hover {\r\n  background: #7A6BFF;\r\n  transform: translateY(-2px);\r\n}"],"sourceRoot":""}]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ 287:
-/***/ ((__unused_webpack_module, exports) => {
-
-/**
- * @license React
- * react.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var l=Symbol.for("react.element"),n=Symbol.for("react.portal"),p=Symbol.for("react.fragment"),q=Symbol.for("react.strict_mode"),r=Symbol.for("react.profiler"),t=Symbol.for("react.provider"),u=Symbol.for("react.context"),v=Symbol.for("react.forward_ref"),w=Symbol.for("react.suspense"),x=Symbol.for("react.memo"),y=Symbol.for("react.lazy"),z=Symbol.iterator;function A(a){if(null===a||"object"!==typeof a)return null;a=z&&a[z]||a["@@iterator"];return"function"===typeof a?a:null}
-var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C=Object.assign,D={};function E(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}E.prototype.isReactComponent={};
-E.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,a,b,"setState")};E.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function F(){}F.prototype=E.prototype;function G(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}var H=G.prototype=new F;
-H.constructor=G;C(H,E.prototype);H.isPureReactComponent=!0;var I=Array.isArray,J=Object.prototype.hasOwnProperty,K={current:null},L={key:!0,ref:!0,__self:!0,__source:!0};
-function M(a,b,e){var d,c={},k=null,h=null;if(null!=b)for(d in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(k=""+b.key),b)J.call(b,d)&&!L.hasOwnProperty(d)&&(c[d]=b[d]);var g=arguments.length-2;if(1===g)c.children=e;else if(1<g){for(var f=Array(g),m=0;m<g;m++)f[m]=arguments[m+2];c.children=f}if(a&&a.defaultProps)for(d in g=a.defaultProps,g)void 0===c[d]&&(c[d]=g[d]);return{$$typeof:l,type:a,key:k,ref:h,props:c,_owner:K.current}}
-function N(a,b){return{$$typeof:l,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}}function O(a){return"object"===typeof a&&null!==a&&a.$$typeof===l}function escape(a){var b={"=":"=0",":":"=2"};return"$"+a.replace(/[=:]/g,function(a){return b[a]})}var P=/\/+/g;function Q(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(""+a.key):b.toString(36)}
-function R(a,b,e,d,c){var k=typeof a;if("undefined"===k||"boolean"===k)a=null;var h=!1;if(null===a)h=!0;else switch(k){case "string":case "number":h=!0;break;case "object":switch(a.$$typeof){case l:case n:h=!0}}if(h)return h=a,c=c(h),a=""===d?"."+Q(h,0):d,I(c)?(e="",null!=a&&(e=a.replace(P,"$&/")+"/"),R(c,b,e,"",function(a){return a})):null!=c&&(O(c)&&(c=N(c,e+(!c.key||h&&h.key===c.key?"":(""+c.key).replace(P,"$&/")+"/")+a)),b.push(c)),1;h=0;d=""===d?".":d+":";if(I(a))for(var g=0;g<a.length;g++){k=
-a[g];var f=d+Q(k,g);h+=R(k,b,e,f,c)}else if(f=A(a),"function"===typeof f)for(a=f.call(a),g=0;!(k=a.next()).done;)k=k.value,f=d+Q(k,g++),h+=R(k,b,e,f,c);else if("object"===k)throw b=String(a),Error("Objects are not valid as a React child (found: "+("[object Object]"===b?"object with keys {"+Object.keys(a).join(", ")+"}":b)+"). If you meant to render a collection of children, use an array instead.");return h}
-function S(a,b,e){if(null==a)return a;var d=[],c=0;R(a,d,"","",function(a){return b.call(e,a,c++)});return d}function T(a){if(-1===a._status){var b=a._result;b=b();b.then(function(b){if(0===a._status||-1===a._status)a._status=1,a._result=b},function(b){if(0===a._status||-1===a._status)a._status=2,a._result=b});-1===a._status&&(a._status=0,a._result=b)}if(1===a._status)return a._result.default;throw a._result;}
-var U={current:null},V={transition:null},W={ReactCurrentDispatcher:U,ReactCurrentBatchConfig:V,ReactCurrentOwner:K};function X(){throw Error("act(...) is not supported in production builds of React.");}
-exports.Children={map:S,forEach:function(a,b,e){S(a,function(){b.apply(this,arguments)},e)},count:function(a){var b=0;S(a,function(){b++});return b},toArray:function(a){return S(a,function(a){return a})||[]},only:function(a){if(!O(a))throw Error("React.Children.only expected to receive a single React element child.");return a}};exports.Component=E;exports.Fragment=p;exports.Profiler=r;exports.PureComponent=G;exports.StrictMode=q;exports.Suspense=w;
-exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=W;exports.act=X;
-exports.cloneElement=function(a,b,e){if(null===a||void 0===a)throw Error("React.cloneElement(...): The argument must be a React element, but you passed "+a+".");var d=C({},a.props),c=a.key,k=a.ref,h=a._owner;if(null!=b){void 0!==b.ref&&(k=b.ref,h=K.current);void 0!==b.key&&(c=""+b.key);if(a.type&&a.type.defaultProps)var g=a.type.defaultProps;for(f in b)J.call(b,f)&&!L.hasOwnProperty(f)&&(d[f]=void 0===b[f]&&void 0!==g?g[f]:b[f])}var f=arguments.length-2;if(1===f)d.children=e;else if(1<f){g=Array(f);
-for(var m=0;m<f;m++)g[m]=arguments[m+2];d.children=g}return{$$typeof:l,type:a.type,key:c,ref:k,props:d,_owner:h}};exports.createContext=function(a){a={$$typeof:u,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null,_defaultValue:null,_globalName:null};a.Provider={$$typeof:t,_context:a};return a.Consumer=a};exports.createElement=M;exports.createFactory=function(a){var b=M.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};
-exports.forwardRef=function(a){return{$$typeof:v,render:a}};exports.isValidElement=O;exports.lazy=function(a){return{$$typeof:y,_payload:{_status:-1,_result:a},_init:T}};exports.memo=function(a,b){return{$$typeof:x,type:a,compare:void 0===b?null:b}};exports.startTransition=function(a){var b=V.transition;V.transition={};try{a()}finally{V.transition=b}};exports.unstable_act=X;exports.useCallback=function(a,b){return U.current.useCallback(a,b)};exports.useContext=function(a){return U.current.useContext(a)};
-exports.useDebugValue=function(){};exports.useDeferredValue=function(a){return U.current.useDeferredValue(a)};exports.useEffect=function(a,b){return U.current.useEffect(a,b)};exports.useId=function(){return U.current.useId()};exports.useImperativeHandle=function(a,b,e){return U.current.useImperativeHandle(a,b,e)};exports.useInsertionEffect=function(a,b){return U.current.useInsertionEffect(a,b)};exports.useLayoutEffect=function(a,b){return U.current.useLayoutEffect(a,b)};
-exports.useMemo=function(a,b){return U.current.useMemo(a,b)};exports.useReducer=function(a,b,e){return U.current.useReducer(a,b,e)};exports.useRef=function(a){return U.current.useRef(a)};exports.useState=function(a){return U.current.useState(a)};exports.useSyncExternalStore=function(a,b,e){return U.current.useSyncExternalStore(a,b,e)};exports.useTransition=function(){return U.current.useTransition()};exports.version="18.3.1";
-
-
-/***/ }),
-
-/***/ 314:
-/***/ ((module) => {
-
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-module.exports = function (cssWithMappingToString) {
-  var list = [];
-
-  // return the list of modules as css string
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = "";
-      var needLayer = typeof item[5] !== "undefined";
-      if (item[4]) {
-        content += "@supports (".concat(item[4], ") {");
-      }
-      if (item[2]) {
-        content += "@media ".concat(item[2], " {");
-      }
-      if (needLayer) {
-        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
-      }
-      content += cssWithMappingToString(item);
-      if (needLayer) {
-        content += "}";
-      }
-      if (item[2]) {
-        content += "}";
-      }
-      if (item[4]) {
-        content += "}";
-      }
-      return content;
-    }).join("");
-  };
-
-  // import a list of modules into the list
-  list.i = function i(modules, media, dedupe, supports, layer) {
-    if (typeof modules === "string") {
-      modules = [[null, modules, undefined]];
-    }
-    var alreadyImportedModules = {};
-    if (dedupe) {
-      for (var k = 0; k < this.length; k++) {
-        var id = this[k][0];
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-    for (var _k = 0; _k < modules.length; _k++) {
-      var item = [].concat(modules[_k]);
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        continue;
-      }
-      if (typeof layer !== "undefined") {
-        if (typeof item[5] === "undefined") {
-          item[5] = layer;
-        } else {
-          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
-          item[5] = layer;
-        }
-      }
-      if (media) {
-        if (!item[2]) {
-          item[2] = media;
-        } else {
-          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
-          item[2] = media;
-        }
-      }
-      if (supports) {
-        if (!item[4]) {
-          item[4] = "".concat(supports);
-        } else {
-          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
-          item[4] = supports;
-        }
-      }
-      list.push(item);
-    }
-  };
-  return list;
-};
-
-/***/ }),
-
-/***/ 338:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var m = __webpack_require__(961);
-if (true) {
-  exports.createRoot = m.createRoot;
-  exports.hydrateRoot = m.hydrateRoot;
-} else // removed by dead control flow
-{ var i; }
-
-
-/***/ }),
-
-/***/ 354:
+/***/ 1354:
 /***/ ((module) => {
 
 
@@ -1504,55 +1090,123 @@ module.exports = function (item) {
 
 /***/ }),
 
-/***/ 417:
-/***/ ((module) => {
+/***/ 1416:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-
-
-module.exports = function (url, options) {
-  if (!options) {
-    options = {};
-  }
-  if (!url) {
-    return url;
-  }
-  url = String(url.__esModule ? url.default : url);
-
-  // If url is already wrapped in quotes, remove them
-  if (/^['"].*['"]$/.test(url)) {
-    url = url.slice(1, -1);
-  }
-  if (options.hash) {
-    url += options.hash;
-  }
-
-  // Should url be wrapped?
-  // See https://drafts.csswg.org/css-values-3/#urls
-  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
-    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
-  }
-  return url;
-};
+module.exports = __webpack_require__.p + "734311c3c530f3ad138e.woff2";
 
 /***/ }),
 
-/***/ 458:
+/***/ 1439:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "492712424f428ca228aa.woff2";
+
+/***/ }),
+
+/***/ 1460:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "b940c7b5ba71580122e1.svg";
+
+/***/ }),
+
+/***/ 1720:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "0184ba4764536183e876.svg";
+
+/***/ }),
+
+/***/ 1809:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4417);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(2129), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(3809), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(5875), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(8651), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* dm-sans-latin-ext-700-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_0___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_1___}) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* dm-sans-latin-700-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_3___}) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}`, "",{"version":3,"sources":["webpack://./node_modules/@fontsource/dm-sans/700.css"],"names":[],"mappings":"AAAA,iCAAiC;AACjC;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAmI;EACnI,iMAAiM;AACnM;;AAEA,6BAA6B;AAC7B;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAA2H;EAC3H,uKAAuK;AACzK","sourcesContent":["/* dm-sans-latin-ext-700-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 700;\n  src: url(./files/dm-sans-latin-ext-700-normal.woff2) format('woff2'), url(./files/dm-sans-latin-ext-700-normal.woff) format('woff');\n  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;\n}\n\n/* dm-sans-latin-700-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 700;\n  src: url(./files/dm-sans-latin-700-normal.woff2) format('woff2'), url(./files/dm-sans-latin-700-normal.woff) format('woff');\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 2129:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "0256f71a1ff29dc6b6d3.woff2";
+
+/***/ }),
+
+/***/ 2212:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "b83cd2f7adef1fc4000c.svg";
+
+/***/ }),
+
+/***/ 2237:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "4c3091c8284c94a1066b.woff2";
+
+/***/ }),
+
+/***/ 2458:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(417);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4417);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
 // Imports
 
 
 
-var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(44), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(9044), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
@@ -1890,8 +1544,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.payment-screen {
   vertical-align: middle;
   color: #ffffffAB;
   opacity: 0.67;
-  width: 95px;
-  height: 12px;
+  width: auto;
+  min-height: 12px;
+  white-space: nowrap;
   margin-top: 21px;
   margin-left: auto;
   margin-right: auto;
@@ -1977,81 +1632,14 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.payment-screen {
     font-size: 48px;
     line-height: 46px;
   }
-}`, "",{"version":3,"sources":["webpack://./src/styles/payment.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;EACjB,YAAY;EACZ,8BAA8B;EAC9B,cAAc;EACd,kCAAkC;AACpC;;AAEA,4BAA4B;AAC5B;EACE;IACE,2BAA2B;IAC3B,UAAU;EACZ;EACA;IACE,wBAAwB;IACxB,UAAU;EACZ;AACF;;AAEA,WAAW;AACX;EACE,aAAa;EACb,8BAA8B;EAC9B,mBAAmB;EACnB,kBAAkB;AACpB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,SAAS;AACX;;AAEA;;EAEE,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,eAAe;EACf,gBAAgB;EAChB,yBAAyB;EACzB,aAAa;EACb,QAAQ;AACV;;AAEA;EACE,+BAA+B;EAC/B,cAAc;AAChB;;AAEA;EACE,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,gCAAgC;EAChC,cAAc;AAChB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,mBAAmB;AACrB;;AAEA,oBAAoB;AACpB;EACE,aAAa;EACb,0BAA0B;EAC1B,YAAY;EACZ,UAAU;EACV,kCAAkC;EAClC,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,QAAQ;EACR,kBAAkB;EAClB,eAAe;EACf,2BAA2B;EAC3B,gBAAgB;EAChB,oBAAoB;AACtB;;AAEA;EACE,eAAe;EACf,WAAW;AACb;;AAEA;EACE,eAAe;EACf,WAAW;AACb;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,+BAA+B;AACjC;;AAEA;EACE,2BAA2B;AAC7B;;AAEA;EACE,2BAA2B;AAC7B;;AAEA,iBAAiB;AACjB;EACE,aAAa;EACb,uBAAuB;EACvB,yBAAyB;EACzB,2BAA2B;EAC3B,aAAa;EACb,gBAAgB;EAChB;AACF;;AAEA;EACE,4EAA4E;EAC5E,mBAAmB;EACnB,2BAA2B;EAC3B,aAAa;EACb,YAAY;EACZ,aAAa;EACb,kBAAkB;EAClB,gBAAgB;EAChB,UAAU;EACV,gBAAgB;EAChB,sBAAsB;EACtB,4BAA4B;EAC5B,yDAA4C;AAC9C;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,MAAM;EACN,OAAO;EACP,QAAQ;EACR,SAAS;EACT,6FAA6F;EAC7F,mBAAmB;EACnB,WAAW;AACb;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,SAAS;EACT,WAAW;EACX,aAAa;AACf;;AAEA;EACE,kBAAkB;EAClB,OAAO;EACP,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,mBAAmB;AACrB;;AAEA;EACE,yCAAyC;EACzC,gBAAgB;EAChB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,YAAY;EACZ,iDAAiD;AACnD;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,kBAAkB;EAClB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,YAAY;EACZ,gBAAgB;EAChB,iDAAiD;EACjD,UAAU;AACZ;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,SAAS;EACT,OAAO;EACP,kBAAkB;EAClB,aAAa;EACb,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,kBAAkB;EAClB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,cAAc;EACd,YAAY;EACZ,YAAY;EACZ,UAAU;EACV,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,cAAc;EACd,gBAAgB;EAChB,mBAAmB;EACnB,iBAAiB;EACjB,iDAAiD;AACnD;;AAEA;EACE,aAAa;EACb,YAAY;EACZ,YAAY;EACZ,qBAAqB;EACrB,2BAA2B;EAC3B,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,QAAQ;EACR,SAAS;EACT,sBAAsB;EACtB,wBAAwB;EACxB,mBAAmB;EACnB,kBAAkB;EAClB,uDAAuD;EACvD,UAAU;AACZ;;AAEA;EACE,wBAAwB;AAC1B;;AAEA;EACE,2BAA2B;AAC7B;;AAEA;EACE,OAAO;EACP,UAAU;EACV,YAAY;EACZ,kBAAkB;EAClB,uBAAuB;EACvB,cAAc;EACd,kCAAkC;EAClC,gBAAgB;EAChB,gBAAgB;EAChB,kBAAkB;EAClB,mBAAmB;EACnB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,eAAe;EACf,2BAA2B;EAC3B,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,kBAAkB;EAClB,UAAU;AACZ;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,iBAAiB;EACjB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,gBAAgB;EAChB,aAAa;EACb,WAAW;EACX,YAAY;EACZ,gBAAgB;EAChB,iBAAiB;EACjB,kBAAkB;EAClB,mDAAmD;AACrD;;AAEA;EACE,mBAAmB;EACnB,cAAc;EACd,YAAY;EACZ,kBAAkB;EAClB,kBAAkB;EAClB,YAAY;EACZ,YAAY;EACZ,QAAQ;EACR,UAAU;EACV,eAAe;EACf,yBAAyB;EACzB,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,kCAAkC;EAClC,gBAAgB;EAChB,kBAAkB;EAClB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;EACnB,mBAAmB;EACnB,cAAc;EACd,gBAAgB;EAChB,sBAAsB;EACtB,kBAAkB;AACpB;;AAEA;EACE,mBAAmB;EACnB,2BAA2B;AAC7B;;AAEA;EACE,YAAY;EACZ,mBAAmB;EACnB,eAAe;AACjB;;AAEA,sBAAsB;AACtB;EACE;IACE,WAAW;EACb;;EAEA;IACE,kBAAkB;EACpB;;EAEA;IACE,0BAA0B;IAC1B,SAAS;EACX;;EAEA;IACE,aAAa;EACf;;EAEA;IACE,kBAAkB;EACpB;;EAEA;IACE,sBAAsB;IACtB,SAAS;EACX;;EAEA;IACE,mBAAmB;EACrB;;EAEA;IACE,kBAAkB;EACpB;;EAEA;IACE,eAAe;IACf,iBAAiB;EACnB;AACF","sourcesContent":[".payment-screen {\r\n  min-height: 100vh;\r\n  width: 800px;\r\n  background: rgba(10, 8, 27, 1);\r\n  color: #ffffff;\r\n  font-family: 'DM Sans', sans-serif;\r\n}\r\n\r\n/* Notification animations */\r\n@keyframes slideInRight {\r\n  from {\r\n    transform: translateX(100%);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateX(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n/* Header */\r\n.payment-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 30px;\r\n}\r\n\r\n.app-name {\r\n  font-size: 24px;\r\n  font-weight: bold;\r\n  color: #ffffff;\r\n}\r\n\r\n.header-buttons {\r\n  display: flex;\r\n  gap: 15px;\r\n}\r\n\r\n.back-btn,\r\n.next-btn {\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: all 0.3s ease;\r\n  display: flex;\r\n  gap: 8px;\r\n}\r\n\r\n.back-btn {\r\n  background: rgba(21, 19, 40, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.back-btn:disabled {\r\n  opacity: 0.6;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.next-btn {\r\n  background: rgba(38, 46, 132, 1);\r\n  color: #ffffff;\r\n}\r\n\r\n.next-btn:hover:not(:disabled) {\r\n  background: #2563eb;\r\n}\r\n\r\n.next-btn:disabled {\r\n  opacity: 0.6;\r\n  cursor: not-allowed;\r\n}\r\n\r\n/* Step Navigation */\r\n.step-navigation {\r\n  display: flex;\r\n  margin: 10px 30px 0px 27px;\r\n  padding: 0px;\r\n  gap: 100px;\r\n  border-bottom: 1px solid #EFEEEC14;\r\n  font-weight: 400;\r\n}\r\n\r\n.step {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 4px;\r\n  position: relative;\r\n  cursor: pointer;\r\n  transition: color 0.3s ease;\r\n  font-weight: 400;\r\n  padding-bottom: 17px;\r\n}\r\n\r\n.step-number {\r\n  font-size: 12px;\r\n  color: #999;\r\n}\r\n\r\n.step-name {\r\n  font-size: 16px;\r\n  color: #999;\r\n}\r\n\r\n.step.active .step-number {\r\n  color: #ffffff;\r\n}\r\n\r\n.step.active .step-name {\r\n  color: #ffffff;\r\n}\r\n\r\n.step:not(.active) .step-name {\r\n  color: rgba(255, 255, 255, 0.7);\r\n}\r\n\r\n.step.completed .step-number {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n.step.completed .step-name {\r\n  color: rgba(43, 110, 47, 1);\r\n}\r\n\r\n/* Main Content */\r\n.payment-screen .main-content {\r\n  display: flex;\r\n  justify-content: center;\r\n  /* align-items: center; */\r\n  height: calc(100vh - 200px);\r\n  padding: 20px;\r\n  text-align: left;\r\n  align-items: flex-start\r\n}\r\n\r\n.payment-card {\r\n  /* background: linear-gradient(29.71deg, #0B091D 18.17%, #2E2B45 127.91%); */\r\n  border-radius: 12px;\r\n  border: 1px solid #EFEEEC14;\r\n  padding: 40px;\r\n  width: 720px;\r\n  height: 220px;\r\n  position: relative;\r\n  overflow: hidden;\r\n  opacity: 1;\r\n  background: left;\r\n  background-size: 800px;\r\n  background-repeat: no-repeat;\r\n  background-image: url(\"../assets/bgpay.png\");\r\n}\r\n\r\n.payment-card::before {\r\n  content: '';\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);\r\n  border-radius: 12px;\r\n  z-index: -1;\r\n}\r\n\r\n.payment-screen .pricing-flex {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: 40px;\r\n  width: 100%;\r\n  height: 200px;\r\n}\r\n\r\n.payment-screen .pricing-left {\r\n  text-align: center;\r\n  flex: 1;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n.main-price {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.price-number {\r\n  font-family: 'Funnel Display', sans-serif;\r\n  font-weight: 700;\r\n  font-style: bold;\r\n  font-size: 66px;\r\n  line-height: 64px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: white;\r\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\r\n}\r\n\r\n.price-period {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-style: medium;\r\n  font-size: 12px;\r\n  line-height: 12px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: white;\r\n  margin-top: 28px;\r\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\r\n  opacity: 1;\r\n}\r\n\r\n.payment-screen .pricing-right {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: 21px;\r\n  flex: 1;\r\n  text-align: center;\r\n  height: 100px;\r\n  position: relative;\r\n  min-width: 180px;\r\n}\r\n\r\n.secondary-price {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-style: medium;\r\n  font-size: 12px;\r\n  line-height: 12px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: #FFFFFF;\r\n  width: 160px;\r\n  height: 12px;\r\n  opacity: 1;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  flex-shrink: 0;\r\n  min-height: 12px;\r\n  white-space: nowrap;\r\n  overflow: visible;\r\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\r\n}\r\n\r\n.payment-toggle {\r\n  display: flex;\r\n  width: 188px;\r\n  height: 40px;\r\n  background: #FEF1F11C;\r\n  border: 1px solid #FFFFFF47;\r\n  border-radius: 8px;\r\n  padding: 4px;\r\n  position: relative;\r\n  margin: 0 auto;\r\n}\r\n\r\n.payment-toggle::before {\r\n  content: '';\r\n  position: absolute;\r\n  top: 4px;\r\n  left: 4px;\r\n  width: calc(50% - 4px);\r\n  height: calc(100% - 8px);\r\n  background: #3CB4E5;\r\n  border-radius: 6px;\r\n  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);\r\n  z-index: 1;\r\n}\r\n\r\n.payment-toggle.monthly::before {\r\n  transform: translateX(0);\r\n}\r\n\r\n.payment-toggle.annually::before {\r\n  transform: translateX(100%);\r\n}\r\n\r\n.toggle-option {\r\n  flex: 1;\r\n  padding: 0;\r\n  border: none;\r\n  border-radius: 6px;\r\n  background: transparent;\r\n  color: #ffffff;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 700;\r\n  font-style: bold;\r\n  font-size: 14.88px;\r\n  line-height: 22.4px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  cursor: pointer;\r\n  transition: color 0.3s ease;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  position: relative;\r\n  z-index: 2;\r\n}\r\n\r\n.toggle-option.active {\r\n  color: #262E84;\r\n}\r\n\r\n.toggle-option:not(.active) {\r\n  color: #EFEEEC;\r\n}\r\n\r\n.toggle-option:not(.active):hover {\r\n  color: #ffffff;\r\n}\r\n\r\n.savings-info {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 300;\r\n  font-style: light;\r\n  font-size: 15px;\r\n  line-height: 12px;\r\n  letter-spacing: 0%;\r\n  text-align: center;\r\n  vertical-align: middle;\r\n  color: #ffffffAB;\r\n  opacity: 0.67;\r\n  width: 95px;\r\n  height: 12px;\r\n  margin-top: 21px;\r\n  margin-left: auto;\r\n  margin-right: auto;\r\n  transition: opacity 0.3s ease, visibility 0.3s ease;\r\n}\r\n\r\n.purchase-btn {\r\n  background: #262E84;\r\n  color: #FFFFFF;\r\n  border: none;\r\n  border-radius: 3px;\r\n  padding: 10px 51px;\r\n  width: 120px;\r\n  height: 28px;\r\n  gap: 8px;\r\n  opacity: 1;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-style: normal;\r\n  font-size: 12px;\r\n  line-height: 100%;\r\n  letter-spacing: -3%;\r\n  white-space: nowrap;\r\n  flex-shrink: 0;\r\n  min-height: 28px;\r\n  box-sizing: border-box;\r\n  position: relative;\r\n}\r\n\r\n.purchase-btn:hover:not(:disabled) {\r\n  background: #2563eb;\r\n  transform: translateY(-1px);\r\n}\r\n\r\n.purchase-btn:disabled {\r\n  opacity: 0.6;\r\n  cursor: not-allowed;\r\n  transform: none;\r\n}\r\n\r\n/* Responsive Design */\r\n@media (max-width: 768px) {\r\n  .payment-screen {\r\n    width: 100%;\r\n  }\r\n\r\n  .payment-header {\r\n    padding: 15px 20px;\r\n  }\r\n\r\n  .step-navigation {\r\n    margin: 10px 20px 0px 20px;\r\n    gap: 50px;\r\n  }\r\n\r\n  .payment-screen .main-content {\r\n    padding: 20px;\r\n  }\r\n\r\n  .payment-card {\r\n    padding: 30px 20px;\r\n  }\r\n\r\n  .payment-screen .pricing-flex {\r\n    flex-direction: column;\r\n    gap: 30px;\r\n  }\r\n\r\n  .payment-screen .pricing-right {\r\n    align-items: center;\r\n  }\r\n\r\n  .secondary-price {\r\n    text-align: center;\r\n  }\r\n\r\n  .price-number {\r\n    font-size: 48px;\r\n    line-height: 46px;\r\n  }\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/styles/payment.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;EACjB,YAAY;EACZ,8BAA8B;EAC9B,cAAc;EACd,kCAAkC;AACpC;;AAEA,4BAA4B;AAC5B;EACE;IACE,2BAA2B;IAC3B,UAAU;EACZ;EACA;IACE,wBAAwB;IACxB,UAAU;EACZ;AACF;;AAEA,WAAW;AACX;EACE,aAAa;EACb,8BAA8B;EAC9B,mBAAmB;EACnB,kBAAkB;AACpB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,SAAS;AACX;;AAEA;;EAEE,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,eAAe;EACf,gBAAgB;EAChB,yBAAyB;EACzB,aAAa;EACb,QAAQ;AACV;;AAEA;EACE,+BAA+B;EAC/B,cAAc;AAChB;;AAEA;EACE,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,gCAAgC;EAChC,cAAc;AAChB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,mBAAmB;AACrB;;AAEA,oBAAoB;AACpB;EACE,aAAa;EACb,0BAA0B;EAC1B,YAAY;EACZ,UAAU;EACV,kCAAkC;EAClC,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,QAAQ;EACR,kBAAkB;EAClB,eAAe;EACf,2BAA2B;EAC3B,gBAAgB;EAChB,oBAAoB;AACtB;;AAEA;EACE,eAAe;EACf,WAAW;AACb;;AAEA;EACE,eAAe;EACf,WAAW;AACb;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,+BAA+B;AACjC;;AAEA;EACE,2BAA2B;AAC7B;;AAEA;EACE,2BAA2B;AAC7B;;AAEA,iBAAiB;AACjB;EACE,aAAa;EACb,uBAAuB;EACvB,yBAAyB;EACzB,2BAA2B;EAC3B,aAAa;EACb,gBAAgB;EAChB;AACF;;AAEA;EACE,4EAA4E;EAC5E,mBAAmB;EACnB,2BAA2B;EAC3B,aAAa;EACb,YAAY;EACZ,aAAa;EACb,kBAAkB;EAClB,gBAAgB;EAChB,UAAU;EACV,gBAAgB;EAChB,sBAAsB;EACtB,4BAA4B;EAC5B,yDAA4C;AAC9C;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,MAAM;EACN,OAAO;EACP,QAAQ;EACR,SAAS;EACT,6FAA6F;EAC7F,mBAAmB;EACnB,WAAW;AACb;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,SAAS;EACT,WAAW;EACX,aAAa;AACf;;AAEA;EACE,kBAAkB;EAClB,OAAO;EACP,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,mBAAmB;AACrB;;AAEA;EACE,yCAAyC;EACzC,gBAAgB;EAChB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,YAAY;EACZ,iDAAiD;AACnD;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,kBAAkB;EAClB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,YAAY;EACZ,gBAAgB;EAChB,iDAAiD;EACjD,UAAU;AACZ;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,SAAS;EACT,OAAO;EACP,kBAAkB;EAClB,aAAa;EACb,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,kBAAkB;EAClB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,cAAc;EACd,YAAY;EACZ,YAAY;EACZ,UAAU;EACV,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,cAAc;EACd,gBAAgB;EAChB,mBAAmB;EACnB,iBAAiB;EACjB,iDAAiD;AACnD;;AAEA;EACE,aAAa;EACb,YAAY;EACZ,YAAY;EACZ,qBAAqB;EACrB,2BAA2B;EAC3B,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,QAAQ;EACR,SAAS;EACT,sBAAsB;EACtB,wBAAwB;EACxB,mBAAmB;EACnB,kBAAkB;EAClB,uDAAuD;EACvD,UAAU;AACZ;;AAEA;EACE,wBAAwB;AAC1B;;AAEA;EACE,2BAA2B;AAC7B;;AAEA;EACE,OAAO;EACP,UAAU;EACV,YAAY;EACZ,kBAAkB;EAClB,uBAAuB;EACvB,cAAc;EACd,kCAAkC;EAClC,gBAAgB;EAChB,gBAAgB;EAChB,kBAAkB;EAClB,mBAAmB;EACnB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,eAAe;EACf,2BAA2B;EAC3B,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,kBAAkB;EAClB,UAAU;AACZ;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,iBAAiB;EACjB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,kBAAkB;EAClB,sBAAsB;EACtB,gBAAgB;EAChB,aAAa;EACb,WAAW;EACX,gBAAgB;EAChB,mBAAmB;EACnB,gBAAgB;EAChB,iBAAiB;EACjB,kBAAkB;EAClB,mDAAmD;AACrD;;AAEA;EACE,mBAAmB;EACnB,cAAc;EACd,YAAY;EACZ,kBAAkB;EAClB,kBAAkB;EAClB,YAAY;EACZ,YAAY;EACZ,QAAQ;EACR,UAAU;EACV,eAAe;EACf,yBAAyB;EACzB,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,kCAAkC;EAClC,gBAAgB;EAChB,kBAAkB;EAClB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;EACnB,mBAAmB;EACnB,cAAc;EACd,gBAAgB;EAChB,sBAAsB;EACtB,kBAAkB;AACpB;;AAEA;EACE,mBAAmB;EACnB,2BAA2B;AAC7B;;AAEA;EACE,YAAY;EACZ,mBAAmB;EACnB,eAAe;AACjB;;AAEA,sBAAsB;AACtB;EACE;IACE,WAAW;EACb;;EAEA;IACE,kBAAkB;EACpB;;EAEA;IACE,0BAA0B;IAC1B,SAAS;EACX;;EAEA;IACE,aAAa;EACf;;EAEA;IACE,kBAAkB;EACpB;;EAEA;IACE,sBAAsB;IACtB,SAAS;EACX;;EAEA;IACE,mBAAmB;EACrB;;EAEA;IACE,kBAAkB;EACpB;;EAEA;IACE,eAAe;IACf,iBAAiB;EACnB;AACF","sourcesContent":[".payment-screen {\n  min-height: 100vh;\n  width: 800px;\n  background: rgba(10, 8, 27, 1);\n  color: #ffffff;\n  font-family: 'DM Sans', sans-serif;\n}\n\n/* Notification animations */\n@keyframes slideInRight {\n  from {\n    transform: translateX(100%);\n    opacity: 0;\n  }\n  to {\n    transform: translateX(0);\n    opacity: 1;\n  }\n}\n\n/* Header */\n.payment-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 18px 30px;\n}\n\n.app-name {\n  font-size: 24px;\n  font-weight: bold;\n  color: #ffffff;\n}\n\n.header-buttons {\n  display: flex;\n  gap: 15px;\n}\n\n.back-btn,\n.next-btn {\n  padding: 10px 20px;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  font-size: 14px;\n  font-weight: 500;\n  transition: all 0.3s ease;\n  display: flex;\n  gap: 8px;\n}\n\n.back-btn {\n  background: rgba(21, 19, 40, 1);\n  color: #ffffff;\n}\n\n.back-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n}\n\n.next-btn {\n  background: rgba(38, 46, 132, 1);\n  color: #ffffff;\n}\n\n.next-btn:hover:not(:disabled) {\n  background: #2563eb;\n}\n\n.next-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n}\n\n/* Step Navigation */\n.step-navigation {\n  display: flex;\n  margin: 10px 30px 0px 27px;\n  padding: 0px;\n  gap: 100px;\n  border-bottom: 1px solid #EFEEEC14;\n  font-weight: 400;\n}\n\n.step {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  cursor: pointer;\n  transition: color 0.3s ease;\n  font-weight: 400;\n  padding-bottom: 17px;\n}\n\n.step-number {\n  font-size: 12px;\n  color: #999;\n}\n\n.step-name {\n  font-size: 16px;\n  color: #999;\n}\n\n.step.active .step-number {\n  color: #ffffff;\n}\n\n.step.active .step-name {\n  color: #ffffff;\n}\n\n.step:not(.active) .step-name {\n  color: rgba(255, 255, 255, 0.7);\n}\n\n.step.completed .step-number {\n  color: rgba(43, 110, 47, 1);\n}\n\n.step.completed .step-name {\n  color: rgba(43, 110, 47, 1);\n}\n\n/* Main Content */\n.payment-screen .main-content {\n  display: flex;\n  justify-content: center;\n  /* align-items: center; */\n  height: calc(100vh - 200px);\n  padding: 20px;\n  text-align: left;\n  align-items: flex-start\n}\n\n.payment-card {\n  /* background: linear-gradient(29.71deg, #0B091D 18.17%, #2E2B45 127.91%); */\n  border-radius: 12px;\n  border: 1px solid #EFEEEC14;\n  padding: 40px;\n  width: 720px;\n  height: 220px;\n  position: relative;\n  overflow: hidden;\n  opacity: 1;\n  background: left;\n  background-size: 800px;\n  background-repeat: no-repeat;\n  background-image: url(\"../assets/bgpay.png\");\n}\n\n.payment-card::before {\n  content: '';\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);\n  border-radius: 12px;\n  z-index: -1;\n}\n\n.payment-screen .pricing-flex {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 40px;\n  width: 100%;\n  height: 200px;\n}\n\n.payment-screen .pricing-left {\n  text-align: center;\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.main-price {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  margin-bottom: 24px;\n}\n\n.price-number {\n  font-family: 'Funnel Display', sans-serif;\n  font-weight: 700;\n  font-style: bold;\n  font-size: 66px;\n  line-height: 64px;\n  letter-spacing: 0%;\n  text-align: center;\n  vertical-align: middle;\n  color: white;\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.price-period {\n  font-family: 'DM Sans', sans-serif;\n  font-weight: 500;\n  font-style: medium;\n  font-size: 12px;\n  line-height: 12px;\n  letter-spacing: 0%;\n  text-align: center;\n  vertical-align: middle;\n  color: white;\n  margin-top: 28px;\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\n  opacity: 1;\n}\n\n.payment-screen .pricing-right {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 21px;\n  flex: 1;\n  text-align: center;\n  height: 100px;\n  position: relative;\n  min-width: 180px;\n}\n\n.secondary-price {\n  font-family: 'DM Sans', sans-serif;\n  font-weight: 500;\n  font-style: medium;\n  font-size: 12px;\n  line-height: 12px;\n  letter-spacing: 0%;\n  text-align: center;\n  vertical-align: middle;\n  color: #FFFFFF;\n  width: 160px;\n  height: 12px;\n  opacity: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  min-height: 12px;\n  white-space: nowrap;\n  overflow: visible;\n  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.payment-toggle {\n  display: flex;\n  width: 188px;\n  height: 40px;\n  background: #FEF1F11C;\n  border: 1px solid #FFFFFF47;\n  border-radius: 8px;\n  padding: 4px;\n  position: relative;\n  margin: 0 auto;\n}\n\n.payment-toggle::before {\n  content: '';\n  position: absolute;\n  top: 4px;\n  left: 4px;\n  width: calc(50% - 4px);\n  height: calc(100% - 8px);\n  background: #3CB4E5;\n  border-radius: 6px;\n  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);\n  z-index: 1;\n}\n\n.payment-toggle.monthly::before {\n  transform: translateX(0);\n}\n\n.payment-toggle.annually::before {\n  transform: translateX(100%);\n}\n\n.toggle-option {\n  flex: 1;\n  padding: 0;\n  border: none;\n  border-radius: 6px;\n  background: transparent;\n  color: #ffffff;\n  font-family: 'DM Sans', sans-serif;\n  font-weight: 700;\n  font-style: bold;\n  font-size: 14.88px;\n  line-height: 22.4px;\n  letter-spacing: 0%;\n  text-align: center;\n  vertical-align: middle;\n  cursor: pointer;\n  transition: color 0.3s ease;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  position: relative;\n  z-index: 2;\n}\n\n.toggle-option.active {\n  color: #262E84;\n}\n\n.toggle-option:not(.active) {\n  color: #EFEEEC;\n}\n\n.toggle-option:not(.active):hover {\n  color: #ffffff;\n}\n\n.savings-info {\n  font-family: 'DM Sans', sans-serif;\n  font-weight: 300;\n  font-style: light;\n  font-size: 15px;\n  line-height: 12px;\n  letter-spacing: 0%;\n  text-align: center;\n  vertical-align: middle;\n  color: #ffffffAB;\n  opacity: 0.67;\n  width: auto;\n  min-height: 12px;\n  white-space: nowrap;\n  margin-top: 21px;\n  margin-left: auto;\n  margin-right: auto;\n  transition: opacity 0.3s ease, visibility 0.3s ease;\n}\n\n.purchase-btn {\n  background: #262E84;\n  color: #FFFFFF;\n  border: none;\n  border-radius: 3px;\n  padding: 10px 51px;\n  width: 120px;\n  height: 28px;\n  gap: 8px;\n  opacity: 1;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-family: 'DM Sans', sans-serif;\n  font-weight: 400;\n  font-style: normal;\n  font-size: 12px;\n  line-height: 100%;\n  letter-spacing: -3%;\n  white-space: nowrap;\n  flex-shrink: 0;\n  min-height: 28px;\n  box-sizing: border-box;\n  position: relative;\n}\n\n.purchase-btn:hover:not(:disabled) {\n  background: #2563eb;\n  transform: translateY(-1px);\n}\n\n.purchase-btn:disabled {\n  opacity: 0.6;\n  cursor: not-allowed;\n  transform: none;\n}\n\n/* Responsive Design */\n@media (max-width: 768px) {\n  .payment-screen {\n    width: 100%;\n  }\n\n  .payment-header {\n    padding: 15px 20px;\n  }\n\n  .step-navigation {\n    margin: 10px 20px 0px 20px;\n    gap: 50px;\n  }\n\n  .payment-screen .main-content {\n    padding: 20px;\n  }\n\n  .payment-card {\n    padding: 30px 20px;\n  }\n\n  .payment-screen .pricing-flex {\n    flex-direction: column;\n    gap: 30px;\n  }\n\n  .payment-screen .pricing-right {\n    align-items: center;\n  }\n\n  .secondary-price {\n    text-align: center;\n  }\n\n  .price-number {\n    font-size: 48px;\n    line-height: 46px;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 460:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "b940c7b5ba71580122e1.svg";
-
-/***/ }),
-
-/***/ 463:
-/***/ ((__unused_webpack_module, exports) => {
-
-/**
- * @license React
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-function f(a,b){var c=a.length;a.push(b);a:for(;0<c;){var d=c-1>>>1,e=a[d];if(0<g(e,b))a[d]=b,a[c]=e,c=d;else break a}}function h(a){return 0===a.length?null:a[0]}function k(a){if(0===a.length)return null;var b=a[0],c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length,w=e>>>1;d<w;){var m=2*(d+1)-1,C=a[m],n=m+1,x=a[n];if(0>g(C,c))n<e&&0>g(x,C)?(a[d]=x,a[n]=c,d=n):(a[d]=C,a[m]=c,d=m);else if(n<e&&0>g(x,c))a[d]=x,a[n]=c,d=n;else break a}}return b}
-function g(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}if("object"===typeof performance&&"function"===typeof performance.now){var l=performance;exports.unstable_now=function(){return l.now()}}else{var p=Date,q=p.now();exports.unstable_now=function(){return p.now()-q}}var r=[],t=[],u=1,v=null,y=3,z=!1,A=!1,B=!1,D="function"===typeof setTimeout?setTimeout:null,E="function"===typeof clearTimeout?clearTimeout:null,F="undefined"!==typeof setImmediate?setImmediate:null;
-"undefined"!==typeof navigator&&void 0!==navigator.scheduling&&void 0!==navigator.scheduling.isInputPending&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function G(a){for(var b=h(t);null!==b;){if(null===b.callback)k(t);else if(b.startTime<=a)k(t),b.sortIndex=b.expirationTime,f(r,b);else break;b=h(t)}}function H(a){B=!1;G(a);if(!A)if(null!==h(r))A=!0,I(J);else{var b=h(t);null!==b&&K(H,b.startTime-a)}}
-function J(a,b){A=!1;B&&(B=!1,E(L),L=-1);z=!0;var c=y;try{G(b);for(v=h(r);null!==v&&(!(v.expirationTime>b)||a&&!M());){var d=v.callback;if("function"===typeof d){v.callback=null;y=v.priorityLevel;var e=d(v.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?v.callback=e:v===h(r)&&k(r);G(b)}else k(r);v=h(r)}if(null!==v)var w=!0;else{var m=h(t);null!==m&&K(H,m.startTime-b);w=!1}return w}finally{v=null,y=c,z=!1}}var N=!1,O=null,L=-1,P=5,Q=-1;
-function M(){return exports.unstable_now()-Q<P?!1:!0}function R(){if(null!==O){var a=exports.unstable_now();Q=a;var b=!0;try{b=O(!0,a)}finally{b?S():(N=!1,O=null)}}else N=!1}var S;if("function"===typeof F)S=function(){F(R)};else if("undefined"!==typeof MessageChannel){var T=new MessageChannel,U=T.port2;T.port1.onmessage=R;S=function(){U.postMessage(null)}}else S=function(){D(R,0)};function I(a){O=a;N||(N=!0,S())}function K(a,b){L=D(function(){a(exports.unstable_now())},b)}
-exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){A||z||(A=!0,I(J))};
-exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):P=0<a?Math.floor(1E3/a):5};exports.unstable_getCurrentPriorityLevel=function(){return y};exports.unstable_getFirstCallbackNode=function(){return h(r)};exports.unstable_next=function(a){switch(y){case 1:case 2:case 3:var b=3;break;default:b=y}var c=y;y=b;try{return a()}finally{y=c}};exports.unstable_pauseExecution=function(){};
-exports.unstable_requestPaint=function(){};exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=y;y=a;try{return b()}finally{y=c}};
-exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:u++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,f(t,a),null===h(r)&&a===h(t)&&(B?(E(L),L=-1):B=!0,K(H,c-d))):(a.sortIndex=e,f(r,a),A||z||(A=!0,I(J)));return a};
-exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
-
-
-/***/ }),
-
-/***/ 465:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "dd5c22c9e5fca44ff45d.svg";
-
-/***/ }),
-
-/***/ 505:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "47ddea3bc86368fac454.svg";
-
-/***/ }),
-
-/***/ 532:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "51512d8a92f8bce807f1.svg";
-
-/***/ }),
-
-/***/ 540:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-
-
-if (true) {
-  module.exports = __webpack_require__(287);
-} else // removed by dead control flow
-{}
-
-
-/***/ }),
-
-/***/ 551:
+/***/ 2551:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 /**
@@ -2066,7 +1654,7 @@ if (true) {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(540),ca=__webpack_require__(982);function p(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var da=new Set,ea={};function fa(a,b){ha(a,b);ha(a+"Capture",b)}
+var aa=__webpack_require__(6540),ca=__webpack_require__(9982);function p(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var da=new Set,ea={};function fa(a,b){ha(a,b);ha(a+"Capture",b)}
 function ha(a,b){ea[a]=b;for(a=0;a<b.length;a++)da.add(b[a])}
 var ia=!("undefined"===typeof window||"undefined"===typeof window.document||"undefined"===typeof window.document.createElement),ja=Object.prototype.hasOwnProperty,ka=/^[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\-.0-9\u00B7\u0300-\u036F\u203F-\u2040]*$/,la=
 {},ma={};function oa(a){if(ja.call(ma,a))return!0;if(ja.call(la,a))return!1;if(ka.test(a))return ma[a]=!0;la[a]=!0;return!1}function pa(a,b,c,d){if(null!==c&&0===c.type)return!1;switch(typeof b){case "function":case "symbol":return!0;case "boolean":if(d)return!1;if(null!==c)return!c.acceptsBooleans;a=a.toLowerCase().slice(0,5);return"data-"!==a&&"aria-"!==a;default:return!1}}
@@ -2380,7 +1968,580 @@ exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!ol(c))throw Er
 
 /***/ }),
 
-/***/ 659:
+/***/ 2741:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "b74b76db66ee85d2ac89.svg";
+
+/***/ }),
+
+/***/ 3083:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "315988554fb8c9a6ef02.svg";
+
+/***/ }),
+
+/***/ 3465:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "dd5c22c9e5fca44ff45d.svg";
+
+/***/ }),
+
+/***/ 3809:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "534537dfd39d9e6da13c.woff";
+
+/***/ }),
+
+/***/ 4134:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "e6960da1d895f76d2033.svg";
+
+/***/ }),
+
+/***/ 4417:
+/***/ ((module) => {
+
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    options = {};
+  }
+  if (!url) {
+    return url;
+  }
+  url = String(url.__esModule ? url.default : url);
+
+  // If url is already wrapped in quotes, remove them
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  }
+  if (options.hash) {
+    url += options.hash;
+  }
+
+  // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+  return url;
+};
+
+/***/ }),
+
+/***/ 4505:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "47ddea3bc86368fac454.svg";
+
+/***/ }),
+
+/***/ 4609:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "95be878c7de25e1db4c0.woff2";
+
+/***/ }),
+
+/***/ 4686:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "eed54baa89357289df02.woff";
+
+/***/ }),
+
+/***/ 4848:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+if (true) {
+  module.exports = __webpack_require__(1020);
+} else // removed by dead control flow
+{}
+
+
+/***/ }),
+
+/***/ 5056:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+/* istanbul ignore next  */
+function setAttributesWithoutAttributes(styleElement) {
+  var nonce =  true ? __webpack_require__.nc : 0;
+  if (nonce) {
+    styleElement.setAttribute("nonce", nonce);
+  }
+}
+module.exports = setAttributesWithoutAttributes;
+
+/***/ }),
+
+/***/ 5072:
+/***/ ((module) => {
+
+
+
+var stylesInDOM = [];
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+  return result;
+}
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var indexByIdentifier = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
+    };
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
+    } else {
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
+        identifier: identifier,
+        updater: updater,
+        references: 1
+      });
+    }
+    identifiers.push(identifier);
+  }
+  return identifiers;
+}
+function addElementStyle(obj, options) {
+  var api = options.domAPI(options);
+  api.update(obj);
+  var updater = function updater(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
+        return;
+      }
+      api.update(obj = newObj);
+    } else {
+      api.remove();
+    }
+  };
+  return updater;
+}
+module.exports = function (list, options) {
+  options = options || {};
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDOM[index].references--;
+    }
+    var newLastIdentifiers = modulesToDom(newList, options);
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+      var _index = getIndexByIdentifier(_identifier);
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
+        stylesInDOM.splice(_index, 1);
+      }
+    }
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ 5287:
+/***/ ((__unused_webpack_module, exports) => {
+
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var l=Symbol.for("react.element"),n=Symbol.for("react.portal"),p=Symbol.for("react.fragment"),q=Symbol.for("react.strict_mode"),r=Symbol.for("react.profiler"),t=Symbol.for("react.provider"),u=Symbol.for("react.context"),v=Symbol.for("react.forward_ref"),w=Symbol.for("react.suspense"),x=Symbol.for("react.memo"),y=Symbol.for("react.lazy"),z=Symbol.iterator;function A(a){if(null===a||"object"!==typeof a)return null;a=z&&a[z]||a["@@iterator"];return"function"===typeof a?a:null}
+var B={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},C=Object.assign,D={};function E(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}E.prototype.isReactComponent={};
+E.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,a,b,"setState")};E.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function F(){}F.prototype=E.prototype;function G(a,b,e){this.props=a;this.context=b;this.refs=D;this.updater=e||B}var H=G.prototype=new F;
+H.constructor=G;C(H,E.prototype);H.isPureReactComponent=!0;var I=Array.isArray,J=Object.prototype.hasOwnProperty,K={current:null},L={key:!0,ref:!0,__self:!0,__source:!0};
+function M(a,b,e){var d,c={},k=null,h=null;if(null!=b)for(d in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(k=""+b.key),b)J.call(b,d)&&!L.hasOwnProperty(d)&&(c[d]=b[d]);var g=arguments.length-2;if(1===g)c.children=e;else if(1<g){for(var f=Array(g),m=0;m<g;m++)f[m]=arguments[m+2];c.children=f}if(a&&a.defaultProps)for(d in g=a.defaultProps,g)void 0===c[d]&&(c[d]=g[d]);return{$$typeof:l,type:a,key:k,ref:h,props:c,_owner:K.current}}
+function N(a,b){return{$$typeof:l,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}}function O(a){return"object"===typeof a&&null!==a&&a.$$typeof===l}function escape(a){var b={"=":"=0",":":"=2"};return"$"+a.replace(/[=:]/g,function(a){return b[a]})}var P=/\/+/g;function Q(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(""+a.key):b.toString(36)}
+function R(a,b,e,d,c){var k=typeof a;if("undefined"===k||"boolean"===k)a=null;var h=!1;if(null===a)h=!0;else switch(k){case "string":case "number":h=!0;break;case "object":switch(a.$$typeof){case l:case n:h=!0}}if(h)return h=a,c=c(h),a=""===d?"."+Q(h,0):d,I(c)?(e="",null!=a&&(e=a.replace(P,"$&/")+"/"),R(c,b,e,"",function(a){return a})):null!=c&&(O(c)&&(c=N(c,e+(!c.key||h&&h.key===c.key?"":(""+c.key).replace(P,"$&/")+"/")+a)),b.push(c)),1;h=0;d=""===d?".":d+":";if(I(a))for(var g=0;g<a.length;g++){k=
+a[g];var f=d+Q(k,g);h+=R(k,b,e,f,c)}else if(f=A(a),"function"===typeof f)for(a=f.call(a),g=0;!(k=a.next()).done;)k=k.value,f=d+Q(k,g++),h+=R(k,b,e,f,c);else if("object"===k)throw b=String(a),Error("Objects are not valid as a React child (found: "+("[object Object]"===b?"object with keys {"+Object.keys(a).join(", ")+"}":b)+"). If you meant to render a collection of children, use an array instead.");return h}
+function S(a,b,e){if(null==a)return a;var d=[],c=0;R(a,d,"","",function(a){return b.call(e,a,c++)});return d}function T(a){if(-1===a._status){var b=a._result;b=b();b.then(function(b){if(0===a._status||-1===a._status)a._status=1,a._result=b},function(b){if(0===a._status||-1===a._status)a._status=2,a._result=b});-1===a._status&&(a._status=0,a._result=b)}if(1===a._status)return a._result.default;throw a._result;}
+var U={current:null},V={transition:null},W={ReactCurrentDispatcher:U,ReactCurrentBatchConfig:V,ReactCurrentOwner:K};function X(){throw Error("act(...) is not supported in production builds of React.");}
+exports.Children={map:S,forEach:function(a,b,e){S(a,function(){b.apply(this,arguments)},e)},count:function(a){var b=0;S(a,function(){b++});return b},toArray:function(a){return S(a,function(a){return a})||[]},only:function(a){if(!O(a))throw Error("React.Children.only expected to receive a single React element child.");return a}};exports.Component=E;exports.Fragment=p;exports.Profiler=r;exports.PureComponent=G;exports.StrictMode=q;exports.Suspense=w;
+exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=W;exports.act=X;
+exports.cloneElement=function(a,b,e){if(null===a||void 0===a)throw Error("React.cloneElement(...): The argument must be a React element, but you passed "+a+".");var d=C({},a.props),c=a.key,k=a.ref,h=a._owner;if(null!=b){void 0!==b.ref&&(k=b.ref,h=K.current);void 0!==b.key&&(c=""+b.key);if(a.type&&a.type.defaultProps)var g=a.type.defaultProps;for(f in b)J.call(b,f)&&!L.hasOwnProperty(f)&&(d[f]=void 0===b[f]&&void 0!==g?g[f]:b[f])}var f=arguments.length-2;if(1===f)d.children=e;else if(1<f){g=Array(f);
+for(var m=0;m<f;m++)g[m]=arguments[m+2];d.children=g}return{$$typeof:l,type:a.type,key:c,ref:k,props:d,_owner:h}};exports.createContext=function(a){a={$$typeof:u,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null,_defaultValue:null,_globalName:null};a.Provider={$$typeof:t,_context:a};return a.Consumer=a};exports.createElement=M;exports.createFactory=function(a){var b=M.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};
+exports.forwardRef=function(a){return{$$typeof:v,render:a}};exports.isValidElement=O;exports.lazy=function(a){return{$$typeof:y,_payload:{_status:-1,_result:a},_init:T}};exports.memo=function(a,b){return{$$typeof:x,type:a,compare:void 0===b?null:b}};exports.startTransition=function(a){var b=V.transition;V.transition={};try{a()}finally{V.transition=b}};exports.unstable_act=X;exports.useCallback=function(a,b){return U.current.useCallback(a,b)};exports.useContext=function(a){return U.current.useContext(a)};
+exports.useDebugValue=function(){};exports.useDeferredValue=function(a){return U.current.useDeferredValue(a)};exports.useEffect=function(a,b){return U.current.useEffect(a,b)};exports.useId=function(){return U.current.useId()};exports.useImperativeHandle=function(a,b,e){return U.current.useImperativeHandle(a,b,e)};exports.useInsertionEffect=function(a,b){return U.current.useInsertionEffect(a,b)};exports.useLayoutEffect=function(a,b){return U.current.useLayoutEffect(a,b)};
+exports.useMemo=function(a,b){return U.current.useMemo(a,b)};exports.useReducer=function(a,b,e){return U.current.useReducer(a,b,e)};exports.useRef=function(a){return U.current.useRef(a)};exports.useState=function(a){return U.current.useState(a)};exports.useSyncExternalStore=function(a,b,e){return U.current.useSyncExternalStore(a,b,e)};exports.useTransition=function(){return U.current.useTransition()};exports.version="18.3.1";
+
+
+/***/ }),
+
+/***/ 5338:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var m = __webpack_require__(961);
+if (true) {
+  exports.createRoot = m.createRoot;
+  exports.hydrateRoot = m.hydrateRoot;
+} else // removed by dead control flow
+{ var i; }
+
+
+/***/ }),
+
+/***/ 5404:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4417);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(9718), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(1308), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(1416), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(4686), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* dm-sans-latin-ext-600-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_0___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_1___}) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* dm-sans-latin-600-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_3___}) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}`, "",{"version":3,"sources":["webpack://./node_modules/@fontsource/dm-sans/600.css"],"names":[],"mappings":"AAAA,iCAAiC;AACjC;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAmI;EACnI,iMAAiM;AACnM;;AAEA,6BAA6B;AAC7B;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAA2H;EAC3H,uKAAuK;AACzK","sourcesContent":["/* dm-sans-latin-ext-600-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 600;\n  src: url(./files/dm-sans-latin-ext-600-normal.woff2) format('woff2'), url(./files/dm-sans-latin-ext-600-normal.woff) format('woff');\n  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;\n}\n\n/* dm-sans-latin-600-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 600;\n  src: url(./files/dm-sans-latin-600-normal.woff2) format('woff2'), url(./files/dm-sans-latin-600-normal.woff) format('woff');\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 5461:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4417);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(2237), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(8453), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(1439), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(7807), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* dm-sans-latin-ext-300-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_0___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_1___}) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* dm-sans-latin-300-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_3___}) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}`, "",{"version":3,"sources":["webpack://./node_modules/@fontsource/dm-sans/300.css"],"names":[],"mappings":"AAAA,iCAAiC;AACjC;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAmI;EACnI,iMAAiM;AACnM;;AAEA,6BAA6B;AAC7B;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAA2H;EAC3H,uKAAuK;AACzK","sourcesContent":["/* dm-sans-latin-ext-300-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 300;\n  src: url(./files/dm-sans-latin-ext-300-normal.woff2) format('woff2'), url(./files/dm-sans-latin-ext-300-normal.woff) format('woff');\n  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;\n}\n\n/* dm-sans-latin-300-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 300;\n  src: url(./files/dm-sans-latin-300-normal.woff2) format('woff2'), url(./files/dm-sans-latin-300-normal.woff) format('woff');\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 5550:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "a670f2d2237866916178.woff";
+
+/***/ }),
+
+/***/ 5820:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "2c8c7be0365aecdaf260.woff";
+
+/***/ }),
+
+/***/ 5875:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "7747fc5114170ad2f6c7.woff2";
+
+/***/ }),
+
+/***/ 6314:
+/***/ ((module) => {
+
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+module.exports = function (cssWithMappingToString) {
+  var list = [];
+
+  // return the list of modules as css string
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = "";
+      var needLayer = typeof item[5] !== "undefined";
+      if (item[4]) {
+        content += "@supports (".concat(item[4], ") {");
+      }
+      if (item[2]) {
+        content += "@media ".concat(item[2], " {");
+      }
+      if (needLayer) {
+        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
+      }
+      content += cssWithMappingToString(item);
+      if (needLayer) {
+        content += "}";
+      }
+      if (item[2]) {
+        content += "}";
+      }
+      if (item[4]) {
+        content += "}";
+      }
+      return content;
+    }).join("");
+  };
+
+  // import a list of modules into the list
+  list.i = function i(modules, media, dedupe, supports, layer) {
+    if (typeof modules === "string") {
+      modules = [[null, modules, undefined]];
+    }
+    var alreadyImportedModules = {};
+    if (dedupe) {
+      for (var k = 0; k < this.length; k++) {
+        var id = this[k][0];
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+    for (var _k = 0; _k < modules.length; _k++) {
+      var item = [].concat(modules[_k]);
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        continue;
+      }
+      if (typeof layer !== "undefined") {
+        if (typeof item[5] === "undefined") {
+          item[5] = layer;
+        } else {
+          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
+          item[5] = layer;
+        }
+      }
+      if (media) {
+        if (!item[2]) {
+          item[2] = media;
+        } else {
+          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
+          item[2] = media;
+        }
+      }
+      if (supports) {
+        if (!item[4]) {
+          item[4] = "".concat(supports);
+        } else {
+          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
+          item[4] = supports;
+        }
+      }
+      list.push(item);
+    }
+  };
+  return list;
+};
+
+/***/ }),
+
+/***/ 6532:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "51512d8a92f8bce807f1.svg";
+
+/***/ }),
+
+/***/ 6540:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+if (true) {
+  module.exports = __webpack_require__(5287);
+} else // removed by dead control flow
+{}
+
+
+/***/ }),
+
+/***/ 7031:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
+/* harmony import */ var _css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4417);
+/* harmony import */ var _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(7475), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(8059), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(4609), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(9937), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* dm-sans-latin-ext-500-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_0___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_1___}) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* dm-sans-latin-500-normal */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_3___}) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}`, "",{"version":3,"sources":["webpack://./node_modules/@fontsource/dm-sans/500.css"],"names":[],"mappings":"AAAA,iCAAiC;AACjC;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAmI;EACnI,iMAAiM;AACnM;;AAEA,6BAA6B;AAC7B;EACE,sBAAsB;EACtB,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAA2H;EAC3H,uKAAuK;AACzK","sourcesContent":["/* dm-sans-latin-ext-500-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 500;\n  src: url(./files/dm-sans-latin-ext-500-normal.woff2) format('woff2'), url(./files/dm-sans-latin-ext-500-normal.woff) format('woff');\n  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;\n}\n\n/* dm-sans-latin-500-normal */\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 500;\n  src: url(./files/dm-sans-latin-500-normal.woff2) format('woff2'), url(./files/dm-sans-latin-500-normal.woff) format('woff');\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 7463:
+/***/ ((__unused_webpack_module, exports) => {
+
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+function f(a,b){var c=a.length;a.push(b);a:for(;0<c;){var d=c-1>>>1,e=a[d];if(0<g(e,b))a[d]=b,a[c]=e,c=d;else break a}}function h(a){return 0===a.length?null:a[0]}function k(a){if(0===a.length)return null;var b=a[0],c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length,w=e>>>1;d<w;){var m=2*(d+1)-1,C=a[m],n=m+1,x=a[n];if(0>g(C,c))n<e&&0>g(x,C)?(a[d]=x,a[n]=c,d=n):(a[d]=C,a[m]=c,d=m);else if(n<e&&0>g(x,c))a[d]=x,a[n]=c,d=n;else break a}}return b}
+function g(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}if("object"===typeof performance&&"function"===typeof performance.now){var l=performance;exports.unstable_now=function(){return l.now()}}else{var p=Date,q=p.now();exports.unstable_now=function(){return p.now()-q}}var r=[],t=[],u=1,v=null,y=3,z=!1,A=!1,B=!1,D="function"===typeof setTimeout?setTimeout:null,E="function"===typeof clearTimeout?clearTimeout:null,F="undefined"!==typeof setImmediate?setImmediate:null;
+"undefined"!==typeof navigator&&void 0!==navigator.scheduling&&void 0!==navigator.scheduling.isInputPending&&navigator.scheduling.isInputPending.bind(navigator.scheduling);function G(a){for(var b=h(t);null!==b;){if(null===b.callback)k(t);else if(b.startTime<=a)k(t),b.sortIndex=b.expirationTime,f(r,b);else break;b=h(t)}}function H(a){B=!1;G(a);if(!A)if(null!==h(r))A=!0,I(J);else{var b=h(t);null!==b&&K(H,b.startTime-a)}}
+function J(a,b){A=!1;B&&(B=!1,E(L),L=-1);z=!0;var c=y;try{G(b);for(v=h(r);null!==v&&(!(v.expirationTime>b)||a&&!M());){var d=v.callback;if("function"===typeof d){v.callback=null;y=v.priorityLevel;var e=d(v.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?v.callback=e:v===h(r)&&k(r);G(b)}else k(r);v=h(r)}if(null!==v)var w=!0;else{var m=h(t);null!==m&&K(H,m.startTime-b);w=!1}return w}finally{v=null,y=c,z=!1}}var N=!1,O=null,L=-1,P=5,Q=-1;
+function M(){return exports.unstable_now()-Q<P?!1:!0}function R(){if(null!==O){var a=exports.unstable_now();Q=a;var b=!0;try{b=O(!0,a)}finally{b?S():(N=!1,O=null)}}else N=!1}var S;if("function"===typeof F)S=function(){F(R)};else if("undefined"!==typeof MessageChannel){var T=new MessageChannel,U=T.port2;T.port1.onmessage=R;S=function(){U.postMessage(null)}}else S=function(){D(R,0)};function I(a){O=a;N||(N=!0,S())}function K(a,b){L=D(function(){a(exports.unstable_now())},b)}
+exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){A||z||(A=!0,I(J))};
+exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):P=0<a?Math.floor(1E3/a):5};exports.unstable_getCurrentPriorityLevel=function(){return y};exports.unstable_getFirstCallbackNode=function(){return h(r)};exports.unstable_next=function(a){switch(y){case 1:case 2:case 3:var b=3;break;default:b=y}var c=y;y=b;try{return a()}finally{y=c}};exports.unstable_pauseExecution=function(){};
+exports.unstable_requestPaint=function(){};exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=y;y=a;try{return b()}finally{y=c}};
+exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:u++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,f(t,a),null===h(r)&&a===h(t)&&(B?(E(L),L=-1):B=!0,K(H,c-d))):(a.sortIndex=e,f(r,a),A||z||(A=!0,I(J)));return a};
+exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
+
+
+/***/ }),
+
+/***/ 7475:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "50b040ac644772dcb734.woff2";
+
+/***/ }),
+
+/***/ 7659:
 /***/ ((module) => {
 
 
@@ -2420,29 +2581,373 @@ module.exports = insertBySelector;
 
 /***/ }),
 
-/***/ 720:
+/***/ 7807:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "0184ba4764536183e876.svg";
+module.exports = __webpack_require__.p + "fbd4aab74294673a3a7d.woff";
 
 /***/ }),
 
-/***/ 741:
+/***/ 7818:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "b74b76db66ee85d2ac89.svg";
+module.exports = __webpack_require__.p + "7dfba5aefefd533747dc.webp";
 
 /***/ }),
 
-/***/ 793:
+/***/ 7825:
+/***/ ((module) => {
+
+
+
+/* istanbul ignore next  */
+function apply(styleElement, options, obj) {
+  var css = "";
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
+  }
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+  var needLayer = typeof obj.layer !== "undefined";
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+  css += obj.css;
+  if (needLayer) {
+    css += "}";
+  }
+  if (obj.media) {
+    css += "}";
+  }
+  if (obj.supports) {
+    css += "}";
+  }
+  var sourceMap = obj.sourceMap;
+  if (sourceMap && typeof btoa !== "undefined") {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  }
+
+  // For old IE
+  /* istanbul ignore if  */
+  options.styleTagTransform(css, styleElement, options.options);
+}
+function removeStyleElement(styleElement) {
+  // istanbul ignore if
+  if (styleElement.parentNode === null) {
+    return false;
+  }
+  styleElement.parentNode.removeChild(styleElement);
+}
+
+/* istanbul ignore next  */
+function domAPI(options) {
+  if (typeof document === "undefined") {
+    return {
+      update: function update() {},
+      remove: function remove() {}
+    };
+  }
+  var styleElement = options.insertStyleElement(options);
+  return {
+    update: function update(obj) {
+      apply(styleElement, options, obj);
+    },
+    remove: function remove() {
+      removeStyleElement(styleElement);
+    }
+  };
+}
+module.exports = domAPI;
+
+/***/ }),
+
+/***/ 8059:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "51a1ede8bf3ecdcfa592.woff";
+
+/***/ }),
+
+/***/ 8453:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "7eead918a6c1b71622f9.woff";
+
+/***/ }),
+
+/***/ 8651:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "4572dd29358123752875.woff";
+
+/***/ }),
+
+/***/ 9044:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "cc718b52279699cff4c2.png";
+
+/***/ }),
+
+/***/ 9252:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(314);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* Welcome Screen Styles */
+.welcome-screen {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background-color: #0A081B;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.welcome-main-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+/* Background line images */
+.welcome-bg-lines-left {
+  position: absolute;
+  left: 0;
+  bottom: 25%;
+  width: 40%;
+  max-width: 300px;
+  height: auto;
+  z-index: 1;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.welcome-bg-lines-right {
+  position: absolute;
+  right: 0;
+  bottom: 25%;
+  width: 40%;
+  max-width: 300px;
+  height: auto;
+  z-index: 1;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+
+  .welcome-bg-lines-left,
+  .welcome-bg-lines-right {
+    width: 30%;
+    max-width: 200px;
+  }
+
+  .welcome-title {
+    font-size: 2rem;
+  }
+
+  .welcome-instructions {
+    font-size: 1rem;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .welcome-bg-lines-left,
+  .welcome-bg-lines-right {
+    width: 35%;
+    max-width: 150px;
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+  }
+
+  .welcome-instructions {
+    font-size: 0.9rem;
+    padding: 0 15px;
+  }
+
+  .welcome-header {
+    padding: 20px 15px;
+  }
+}
+
+/* Header */
+.welcome-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 10;
+  position: relative;
+  padding-right: 15px;
+}
+
+.welcome-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.welcome-logo img {
+  width: 24px;
+  height: 24px;
+}
+
+.welcome-help {
+  position: absolute;
+  top: 22px;
+  left: 685px;
+  width: 91px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  opacity: 1;
+}
+
+.welcome-help:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.welcome-help img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}
+
+/* Main content */
+.welcome-content {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 9;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 40px;
+}
+
+.welcome-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-style: 9pt Regular;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: -3%;
+
+}
+
+.welcome-title-highlight {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  color: #59AAFB;
+
+}
+
+.welcome-instructions {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 500px;
+  margin: 20px 0 30px 0;
+  opacity: 1;
+}
+
+.welcome-authorize-btn {
+  position: absolute;
+  background: #262E84;
+  width: 200px;
+  height: 28px;
+  top: 111%;
+  left: 35%;
+  opacity: 1;
+  gap: 8px;
+  padding: 10px 51px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-authorize-btn.scan-project {
+  width: 200px;
+  left: 35%;
+}
+
+.welcome-authorize-btn:hover {
+  background: #7A6BFF;
+  transform: translateY(-2px);
+}`, "",{"version":3,"sources":["webpack://./src/styles/welcomescreen.css"],"names":[],"mappings":"AAAA,0BAA0B;AAC1B;EACE,kBAAkB;EAClB,YAAY;EACZ,aAAa;EACb,yBAAyB;EACzB,gBAAgB;EAChB,aAAa;EACb,sBAAsB;EACtB,kCAAkC;EAClC,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,kBAAkB;EAClB,WAAW;EACX,YAAY;EACZ,aAAa;EACb,sBAAsB;EACtB,UAAU;AACZ;;AAEA,2BAA2B;AAC3B;EACE,kBAAkB;EAClB,OAAO;EACP,WAAW;EACX,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,UAAU;EACV,oBAAoB;AACtB;;AAEA;EACE,kBAAkB;EAClB,QAAQ;EACR,WAAW;EACX,UAAU;EACV,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,UAAU;EACV,oBAAoB;AACtB;;AAEA,sBAAsB;AACtB;;EAEE;;IAEE,UAAU;IACV,gBAAgB;EAClB;;EAEA;IACE,eAAe;EACjB;;EAEA;IACE,eAAe;IACf,eAAe;EACjB;AACF;;AAEA;;EAEE;;IAEE,UAAU;IACV,gBAAgB;EAClB;;EAEA;IACE,iBAAiB;EACnB;;EAEA;IACE,iBAAiB;IACjB,eAAe;EACjB;;EAEA;IACE,kBAAkB;EACpB;AACF;;AAEA,WAAW;AACX;EACE,aAAa;EACb,yBAAyB;EACzB,mBAAmB;EACnB,WAAW;EACX,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,QAAQ;EACR,YAAY;EACZ,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;EACX,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,QAAQ;EACR,+BAA+B;EAC/B,eAAe;EACf,eAAe;EACf,2BAA2B;EAC3B,UAAU;AACZ;;AAEA;EACE,+BAA+B;AACjC;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,YAAY;AACd;;AAEA,iBAAiB;AACjB;EACE,kBAAkB;EAClB,QAAQ;EACR,SAAS;EACT,gCAAgC;EAChC,aAAa;EACb,sBAAsB;EACtB,uBAAuB;EACvB,mBAAmB;EACnB,kBAAkB;EAClB,UAAU;EACV,WAAW;EACX,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,uBAAuB;EACvB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;;AAErB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,sBAAsB;EACtB,cAAc;;AAEhB;;AAEA;EACE,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,kBAAkB;EAClB,+BAA+B;EAC/B,gBAAgB;EAChB,qBAAqB;EACrB,UAAU;AACZ;;AAEA;EACE,kBAAkB;EAClB,mBAAmB;EACnB,YAAY;EACZ,YAAY;EACZ,SAAS;EACT,SAAS;EACT,UAAU;EACV,QAAQ;EACR,kBAAkB;EAClB,YAAY;EACZ,kBAAkB;EAClB,YAAY;EACZ,kCAAkC;EAClC,gBAAgB;EAChB,eAAe;EACf,eAAe;EACf,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,mBAAmB;EACnB,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,SAAS;AACX;;AAEA;EACE,mBAAmB;EACnB,2BAA2B;AAC7B","sourcesContent":["/* Welcome Screen Styles */\r\n.welcome-screen {\r\n  position: relative;\r\n  width: 800px;\r\n  height: 600px;\r\n  background-color: #0A081B;\r\n  overflow: hidden;\r\n  display: flex;\r\n  flex-direction: column;\r\n  font-family: 'DM Sans', sans-serif;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n.welcome-main-content {\r\n  position: relative;\r\n  width: 100%;\r\n  height: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  z-index: 2;\r\n}\r\n\r\n/* Background line images */\r\n.welcome-bg-lines-left {\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: 25%;\r\n  width: 40%;\r\n  max-width: 300px;\r\n  height: auto;\r\n  z-index: 1;\r\n  opacity: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n.welcome-bg-lines-right {\r\n  position: absolute;\r\n  right: 0;\r\n  bottom: 25%;\r\n  width: 40%;\r\n  max-width: 300px;\r\n  height: auto;\r\n  z-index: 1;\r\n  opacity: 1;\r\n  pointer-events: none;\r\n}\r\n\r\n/* Responsive styles */\r\n@media (max-width: 768px) {\r\n\r\n  .welcome-bg-lines-left,\r\n  .welcome-bg-lines-right {\r\n    width: 30%;\r\n    max-width: 200px;\r\n  }\r\n\r\n  .welcome-title {\r\n    font-size: 2rem;\r\n  }\r\n\r\n  .welcome-instructions {\r\n    font-size: 1rem;\r\n    padding: 0 20px;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n\r\n  .welcome-bg-lines-left,\r\n  .welcome-bg-lines-right {\r\n    width: 35%;\r\n    max-width: 150px;\r\n  }\r\n\r\n  .welcome-title {\r\n    font-size: 1.5rem;\r\n  }\r\n\r\n  .welcome-instructions {\r\n    font-size: 0.9rem;\r\n    padding: 0 15px;\r\n  }\r\n\r\n  .welcome-header {\r\n    padding: 20px 15px;\r\n  }\r\n}\r\n\r\n/* Header */\r\n.welcome-header {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  z-index: 10;\r\n  position: relative;\r\n  padding-right: 15px;\r\n}\r\n\r\n.welcome-logo {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 8px;\r\n  color: white;\r\n  font-weight: 500;\r\n  font-size: 18px;\r\n}\r\n\r\n.welcome-logo img {\r\n  width: 24px;\r\n  height: 24px;\r\n}\r\n\r\n.welcome-help {\r\n  position: absolute;\r\n  top: 22px;\r\n  left: 685px;\r\n  width: 91px;\r\n  height: 18px;\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 2px;\r\n  color: rgba(255, 255, 255, 0.6);\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  transition: color 0.2s ease;\r\n  opacity: 1;\r\n}\r\n\r\n.welcome-help:hover {\r\n  color: rgba(255, 255, 255, 0.8);\r\n}\r\n\r\n.welcome-help img {\r\n  width: 16px;\r\n  height: 16px;\r\n  opacity: 0.6;\r\n}\r\n\r\n/* Main content */\r\n.welcome-content {\r\n  position: absolute;\r\n  top: 35%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  text-align: center;\r\n  z-index: 9;\r\n  width: 100%;\r\n  max-width: 600px;\r\n  padding: 0 40px;\r\n}\r\n\r\n.welcome-title {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-style: 9pt Regular;\r\n  font-size: 20px;\r\n  line-height: 100%;\r\n  letter-spacing: -3%;\r\n\r\n}\r\n\r\n.welcome-title-highlight {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-size: 20px;\r\n  line-height: 1.2;\r\n  letter-spacing: -0.6px;\r\n  color: #59AAFB;\r\n\r\n}\r\n\r\n.welcome-instructions {\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 400;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  text-align: center;\r\n  color: rgba(255, 255, 255, 0.8);\r\n  max-width: 500px;\r\n  margin: 20px 0 30px 0;\r\n  opacity: 1;\r\n}\r\n\r\n.welcome-authorize-btn {\r\n  position: absolute;\r\n  background: #262E84;\r\n  width: 200px;\r\n  height: 28px;\r\n  top: 111%;\r\n  left: 35%;\r\n  opacity: 1;\r\n  gap: 8px;\r\n  padding: 10px 51px;\r\n  border: none;\r\n  border-radius: 6px;\r\n  color: white;\r\n  font-family: 'DM Sans', sans-serif;\r\n  font-weight: 500;\r\n  font-size: 14px;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n  text-align: center;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.welcome-authorize-btn.scan-project {\r\n  width: 200px;\r\n  left: 35%;\r\n}\r\n\r\n.welcome-authorize-btn:hover {\r\n  background: #7A6BFF;\r\n  transform: translateY(-2px);\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 9718:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "cb3fc28955a7656c13e2.woff2";
+
+/***/ }),
+
+/***/ 9793:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1354);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6314);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -3461,143 +3966,34 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.publish-screen {
 
 /***/ }),
 
-/***/ 818:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "7dfba5aefefd533747dc.webp";
-
-/***/ }),
-
-/***/ 825:
-/***/ ((module) => {
-
-
-
-/* istanbul ignore next  */
-function apply(styleElement, options, obj) {
-  var css = "";
-  if (obj.supports) {
-    css += "@supports (".concat(obj.supports, ") {");
-  }
-  if (obj.media) {
-    css += "@media ".concat(obj.media, " {");
-  }
-  var needLayer = typeof obj.layer !== "undefined";
-  if (needLayer) {
-    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
-  }
-  css += obj.css;
-  if (needLayer) {
-    css += "}";
-  }
-  if (obj.media) {
-    css += "}";
-  }
-  if (obj.supports) {
-    css += "}";
-  }
-  var sourceMap = obj.sourceMap;
-  if (sourceMap && typeof btoa !== "undefined") {
-    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  }
-
-  // For old IE
-  /* istanbul ignore if  */
-  options.styleTagTransform(css, styleElement, options.options);
-}
-function removeStyleElement(styleElement) {
-  // istanbul ignore if
-  if (styleElement.parentNode === null) {
-    return false;
-  }
-  styleElement.parentNode.removeChild(styleElement);
-}
-
-/* istanbul ignore next  */
-function domAPI(options) {
-  if (typeof document === "undefined") {
-    return {
-      update: function update() {},
-      remove: function remove() {}
-    };
-  }
-  var styleElement = options.insertStyleElement(options);
-  return {
-    update: function update(obj) {
-      apply(styleElement, options, obj);
-    },
-    remove: function remove() {
-      removeStyleElement(styleElement);
-    }
-  };
-}
-module.exports = domAPI;
-
-/***/ }),
-
-/***/ 848:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-
-
-if (true) {
-  module.exports = __webpack_require__(20);
-} else // removed by dead control flow
-{}
-
-
-/***/ }),
-
-/***/ 871:
+/***/ 9871:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__.p + "7b8b6654090bf3b66e38.svg";
 
 /***/ }),
 
-/***/ 961:
+/***/ 9937:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (false) // removed by dead control flow
-{}
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (true) {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(551);
-} else // removed by dead control flow
-{}
-
+module.exports = __webpack_require__.p + "ed11bdb46a5adfbb6416.woff";
 
 /***/ }),
 
-/***/ 982:
+/***/ 9974:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "97def203da337e26d827.woff2";
+
+/***/ }),
+
+/***/ 9982:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
 
 if (true) {
-  module.exports = __webpack_require__(463);
+  module.exports = __webpack_require__(7463);
 } else // removed by dead control flow
 {}
 
@@ -3733,9 +4129,172 @@ if (true) {
 var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(540);
+var react = __webpack_require__(6540);
 // EXTERNAL MODULE: ./node_modules/react-dom/client.js
-var client = __webpack_require__(338);
+var client = __webpack_require__(5338);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+var injectStylesIntoStyleTag = __webpack_require__(5072);
+var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleDomAPI.js
+var styleDomAPI = __webpack_require__(7825);
+var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(7659);
+var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(5056);
+var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertStyleElement.js
+var insertStyleElement = __webpack_require__(540);
+var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
+// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(1113);
+var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/@fontsource/dm-sans/300.css
+var _300 = __webpack_require__(5461);
+;// ./node_modules/@fontsource/dm-sans/300.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (styleTagTransform_default());
+options.setAttributes = (setAttributesWithoutAttributes_default());
+options.insert = insertBySelector_default().bind(null, "head");
+options.domAPI = (styleDomAPI_default());
+options.insertStyleElement = (insertStyleElement_default());
+
+var update = injectStylesIntoStyleTag_default()(_300/* default */.A, options);
+
+
+
+
+       /* harmony default export */ const dm_sans_300 = (_300/* default */.A && _300/* default */.A.locals ? _300/* default */.A.locals : undefined);
+
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/@fontsource/dm-sans/400.css
+var _400 = __webpack_require__(938);
+;// ./node_modules/@fontsource/dm-sans/400.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var _400_options = {};
+
+_400_options.styleTagTransform = (styleTagTransform_default());
+_400_options.setAttributes = (setAttributesWithoutAttributes_default());
+_400_options.insert = insertBySelector_default().bind(null, "head");
+_400_options.domAPI = (styleDomAPI_default());
+_400_options.insertStyleElement = (insertStyleElement_default());
+
+var _400_update = injectStylesIntoStyleTag_default()(_400/* default */.A, _400_options);
+
+
+
+
+       /* harmony default export */ const dm_sans_400 = (_400/* default */.A && _400/* default */.A.locals ? _400/* default */.A.locals : undefined);
+
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/@fontsource/dm-sans/500.css
+var _500 = __webpack_require__(7031);
+;// ./node_modules/@fontsource/dm-sans/500.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var _500_options = {};
+
+_500_options.styleTagTransform = (styleTagTransform_default());
+_500_options.setAttributes = (setAttributesWithoutAttributes_default());
+_500_options.insert = insertBySelector_default().bind(null, "head");
+_500_options.domAPI = (styleDomAPI_default());
+_500_options.insertStyleElement = (insertStyleElement_default());
+
+var _500_update = injectStylesIntoStyleTag_default()(_500/* default */.A, _500_options);
+
+
+
+
+       /* harmony default export */ const dm_sans_500 = (_500/* default */.A && _500/* default */.A.locals ? _500/* default */.A.locals : undefined);
+
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/@fontsource/dm-sans/600.css
+var _600 = __webpack_require__(5404);
+;// ./node_modules/@fontsource/dm-sans/600.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var _600_options = {};
+
+_600_options.styleTagTransform = (styleTagTransform_default());
+_600_options.setAttributes = (setAttributesWithoutAttributes_default());
+_600_options.insert = insertBySelector_default().bind(null, "head");
+_600_options.domAPI = (styleDomAPI_default());
+_600_options.insertStyleElement = (insertStyleElement_default());
+
+var _600_update = injectStylesIntoStyleTag_default()(_600/* default */.A, _600_options);
+
+
+
+
+       /* harmony default export */ const dm_sans_600 = (_600/* default */.A && _600/* default */.A.locals ? _600/* default */.A.locals : undefined);
+
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/@fontsource/dm-sans/700.css
+var _700 = __webpack_require__(1809);
+;// ./node_modules/@fontsource/dm-sans/700.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var _700_options = {};
+
+_700_options.styleTagTransform = (styleTagTransform_default());
+_700_options.setAttributes = (setAttributesWithoutAttributes_default());
+_700_options.insert = insertBySelector_default().bind(null, "head");
+_700_options.domAPI = (styleDomAPI_default());
+_700_options.insertStyleElement = (insertStyleElement_default());
+
+var _700_update = injectStylesIntoStyleTag_default()(_700/* default */.A, _700_options);
+
+
+
+
+       /* harmony default export */ const dm_sans_700 = (_700/* default */.A && _700/* default */.A.locals ? _700/* default */.A.locals : undefined);
+
 ;// ./node_modules/@tanstack/query-core/build/modern/subscribable.js
 // src/subscribable.ts
 var Subscribable = class {
@@ -4031,7 +4590,7 @@ function ensureQueryFn(options, fetchOptions) {
   }
   return options.queryFn;
 }
-function shouldThrowError(throwOnError, params) {
+function utils_shouldThrowError(throwOnError, params) {
   if (typeof throwOnError === "function") {
     return throwOnError(...params);
   }
@@ -6000,7 +6559,7 @@ function scopeFor(mutation) {
 
 
 
-var MutationObserver = class extends Subscribable {
+var mutationObserver_MutationObserver = class extends Subscribable {
   #client;
   #currentResult = void 0;
   #currentMutation;
@@ -6753,7 +7312,7 @@ var unsetMarker = Symbol("unsetMarker");
 ;// ./node_modules/@tanstack/react-query/build/modern/types.js
 //# sourceMappingURL=types.js.map
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(848);
+var jsx_runtime = __webpack_require__(4848);
 ;// ./node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
 "use client";
 
@@ -6852,7 +7411,7 @@ var errorBoundaryUtils_getHasError = ({
   query,
   suspense
 }) => {
-  return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (suspense && result.data === void 0 || shouldThrowError(throwOnError, [result.error, query]));
+  return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && (suspense && result.data === void 0 || utils_shouldThrowError(throwOnError, [result.error, query]));
 };
 
 //# sourceMappingURL=errorBoundaryUtils.js.map
@@ -7314,27 +7873,27 @@ function useMutationState(options = {}, queryClient) {
 
 
 function useMutation(options, queryClient) {
-  const client = QueryClientProvider_useQueryClient(queryClient);
-  const [observer] = react.useState(
+  const client = useQueryClient(queryClient);
+  const [observer] = React.useState(
     () => new MutationObserver(
       client,
       options
     )
   );
-  react.useEffect(() => {
+  React.useEffect(() => {
     observer.setOptions(options);
   }, [observer, options]);
-  const result = react.useSyncExternalStore(
-    react.useCallback(
-      (onStoreChange) => observer.subscribe(notifyManager_notifyManager.batchCalls(onStoreChange)),
+  const result = React.useSyncExternalStore(
+    React.useCallback(
+      (onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)),
       [observer]
     ),
     () => observer.getCurrentResult(),
     () => observer.getCurrentResult()
   );
-  const mutate = react.useCallback(
+  const mutate = React.useCallback(
     (variables, mutateOptions) => {
-      observer.mutate(variables, mutateOptions).catch(utils_noop);
+      observer.mutate(variables, mutateOptions).catch(noop);
     },
     [observer]
   );
@@ -7391,26 +7950,8 @@ function useInfiniteQuery(options, queryClient) {
 
 
 //# sourceMappingURL=index.js.map
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
-var injectStylesIntoStyleTag = __webpack_require__(72);
-var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleDomAPI.js
-var styleDomAPI = __webpack_require__(825);
-var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertBySelector.js
-var insertBySelector = __webpack_require__(659);
-var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
-var setAttributesWithoutAttributes = __webpack_require__(56);
-var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertStyleElement.js
-var insertStyleElement = __webpack_require__(159);
-var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
-var styleTagTransform = __webpack_require__(113);
-var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/styles/welcomescreen.css
-var welcomescreen = __webpack_require__(252);
+var welcomescreen = __webpack_require__(9252);
 ;// ./src/styles/welcomescreen.css
 
       
@@ -7423,15 +7964,15 @@ var welcomescreen = __webpack_require__(252);
       
       
 
-var options = {};
+var welcomescreen_options = {};
 
-options.styleTagTransform = (styleTagTransform_default());
-options.setAttributes = (setAttributesWithoutAttributes_default());
-options.insert = insertBySelector_default().bind(null, "head");
-options.domAPI = (styleDomAPI_default());
-options.insertStyleElement = (insertStyleElement_default());
+welcomescreen_options.styleTagTransform = (styleTagTransform_default());
+welcomescreen_options.setAttributes = (setAttributesWithoutAttributes_default());
+welcomescreen_options.insert = insertBySelector_default().bind(null, "head");
+welcomescreen_options.domAPI = (styleDomAPI_default());
+welcomescreen_options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(welcomescreen/* default */.A, options);
+var welcomescreen_update = injectStylesIntoStyleTag_default()(welcomescreen/* default */.A, welcomescreen_options);
 
 
 
@@ -7441,8 +7982,8 @@ var update = injectStylesIntoStyleTag_default()(welcomescreen/* default */.A, op
 ;// ./src/components/WelcomeScreen.tsx
 
 
-const leftLines = new URL(/* asset import */ __webpack_require__(134), __webpack_require__.b).href;
-const rightLines = new URL(/* asset import */ __webpack_require__(505), __webpack_require__.b).href;
+const leftLines = new URL(/* asset import */ __webpack_require__(4134), __webpack_require__.b).href;
+const rightLines = new URL(/* asset import */ __webpack_require__(4505), __webpack_require__.b).href;
 const WelcomeScreen = ({ onAuthorize, onNeedHelp, authenticated, handleWelcomeScreen }) => {
     const [isCheckingAuth, setIsCheckingAuth] = (0,react.useState)(true);
     const [hasUserData, setHasUserData] = (0,react.useState)(false);
@@ -7528,7 +8069,7 @@ const WelcomeScreen = ({ onAuthorize, onNeedHelp, authenticated, handleWelcomeSc
 /* harmony default export */ const components_WelcomeScreen = (WelcomeScreen);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/styles/customization.css
-var customization = __webpack_require__(59);
+var customization = __webpack_require__(1059);
 ;// ./src/styles/customization.css
 
       
@@ -9353,9 +9894,9 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
 </svg>`);
-const mobile = new URL(/* asset import */ __webpack_require__(212), __webpack_require__.b).href;
-const monitor = new URL(/* asset import */ __webpack_require__(532), __webpack_require__.b).href;
-const icon1 = new URL(/* asset import */ __webpack_require__(818), __webpack_require__.b).href;
+const mobile = new URL(/* asset import */ __webpack_require__(2212), __webpack_require__.b).href;
+const monitor = new URL(/* asset import */ __webpack_require__(6532), __webpack_require__.b).href;
+const icon1 = new URL(/* asset import */ __webpack_require__(7818), __webpack_require__.b).href;
 const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoadingExistingData = false }) => {
     const [isDesktopView, setIsDesktopView] = (0,react.useState)(true);
     const [openDropdown, setOpenDropdown] = (0,react.useState)(null);
@@ -9767,8 +10308,49 @@ function jwtDecode(token, options) {
 }
 
 ;// ./src/util/constants.ts
-// Shared constants to avoid duplication
+/**
+ * AccessBit API origin
+ *
+ * Trust model (Designer Extension):
+ * - All OAuth, session tokens, publish, script register/apply, and settings traffic
+ *   goes to this host only. The extension does not send bearer tokens to any other origin.
+ * - Network allowlisting: CSP `connect-src` in `public/index.html` must include this origin.
+ * - Runtime: use `workerUrl()` / `fetchWorker()` / `makeAuthenticatedRequest()` (after URL assert)
+ *   so tokens cannot be exfiltrated via a mistaken absolute URL.
+ *
+ * Server-side validation, least-privilege OAuth scopes, and TLS are enforced on the worker;
+
+ */
 const WORKER_BASE_URL = "https://app.accessbit.io";
+
+;// ./src/util/workerRequest.ts
+
+const WORKER_ORIGIN = new URL(WORKER_BASE_URL).origin;
+function workerUrl(pathAndQuery) {
+    if (!pathAndQuery.startsWith("/")) {
+        throw new Error("workerUrl: path must start with /");
+    }
+    const base = WORKER_BASE_URL.replace(/\/+$/, "");
+    return `${base}${pathAndQuery}`;
+}
+/** Reject any URL whose origin is not exactly WORKER_BASE_URL. */
+function assertTrustedWorkerUrl(url) {
+    let parsed;
+    try {
+        parsed = new URL(url);
+    }
+    catch (_a) {
+        throw new Error("Invalid request URL");
+    }
+    if (parsed.origin !== WORKER_ORIGIN) {
+        throw new Error("Refusing request: URL is not the configured AccessBit backend");
+    }
+}
+/** `fetch` only after origin check — use for unauthenticated worker calls. */
+function fetchWorker(url, init) {
+    assertTrustedWorkerUrl(url);
+    return fetch(url, init);
+}
 
 ;// ./src/hooks/userAuth.ts
 var userAuth_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -9783,10 +10365,43 @@ var userAuth_awaiter = (undefined && undefined.__awaiter) || function (thisArg, 
 
 
 
+
 let inMemorySessionToken = null;
 let inMemorySessionTokenExpiry = null;
 let sessionTokenRefreshPromise = null;
 const SESSION_TOKEN_BUFFER_MS = 60 * 1000; // refresh 1 minute before expiry
+const readStoredUserInfo = () => {
+    const raw = localStorage.getItem('accessbit-userinfo');
+    if (!raw || raw === 'null' || raw === 'undefined')
+        return null;
+    try {
+        const parsed = JSON.parse(raw);
+        return (parsed === null || parsed === void 0 ? void 0 : parsed.siteId) ? parsed : null;
+    }
+    catch (_a) {
+        return null;
+    }
+};
+const dispatchAuthSuccess = (detail) => {
+    window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail }));
+};
+const resolveCustomDomainFromSiteInfo = (siteInfo) => {
+    try {
+        if ((siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.domains) && Array.isArray(siteInfo.domains)) {
+            const productionDomain = siteInfo.domains.find((d) => (d === null || d === void 0 ? void 0 : d.stage) === 'production' || (d === null || d === void 0 ? void 0 : d.default) === true || (d === null || d === void 0 ? void 0 : d.primary) === true);
+            if (productionDomain === null || productionDomain === void 0 ? void 0 : productionDomain.url) {
+                return `https://${productionDomain.url}`;
+            }
+        }
+    }
+    catch (_a) {
+        // ignore
+    }
+    if (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName) {
+        return `https://${siteInfo.shortName}.webflow.io`;
+    }
+    return undefined;
+};
 const setInMemorySessionToken = (token) => {
     if (!token) {
         inMemorySessionToken = null;
@@ -9817,6 +10432,15 @@ const hasUsableSessionToken = () => {
         return true;
     return inMemorySessionTokenExpiry - Date.now() > SESSION_TOKEN_BUFFER_MS;
 };
+const requestAuthToken = (siteId) => userAuth_awaiter(void 0, void 0, void 0, function* () {
+    const response = yield fetchWorker(workerUrl("/api/auth/token"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ siteId }),
+    });
+    const data = yield response.json().catch(() => ({}));
+    return { response, data };
+});
 const refreshSessionToken = () => userAuth_awaiter(void 0, void 0, void 0, function* () {
     if (sessionTokenRefreshPromise) {
         return sessionTokenRefreshPromise;
@@ -9826,12 +10450,7 @@ const refreshSessionToken = () => userAuth_awaiter(void 0, void 0, void 0, funct
         if (!(siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId)) {
             throw new Error('No site information available');
         }
-        const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ siteId: siteInfo.siteId }),
-        });
-        const data = yield response.json().catch(() => ({}));
+        const { response, data } = yield requestAuthToken(siteInfo.siteId);
         if (!response.ok) {
             throw new Error(`Token exchange failed: ${data.error || 'Unknown error'}`);
         }
@@ -9860,12 +10479,11 @@ const getValidSessionToken = () => userAuth_awaiter(void 0, void 0, void 0, func
  */
 function useAuth() {
     const queryClient = QueryClientProvider_useQueryClient();
-    const isExchangingToken = { current: false };
     // Query for managing auth state and token validation
     const { data: authState, isLoading: isAuthLoading } = useQuery({
         queryKey: ["auth"],
         queryFn: () => userAuth_awaiter(this, void 0, void 0, function* () {
-            const storedUser = localStorage.getItem("accessbit-userinfo") || localStorage.getItem("accessbit-userinfo");
+            const storedUser = localStorage.getItem("accessbit-userinfo");
             const wasExplicitlyLoggedOut = localStorage.getItem("explicitly_logged_out");
             // Return initial state if no stored user or logged out
             if (!storedUser || wasExplicitlyLoggedOut) {
@@ -9894,160 +10512,6 @@ function useAuth() {
         refetchOnReconnect: false,
         gcTime: 1000 * 60 * 60, // Cache for 1 hour
     });
-    // Mutation for requesting session token from backend
-    const tokenMutation = useMutation({
-        mutationFn: () => userAuth_awaiter(this, void 0, void 0, function* () {
-            // Get site info from Webflow (Designer Extension API - allowed)
-            const siteInfo = yield webflow.getSiteInfo();
-            const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ siteId: siteInfo.siteId }),
-            });
-            if (!response.ok) {
-                const errorData = yield response.json();
-                throw new Error(`Failed to exchange token: ${JSON.stringify(errorData)}`);
-            }
-            const data = yield response.json();
-            if (!data.sessionToken) {
-                throw new Error("No session token received");
-            }
-            // Return both auth data and site info
-            return Object.assign(Object.assign({}, data), { siteInfo });
-        }),
-        onSuccess: (data) => {
-            var _a, _b;
-            try {
-                // Decode the new token
-                const decodedToken = jwtDecode(data.sessionToken);
-                // Worker now sends real email, so use it directly
-                const realEmail = data.email || '';
-                const siteInfoWithEmail = data.siteInfo ? Object.assign(Object.assign({}, data.siteInfo), { email: realEmail }) : undefined;
-                // Get custom domain from Webflow site data
-                let customDomain;
-                // Get production domain from domains array (custom domain)
-                if (((_a = data.siteInfo) === null || _a === void 0 ? void 0 : _a.domains) && Array.isArray(data.siteInfo.domains)) {
-                    const productionDomain = data.siteInfo.domains.find((d) => d.stage === 'production' || d.default === true);
-                    if (productionDomain === null || productionDomain === void 0 ? void 0 : productionDomain.url) {
-                        customDomain = `https://${productionDomain.url}`;
-                    }
-                }
-                // Fallback to staging domain if no production domain found
-                if (!customDomain && ((_b = data.siteInfo) === null || _b === void 0 ? void 0 : _b.shortName)) {
-                    customDomain = `https://${data.siteInfo.shortName}.webflow.io`;
-                }
-                setInMemorySessionToken(data.sessionToken);
-                // SECURITY FIX: Remove email (PII) from localStorage per Webflow Marketplace requirements
-                // Email should be retrieved from session token or API when needed, not stored in localStorage
-                const userData = {
-                    // sessionToken is kept only in memory; do not persist
-                    firstName: data.firstName,
-                    // email removed - PII should not be stored in localStorage
-                    siteId: data.siteId, // Store the siteId from server response
-                    customDomain: customDomain,
-                    // siteInfo stored without email
-                    siteInfo: data.siteInfo ? Object.assign({}, data.siteInfo) : undefined, // Remove email from siteInfo
-                };
-                localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
-                localStorage.removeItem("explicitly_logged_out");
-                // No separate siteInfo key anymore
-                // Directly update the query data instead of invalidating
-                queryClient.setQueryData(["auth"], {
-                    user: {
-                        firstName: decodedToken.user.firstName,
-                        email: decodedToken.user.email,
-                        siteId: data.siteId, // Include siteId in user data
-                    },
-                });
-            }
-            catch (error) {
-            }
-        },
-    });
-    // Function to request session token from backend
-    // SECURITY: idToken is NOT sent to worker - it's only used for client-side identity verification
-    // Worker uses stored access_token from OAuth to verify identity and make Webflow API calls
-    const exchangeAndVerifyIdToken = () => userAuth_awaiter(this, void 0, void 0, function* () {
-        try {
-            // Get fresh ID token for client-side identity verification (short-lived, ~15 minutes)
-            // This is used locally to verify the user is authenticated, but NOT sent to worker
-            const idToken = yield webflow.getIdToken();
-            if (!idToken) {
-                throw new Error('Failed to get ID token from Webflow');
-            }
-            // Get site info from Webflow (Designer Extension API - allowed)
-            const siteInfo = yield webflow.getSiteInfo();
-            if (!siteInfo || !siteInfo.siteId) {
-                throw new Error('Failed to get site info from Webflow');
-            }
-            // SECURITY: Do NOT send idToken to worker
-            // Worker will use stored access_token from OAuth to verify identity and make API calls
-            const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    siteId: siteInfo.siteId
-                    // idToken is NOT sent - worker uses stored access_token from OAuth
-                }),
-            });
-            const data = yield response.json();
-            if (!response.ok) {
-                throw new Error(`Token exchange failed: ${data.error || 'Unknown error'}`);
-            }
-            if (!data.sessionToken) {
-                throw new Error('No session token received from server');
-            }
-            setInMemorySessionToken(data.sessionToken);
-            // Worker now sends real email, so use it directly
-            const realEmail = data.email || '';
-            const siteInfoWithEmail = siteInfo ? Object.assign(Object.assign({}, siteInfo), { email: realEmail }) : undefined;
-            // Get custom domain from Webflow site data
-            let customDomain;
-            // Prefer production domain from siteInfo.domains if present
-            try {
-                const siAny = siteInfo;
-                if ((siAny === null || siAny === void 0 ? void 0 : siAny.domains) && Array.isArray(siAny.domains)) {
-                    const productionDomain = siAny.domains.find((d) => (d === null || d === void 0 ? void 0 : d.stage) === 'production' || (d === null || d === void 0 ? void 0 : d.default) === true || (d === null || d === void 0 ? void 0 : d.primary) === true);
-                    if (productionDomain === null || productionDomain === void 0 ? void 0 : productionDomain.url) {
-                        customDomain = `https://${productionDomain.url}`;
-                    }
-                }
-            }
-            catch (_a) { }
-            // Fallback to staging domain via shortName
-            if (!customDomain && (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName)) {
-                customDomain = `https://${siteInfo.shortName}.webflow.io`;
-            }
-            // SECURITY FIX: Remove email (PII) from localStorage per Webflow Marketplace requirements
-            const userData = {
-                // sessionToken is kept only in memory; do not persist
-                firstName: data.firstName,
-                // email removed - PII should not be stored in localStorage
-                siteId: siteInfo.siteId, // Store the siteId
-                customDomain: customDomain,
-                // siteInfo stored without email
-                siteInfo: siteInfo ? Object.assign({}, siteInfo) : undefined, // Remove email from siteInfo
-            };
-            localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
-            localStorage.removeItem("explicitly_logged_out");
-            // Update React Query cache
-            queryClient.setQueryData(["auth"], {
-                user: {
-                    firstName: data.firstName,
-                    email: data.email,
-                    siteId: siteInfo.siteId
-                },
-            });
-            return data;
-        }
-        catch (error) {
-            localStorage.removeItem("accessbit-userinfo");
-            localStorage.removeItem("accessbit-userinfo");
-            throw error;
-        }
-    });
     // Function to handle user logout
     const logout = () => {
         // Set logout flag and clear storage
@@ -10062,80 +10526,53 @@ function useAuth() {
     const openAuthScreen = () => userAuth_awaiter(this, void 0, void 0, function* () {
         // Get current site info first
         const siteInfo = yield webflow.getSiteInfo();
-        const authUrl = `${WORKER_BASE_URL}/api/auth/authorize?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`;
+        const authUrl = `${workerUrl("/api/auth/authorize")}?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`;
         // Try to open popup
         let authWindow = null;
         try {
-            authWindow = window.open(authUrl, "accessbit_auth", "width=600,height=700,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=yes");
+            authWindow = window.open(authUrl, "accessbit_auth", "width=600,height=700,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=yes,noopener,noreferrer");
         }
         catch (e) {
-            return;
+            // Continue with server-state polling path even if popup handle is unavailable.
         }
-        if (!authWindow || authWindow.closed) {
-            return;
-        }
-        // Check if popup navigates away from about:blank
-        let checkCount = 0;
-        const checkNavigation = setInterval(() => {
-            checkCount++;
-            try {
-                if (authWindow && !authWindow.closed) {
-                    const popupUrl = authWindow.location.href;
-                    if (popupUrl && popupUrl !== 'about:blank' && !popupUrl.startsWith('about:')) {
-                        clearInterval(checkNavigation);
-                    }
-                    else if (checkCount > 10) {
-                        clearInterval(checkNavigation);
-                        if (authWindow && !authWindow.closed) {
-                            authWindow.close();
+        const completeFromServerState = () => userAuth_awaiter(this, void 0, void 0, function* () {
+            // 1) Use existing localStorage if complete
+            // 2) Otherwise retry backend token exchange briefly
+            const stored = readStoredUserInfo();
+            if (stored) {
+                dispatchAuthSuccess(stored);
+                return;
+            }
+            const maxAttempts = 15;
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                try {
+                    const ok = yield attemptSilentAuth();
+                    if (ok) {
+                        const latest = readStoredUserInfo();
+                        if (latest) {
+                            dispatchAuthSuccess(latest);
+                            break;
                         }
                     }
                 }
-                else {
-                    clearInterval(checkNavigation);
+                catch (_a) {
+                    // Continue retrying until maxAttempts
+                }
+                if (attempt < maxAttempts) {
+                    yield new Promise((resolve) => setTimeout(resolve, 800));
                 }
             }
-            catch (e) {
-                // Cross-origin error is expected once popup navigates to different domain
-                if (checkCount > 5) {
-                    clearInterval(checkNavigation);
-                }
-            }
-        }, 1000);
-        // Monitor popup window for completion and URL changes
+        });
+        // Monitor popup window for completion when a handle is available
         const checkPopupClosed = setInterval(() => userAuth_awaiter(this, void 0, void 0, function* () {
-            if (authWindow.closed) {
+            if (authWindow && authWindow.closed) {
                 clearInterval(checkPopupClosed);
-                // Check for auth success when popup closes
-                const url = new URL(window.location.href);
-                const authSuccess = url.searchParams.get('auth_success');
-                if (authSuccess === 'true') {
-                    yield processAuthSuccess(url);
-                }
-                else {
-                    // Check localStorage as fallback when popup closes
-                    const stored = localStorage.getItem('accessbit-userinfo');
-                    if (stored) {
-                        try {
-                            const parsed = JSON.parse(stored);
-                            if (parsed.siteId) {
-                                // Trigger success
-                                window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail: parsed }));
-                            }
-                            else {
-                            }
-                        }
-                        catch (e) {
-                        }
-                    }
-                    else {
-                    }
-                }
+                yield completeFromServerState();
             }
             else {
                 // Popup still open - try to check its URL (may fail due to cross-origin)
                 try {
-                    if (authWindow.location) {
+                    if (authWindow && authWindow.location) {
                         const popupUrl = authWindow.location.href;
                         if (popupUrl.includes('auth-success')) {
                         }
@@ -10158,46 +10595,59 @@ function useAuth() {
                 }
             }
         }), 1000);
+        let noHandleCompletionPoll = null;
+        let noHandleFocusListener = null;
+        if (!authWindow) {
+            noHandleFocusListener = () => {
+                if (noHandleCompletionPoll)
+                    return;
+                let attempts = 0;
+                const maxAttempts = 20; // ~20s
+                noHandleCompletionPoll = setInterval(() => userAuth_awaiter(this, void 0, void 0, function* () {
+                    attempts++;
+                    yield completeFromServerState();
+                    const hasSiteId = !!readStoredUserInfo();
+                    if (hasSiteId || attempts >= maxAttempts) {
+                        if (noHandleCompletionPoll) {
+                            clearInterval(noHandleCompletionPoll);
+                            noHandleCompletionPoll = null;
+                        }
+                        if (noHandleFocusListener) {
+                            window.removeEventListener('focus', noHandleFocusListener);
+                            noHandleFocusListener = null;
+                        }
+                    }
+                }), 1000);
+            };
+            window.addEventListener('focus', noHandleFocusListener);
+        }
         // Listen for postMessage from popup
-        const handleMessage = (event) => {
-            // Log ALL messages for debugging (will help identify if message is received)
-            // SECURITY: Do NOT log sessionToken - it's sensitive
+        const handleMessage = (event) => userAuth_awaiter(this, void 0, void 0, function* () {
             const safeData = event.data ? Object.assign({}, event.data) : null;
             if (safeData && safeData.sessionToken) {
                 safeData.sessionToken = '[REDACTED]'; // Remove sensitive token from logs
             }
-            const allowedOrigin = 'https://app.accessbit.io';
-            // Normalize origin for comparison (remove trailing slashes, lowercase)
             const normalizeOrigin = (origin) => origin.replace(/\/+$/, '').toLowerCase();
-            const normalizedEventOrigin = normalizeOrigin(event.origin);
-            const normalizedAllowedOrigin = normalizeOrigin(allowedOrigin);
-            // STRICT validation: event.origin must EXACTLY match our worker domain
-            // This is secure because event.origin is set by browser to actual sender origin
-            if (normalizedEventOrigin !== normalizedAllowedOrigin) {
-                return; // REJECT message - do not process
-            }
-            // Additional validation: Ensure origin is exactly our worker domain
-            // Double-check to be extra safe
-            if (!event.origin || !event.origin.includes('app.accessbit.io')) {
+            const normalizedAllowedOrigin = normalizeOrigin(WORKER_BASE_URL);
+            // Strict equality only: event.origin is the browser-supplied sender origin (scheme+host+port).
+            if (!event.origin || normalizeOrigin(event.origin) !== normalizedAllowedOrigin) {
                 return;
             }
             // Only process AUTH_SUCCESS messages
             if (event.data && event.data.type === 'AUTH_SUCCESS') {
                 clearInterval(checkPopupClosed);
-                clearInterval(checkUrlChange);
-                // Close popup immediately to prevent app UI from loading in it
                 try {
                     if (authWindow && !authWindow.closed) {
                         authWindow.close();
                     }
                 }
                 catch (e) {
-                    // Ignore if we can't close the window
                 }
                 // Process the auth success with the data from the popup
                 const { sessionToken, user, siteInfo } = event.data;
-                // Ensure we have required data - be more lenient with user data
+                // If popup sends a minimal success payload (no user/siteInfo), complete via backend.
                 if (!siteInfo || !siteInfo.siteId) {
+                    yield completeFromServerState();
                     return;
                 }
                 // Convert worker data format to our internal format
@@ -10218,12 +10668,11 @@ function useAuth() {
             }
             else {
             }
-        };
+        });
         // Listen for storage events (when popup stores data)
         const handleStorageChange = (event) => {
             if (event.key === 'accessbit-userinfo' && event.newValue) {
                 clearInterval(checkPopupClosed);
-                clearInterval(checkUrlChange);
                 try {
                     const authData = JSON.parse(event.newValue);
                     processAuthSuccessFromData(authData);
@@ -10236,168 +10685,28 @@ function useAuth() {
         const cleanup = () => {
             window.removeEventListener('message', handleMessage);
             window.removeEventListener('storage', handleStorageChange);
+            if (noHandleCompletionPoll) {
+                clearInterval(noHandleCompletionPoll);
+                noHandleCompletionPoll = null;
+            }
+            if (noHandleFocusListener) {
+                window.removeEventListener('focus', noHandleFocusListener);
+                noHandleFocusListener = null;
+            }
         };
         // Add global message listener (will catch ALL postMessages)
         // Use capture phase to catch messages early
         window.addEventListener('message', handleMessage, true);
         window.addEventListener('storage', handleStorageChange, false);
-        // Also add a direct window.message listener as backup (bubble phase)
-        const backupHandler = (event) => {
-            // SECURITY: Redact sessionToken from logs
-            const safeData = event.data ? Object.assign({}, event.data) : null;
-            if (safeData && safeData.sessionToken) {
-                safeData.sessionToken = '[REDACTED]';
-            }
-            handleMessage(event);
-        };
-        window.addEventListener('message', backupHandler, false);
-        // Debug: Log all message events (even if not handled)
-        const debugHandler = (event) => {
-            var _a;
-            if (((_a = event.data) === null || _a === void 0 ? void 0 : _a.type) !== 'AUTH_SUCCESS') {
-                // SECURITY: Redact any sensitive data from logs
-                const safeData = event.data ? Object.assign({}, event.data) : null;
-                if (safeData && safeData.sessionToken) {
-                    safeData.sessionToken = '[REDACTED]';
-                }
-            }
-        };
-        window.addEventListener('message', debugHandler, false);
-        // Also add a fallback: check localStorage periodically in case postMessage fails
-        const checkLocalStorage = setInterval(() => {
-            const stored = localStorage.getItem('accessbit-userinfo');
-            if (stored) {
-                try {
-                    const parsed = JSON.parse(stored);
-                    if (parsed.siteId) {
-                        clearInterval(checkLocalStorage);
-                        clearInterval(checkPopupClosed);
-                        clearInterval(checkUrlChange);
-                        // Trigger the success handler
-                        window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail: parsed }));
-                    }
-                }
-                catch (e) {
-                    // Ignore parse errors
-                }
-            }
-        }, 1000);
-        // Clean up localStorage checker after 2 minutes
-        setTimeout(() => clearInterval(checkLocalStorage), 2 * 60 * 1000);
         // Cleanup after 5 minutes
         setTimeout(cleanup, 5 * 60 * 1000);
-        // Also monitor for URL changes in the main window (in case popup redirects back)
-        const checkUrlChange = setInterval(() => userAuth_awaiter(this, void 0, void 0, function* () {
-            const url = new URL(window.location.href);
-            const authSuccess = url.searchParams.get('auth_success');
-            if (authSuccess === 'true') {
-                clearInterval(checkUrlChange);
-                clearInterval(checkPopupClosed);
-                // Process auth success using helper function
-                yield processAuthSuccess(url);
-            }
-        }), 500);
-        // Check immediately for auth success (in case popup already completed)
-        const checkImmediateAuth = () => userAuth_awaiter(this, void 0, void 0, function* () {
-            try {
-                const url = new URL(window.location.href);
-                const authSuccess = url.searchParams.get('auth_success');
-                if (authSuccess === 'true') {
-                    // Clear intervals since we found auth success
-                    clearInterval(checkUrlChange);
-                    clearInterval(checkPopupClosed);
-                    // Process auth success (same logic as above)
-                    yield processAuthSuccess(url);
-                }
-            }
-            catch (error) {
-            }
-        });
-        // Helper function to process auth success
-        const processAuthSuccess = (url) => userAuth_awaiter(this, void 0, void 0, function* () {
-            try {
-                localStorage.removeItem("accessbit-userinfo");
-                localStorage.removeItem("accessbit-userinfo");
-                localStorage.removeItem("explicitly_logged_out");
-                localStorage.removeItem("siteInfo");
-                // Get auth data from URL parameters (sessionToken removed for security - use postMessage instead)
-                const firstName = url.searchParams.get('firstName');
-                const email = url.searchParams.get('email');
-                const siteId = url.searchParams.get('siteId');
-                const siteName = url.searchParams.get('siteName');
-                const shortName = url.searchParams.get('shortName');
-                // Get custom domain - will be updated from actual siteInfo if available
-                // For now use staging domain as fallback
-                let customDomain;
-                if (shortName) {
-                    customDomain = `https://${shortName}.webflow.io`;
-                }
-                // Get sessionToken via token exchange instead of URL (more secure)
-                // This ensures sessionToken never appears in browser history or server logs
-                try {
-                    const sessionToken = yield refreshSessionToken();
-                    if (sessionToken) {
-                        setInMemorySessionToken(sessionToken);
-                    }
-                }
-                catch (error) {
-                    // If token exchange fails, continue without sessionToken
-                    // User may need to re-authenticate
-                }
-                // SECURITY FIX: Remove email (PII) from localStorage
-                // Store the user data from the OAuth popup
-                const userData = {
-                    // sessionToken is kept only in memory; do not persist
-                    firstName: firstName,
-                    // email removed - PII should not be stored in localStorage
-                    siteId: siteId,
-                    customDomain: customDomain,
-                    siteInfo: {
-                        siteId: siteId,
-                        siteName: siteName,
-                        shortName: shortName
-                        // email removed from siteInfo
-                    }
-                };
-                localStorage.setItem("accessbit-userinfo", JSON.stringify(userData));
-                localStorage.removeItem("explicitly_logged_out");
-                // Clear React Query cache and update with new data
-                queryClient.clear();
-                queryClient.setQueryData(["auth"], {
-                    user: {
-                        firstName: firstName,
-                        email: email || '',
-                        siteId: siteId
-                    },
-                });
-                // Dispatch custom event immediately after localStorage is set
-                window.dispatchEvent(new CustomEvent('accessbit-auth-success', { detail: userData }));
-                // Clean up URL parameters
-                const cleanUrl = new URL(window.location.href);
-                cleanUrl.searchParams.delete('auth_success');
-                cleanUrl.searchParams.delete('sessionToken');
-                cleanUrl.searchParams.delete('firstName');
-                cleanUrl.searchParams.delete('email');
-                cleanUrl.searchParams.delete('siteId');
-                cleanUrl.searchParams.delete('siteName');
-                cleanUrl.searchParams.delete('shortName');
-                window.history.replaceState({}, '', cleanUrl.toString());
-            }
-            catch (error) {
-            }
-        });
         // Helper function to process auth success from data object
         const processAuthSuccessFromData = (authData) => {
             try {
                 localStorage.removeItem("accessbit-userinfo");
                 localStorage.removeItem("explicitly_logged_out");
                 localStorage.removeItem("siteInfo");
-                // Get custom domain - will be updated from actual siteInfo if available
-                // For now use staging domain as fallback
-                let customDomain;
-                if (authData.shortName) {
-                    customDomain = `https://${authData.shortName}.webflow.io`;
-                }
+                const customDomain = resolveCustomDomainFromSiteInfo({ shortName: authData.shortName });
                 if (authData.sessionToken) {
                     setInMemorySessionToken(authData.sessionToken);
                 }
@@ -10425,17 +10734,13 @@ function useAuth() {
                     },
                 });
                 // Dispatch custom event immediately after localStorage is set
-                const customEvent = new CustomEvent('accessbit-auth-success', { detail: userData });
-                window.dispatchEvent(customEvent);
+                dispatchAuthSuccess(userData);
             }
             catch (error) {
             }
         };
-        // Check immediately for auth success
-        checkImmediateAuth();
         // Set a timeout to clear intervals after 5 minutes
         setTimeout(() => {
-            clearInterval(checkUrlChange);
             clearInterval(checkPopupClosed);
         }, 5 * 60 * 1000); // 5 minutes
     });
@@ -10464,6 +10769,7 @@ function useAuth() {
     });
     // Function to make authenticated API requests with bearer token
     const makeAuthenticatedRequest = (url_1, ...args_1) => userAuth_awaiter(this, [url_1, ...args_1], void 0, function* (url, options = {}) {
+        assertTrustedWorkerUrl(url);
         const executeRequest = (token) => userAuth_awaiter(this, void 0, void 0, function* () {
             const headers = new Headers(options.headers);
             if (!headers.has('Content-Type') && !(options.body instanceof FormData)) {
@@ -10544,7 +10850,7 @@ function useAuth() {
                 customDomain: null,
                 publishedAt: new Date().toISOString(),
             };
-            const result = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/publish?siteId=${siteInfo.siteId}`, {
+            const result = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/publish?siteId=${siteInfo.siteId}`), {
                 method: 'POST',
                 body: JSON.stringify(publishData),
             });
@@ -10568,20 +10874,19 @@ function useAuth() {
                 return false;
             }
             // Check if there's existing auth data that might be expired or invalid
-            const storedUser = localStorage.getItem("accessbit-userinfo") || localStorage.getItem("accessbit-userinfo");
+            const storedUser = localStorage.getItem("accessbit-userinfo");
             if (storedUser) {
                 try {
                     const userData = JSON.parse(storedUser);
                     // Check if site has changed
                     if (userData.siteId && userData.siteId !== currentSiteInfo.siteId) {
                         localStorage.removeItem('accessbit-userinfo');
-                        localStorage.removeItem('accessbit-userinfo');
                         localStorage.removeItem('siteInfo');
                         return false; // Force silent auth for new site
                     }
-                    // Check if user data exists
-                    if (userData.email && userData.siteId) {
-                        return true; // User data exists
+                    // Email is intentionally removed from localStorage (PII); siteId is the persisted auth marker.
+                    if (userData.siteId) {
+                        return true;
                     }
                 }
                 catch (error) {
@@ -10611,80 +10916,41 @@ function useAuth() {
             if (!siteInfo || !siteInfo.siteId) {
                 return false;
             }
-            const currentStoredData = localStorage.getItem('accessbit-userinfo');
-            const response = yield fetch(`${WORKER_BASE_URL}/api/auth/token`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    siteId: siteInfo.siteId
-                }),
-            });
+            const { response, data } = yield requestAuthToken(siteInfo.siteId);
             // If 400 or 401, user hasn't completed OAuth yet - this is expected
             if (!response.ok && (response.status === 400 || response.status === 401)) {
                 return false;
             }
             if (response.ok) {
-                const data = yield response.json();
                 if (!data.sessionToken) {
                     throw new Error('No session token received from server');
                 }
                 setInMemorySessionToken(data.sessionToken);
-                if (data.firstName || data.email) {
-                    // SECURITY FIX: Remove email (PII) from localStorage
-                    const userData = {
-                        firstName: data.firstName || 'User',
-                        // email removed - PII should not be stored in localStorage
+                const userData = {
+                    firstName: data.firstName || 'User',
+                    siteId: siteInfo.siteId,
+                    siteInfo: {
                         siteId: siteInfo.siteId,
-                        siteInfo: {
-                            siteId: siteInfo.siteId,
-                            siteName: siteInfo.siteName,
-                            shortName: siteInfo.shortName
-                            // email removed from siteInfo
-                        }
-                    };
-                    try {
-                        let customDomain;
-                        // Prefer production domain from siteInfo.domains if present
-                        const siAny = siteInfo;
-                        if ((siAny === null || siAny === void 0 ? void 0 : siAny.domains) && Array.isArray(siAny.domains)) {
-                            const productionDomain = siAny.domains.find((d) => (d === null || d === void 0 ? void 0 : d.stage) === 'production' || (d === null || d === void 0 ? void 0 : d.default) === true || (d === null || d === void 0 ? void 0 : d.primary) === true);
-                            if (productionDomain === null || productionDomain === void 0 ? void 0 : productionDomain.url) {
-                                customDomain = `https://${productionDomain.url}`;
-                            }
-                        }
-                        // Fallback to staging domain via shortName
-                        if (!customDomain && (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName)) {
-                            customDomain = `https://${siteInfo.shortName}.webflow.io`;
-                        }
-                        if (customDomain) {
-                            userData.customDomain = customDomain;
-                        }
+                        siteName: siteInfo.siteName,
+                        shortName: siteInfo.shortName
                     }
-                    catch (_err) {
-                        // Non-fatal: absence of domain data should not block auth
-                    }
-                    localStorage.setItem('accessbit-userinfo', JSON.stringify(userData));
-                    localStorage.removeItem('explicitly_logged_out');
-                    // Site info is now included in accessbit-userinfo above
-                    // Update React Query cache
-                    queryClient.setQueryData(["auth"], {
-                        user: {
-                            firstName: data.firstName,
-                            email: data.email,
-                            siteId: siteInfo.siteId
-                        },
-                    });
-                    // Verify the data was stored
-                    const storedData = localStorage.getItem('accessbit-userinfo');
-                    return true;
+                };
+                const customDomain = resolveCustomDomainFromSiteInfo(siteInfo);
+                if (customDomain) {
+                    userData.customDomain = customDomain;
                 }
-                else {
-                    return false;
-                }
+                localStorage.setItem('accessbit-userinfo', JSON.stringify(userData));
+                localStorage.removeItem('explicitly_logged_out');
+                // Update React Query cache (in-memory / UI state); do not persist PII beyond this client.
+                queryClient.setQueryData(["auth"], {
+                    user: {
+                        firstName: data.firstName || 'User',
+                        email: data.email || '',
+                        siteId: siteInfo.siteId
+                    },
+                });
+                return true;
             }
-            const data = yield response.json();
             return false;
         }
         catch (error) {
@@ -10703,7 +10969,7 @@ function useAuth() {
                 customDomain: domain,
                 connectedAt: new Date().toISOString(),
             };
-            const result = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/domain`, {
+            const result = yield makeAuthenticatedRequest(workerUrl("/api/accessibility/domain"), {
                 method: 'POST',
                 body: JSON.stringify(domainData),
             });
@@ -10721,9 +10987,7 @@ function useAuth() {
             if (!(siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId)) {
                 return false;
             }
-            const result = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/settings?siteId=${siteInfo.siteId}`, {
-                method: 'GET',
-            });
+            const result = yield getPublishedSettings();
             // If we get here without error, published data exists
             if (result && (result.customization || result.accessibilityProfiles)) {
                 return true;
@@ -10744,7 +11008,7 @@ function useAuth() {
             if (!(siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId)) {
                 throw new Error('No site information available');
             }
-            const result = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/settings?siteId=${siteInfo.siteId}`, {
+            const result = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/settings?siteId=${siteInfo.siteId}`), {
                 method: 'GET',
             });
             return result;
@@ -10761,7 +11025,7 @@ function useAuth() {
                 throw new Error('No site information available');
             }
             // Call backend worker endpoint which calls Webflow API server-side
-            const result = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/register-script?siteId=${siteInfo.siteId}`, { method: 'POST' });
+            const result = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/register-script?siteId=${siteInfo.siteId}`), { method: 'POST' });
             return result;
         }
         catch (error) {
@@ -10776,7 +11040,7 @@ function useAuth() {
                 throw new Error('No site information available');
             }
             // Call backend worker endpoint which calls Webflow API server-side
-            const result = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/apply-script?siteId=${siteInfo.siteId}`, {
+            const result = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/apply-script?siteId=${siteInfo.siteId}`), {
                 method: 'POST',
                 body: JSON.stringify(params),
             });
@@ -10792,7 +11056,6 @@ function useAuth() {
     return {
         user: (authState === null || authState === void 0 ? void 0 : authState.user) || { firstName: "", email: "" },
         isAuthLoading,
-        exchangeAndVerifyIdToken,
         logout,
         openAuthScreen,
         isAuthenticatedForCurrentSite,
@@ -10809,54 +11072,8 @@ function useAuth() {
     };
 }
 
-;// ./src/util/siteId.ts
-var siteId_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-// Shared utility for getting siteId from accessbit-userinfo
-const getSiteId = () => siteId_awaiter(void 0, void 0, void 0, function* () {
-    const userData = localStorage.getItem('accessbit-userinfo');
-    if (userData) {
-        try {
-            const parsed = JSON.parse(userData);
-            return parsed.siteId || null;
-        }
-        catch (error) {
-            console.warn('Failed to parse accessbit-userinfo:', error);
-        }
-    }
-    return null;
-});
-// Shared utility for getting custom domain from accessbit-userinfo
-const getCustomDomain = () => {
-    const userData = localStorage.getItem('accessbit-userinfo');
-    if (userData) {
-        try {
-            const parsed = JSON.parse(userData);
-            const customDomain = parsed.customDomain;
-            if (customDomain) {
-                // Extract domain from URL (remove https://, http://, trailing slash)
-                const domain = customDomain
-                    .replace(/^https?:\/\//, '')
-                    .replace(/\/$/, '')
-                    .split('/')[0]; // Get just the domain part
-                return domain;
-            }
-        }
-        catch (error) {
-        }
-    }
-    return null;
-};
-
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/styles/publish.css
-var publish = __webpack_require__(793);
+var publish = __webpack_require__(9793);
 ;// ./src/styles/publish.css
 
       
@@ -10885,7 +11102,7 @@ var publish_update = injectStylesIntoStyleTag_default()(publish/* default */.A, 
        /* harmony default export */ const styles_publish = (publish/* default */.A && publish/* default */.A.locals ? publish/* default */.A.locals : undefined);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./src/styles/payment.css
-var payment = __webpack_require__(458);
+var payment = __webpack_require__(2458);
 ;// ./src/styles/payment.css
 
       
@@ -10928,19 +11145,48 @@ var PublishScreen_awaiter = (undefined && undefined.__awaiter) || function (this
 
 
 
-
+function getStoredSiteId() {
+    try {
+        const raw = localStorage.getItem('accessbit-userinfo');
+        if (!raw)
+            return null;
+        const parsed = JSON.parse(raw);
+        return (parsed === null || parsed === void 0 ? void 0 : parsed.siteId) || null;
+    }
+    catch (_a) {
+        return null;
+    }
+}
+function getStoredCustomDomain() {
+    try {
+        const raw = localStorage.getItem('accessbit-userinfo');
+        if (!raw)
+            return null;
+        const parsed = JSON.parse(raw);
+        const customDomain = parsed === null || parsed === void 0 ? void 0 : parsed.customDomain;
+        if (!customDomain)
+            return null;
+        return String(customDomain)
+            .replace(/^https?:\/\//, '')
+            .replace(/\/$/, '')
+            .split('/')[0];
+    }
+    catch (_a) {
+        return null;
+    }
+}
 const PublishScreen_whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
 </svg>`);
 // Accessibility icon as data URL (Font Awesome 5 style: ring + figure)
-const PublishScreen_icon1 = new URL(/* asset import */ __webpack_require__(818), __webpack_require__.b).href;
-const icon2 = new URL(/* asset import */ __webpack_require__(741), __webpack_require__.b).href;
-const icon3 = new URL(/* asset import */ __webpack_require__(460), __webpack_require__.b).href;
-const icon4 = new URL(/* asset import */ __webpack_require__(83), __webpack_require__.b).href;
-const icon5 = new URL(/* asset import */ __webpack_require__(114), __webpack_require__.b).href;
-const icon6 = new URL(/* asset import */ __webpack_require__(465), __webpack_require__.b).href;
-const icon7 = new URL(/* asset import */ __webpack_require__(720), __webpack_require__.b).href;
-const icon8 = new URL(/* asset import */ __webpack_require__(871), __webpack_require__.b).href;
+const PublishScreen_icon1 = new URL(/* asset import */ __webpack_require__(7818), __webpack_require__.b).href;
+const icon2 = new URL(/* asset import */ __webpack_require__(2741), __webpack_require__.b).href;
+const icon3 = new URL(/* asset import */ __webpack_require__(1460), __webpack_require__.b).href;
+const icon4 = new URL(/* asset import */ __webpack_require__(3083), __webpack_require__.b).href;
+const icon5 = new URL(/* asset import */ __webpack_require__(1114), __webpack_require__.b).href;
+const icon6 = new URL(/* asset import */ __webpack_require__(3465), __webpack_require__.b).href;
+const icon7 = new URL(/* asset import */ __webpack_require__(1720), __webpack_require__.b).href;
+const icon8 = new URL(/* asset import */ __webpack_require__(9871), __webpack_require__.b).href;
 // Icon options matching CustomizationScreen
 const iconOptions = [
     { id: "accessibility", label: PublishScreen_icon1, name: "Accessibility" },
@@ -10952,6 +11198,20 @@ const iconOptions = [
     { id: "gear", label: icon7, name: "Gear" },
     { id: "ad-triple", label: icon8, name: "AD)))" },
 ];
+/** Exact Stripe URLs opened from this screen — only these may be passed to `window.open`. */
+const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/8x23cx9dRaLt2V6ffO4Ni01";
+const TRUSTED_STRIPE_URLS = new Set([
+    STRIPE_PORTAL_URL,
+    STRIPE_BUY_ANNUAL_URL,
+    STRIPE_BUY_MONTHLY_URL,
+]);
+function openTrustedStripeUrl(url) {
+    if (!TRUSTED_STRIPE_URLS.has(url))
+        return;
+    window.open(url, "_blank", "noopener,noreferrer");
+}
 // Preview footer SVGs copied from widget UI (links removed for preview)
 const PREVIEW_FOOTER_BRAND_SVG = `<svg width="97" height="15" viewBox="0 0 97 15" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.5"><path d="M18.6187 14.94C17.6214 14.94 16.7333 14.705 15.9546 14.235C15.1758 13.7508 14.561 13.0885 14.1102 12.2482C13.673 11.4079 13.4544 10.4323 13.4544 9.32136C13.4544 8.19621 13.673 7.21349 14.1102 6.37318C14.561 5.51864 15.1758 4.85636 15.9546 4.38636C16.7333 3.90212 17.6214 3.66 18.6187 3.66C19.8756 3.66 20.9276 4.00182 21.7747 4.68545C22.6217 5.36909 23.1614 6.29485 23.3937 7.46273H23.0499C22.0069 7.46273 21.1733 6.60327 20.3197 6.01C19.8415 5.66818 19.2677 5.49727 18.5982 5.49727C18.0517 5.49727 17.5462 5.64682 17.0817 5.94591C16.6172 6.23076 16.2415 6.65803 15.9546 7.22773C15.6813 7.78318 15.5447 8.47394 15.5447 9.3C15.5447 9.91242 15.6267 10.4608 15.7906 10.945C15.9546 11.415 16.1732 11.8138 16.4464 12.1414C16.7333 12.4689 17.0612 12.7182 17.4301 12.8891C17.799 13.0458 18.1884 13.1241 18.5982 13.1241C19.0491 13.1241 19.4521 13.0529 19.8073 12.9105C20.1762 12.7538 20.4836 12.5259 20.7295 12.2268C21.193 11.6928 21.7666 11.1586 22.4778 11.1586H23.3937C23.1614 12.298 22.6217 13.2167 21.7747 13.9145C20.9276 14.5982 19.8756 14.94 18.6187 14.94Z" fill="black"/><path d="M29.7701 15C28.7728 15 27.8847 14.765 27.106 14.295C26.3272 13.8108 25.7124 13.1485 25.2616 12.3082C24.8244 11.4679 24.6058 10.4923 24.6058 9.38136C24.6058 8.25621 24.8244 7.27349 25.2616 6.43318C25.7124 5.57864 26.3272 4.91636 27.106 4.44636C27.8847 3.96212 28.7728 3.72 29.7701 3.72C31.027 3.72 32.079 4.06182 32.9261 4.74545C33.7731 5.42909 34.3128 6.35485 34.545 7.52273H34.2013C33.1583 7.52273 32.3247 6.66327 31.471 6.07C30.9929 5.72818 30.419 5.55727 29.7496 5.55727C29.2031 5.55727 28.6976 5.70682 28.2331 6.00591C27.7686 6.29076 27.3929 6.71803 27.106 7.28773C26.8327 7.84318 26.6961 8.53394 26.6961 9.36C26.6961 9.97242 26.7781 10.5208 26.942 11.005C27.106 11.475 27.3246 11.8738 27.5978 12.2014C27.8847 12.5289 28.2126 12.7782 28.5815 12.9491C28.9504 13.1058 29.3397 13.1841 29.7496 13.1841C30.2005 13.1841 30.6035 13.1129 30.9587 12.9705C31.3276 12.8138 31.635 12.5859 31.8809 12.2868C32.3444 11.7528 32.9179 11.2186 33.6292 11.2186H34.545C34.3128 12.358 33.7731 13.2767 32.9261 13.9745C32.079 14.6582 31.027 15 29.7701 15Z" fill="black"/><path d="M40.7017 14.94C39.6982 14.94 38.8061 14.705 38.0256 14.235C37.2451 13.765 36.6318 13.1098 36.1858 12.2695C35.7537 11.4292 35.5377 10.4536 35.5377 9.34273C35.5377 8.20333 35.7537 7.21349 36.1858 6.37318C36.6318 5.51864 37.2451 4.85636 38.0256 4.38636C38.8061 3.90212 39.7121 3.66 40.7435 3.66C41.7749 3.66 42.66 3.895 43.3987 4.365C44.1374 4.835 44.7089 5.46167 45.1131 6.245C45.5173 7.01409 45.7194 7.86864 45.7194 8.80864C45.7194 8.95106 45.7124 9.10773 45.6985 9.27864C45.6985 9.4353 45.6915 9.61333 45.6776 9.81273H40.1649C39.3187 9.81273 38.6328 9.13363 38.6328 8.29591H43.6287C43.5869 7.39864 43.2942 6.70076 42.7506 6.20227C42.207 5.68955 41.531 5.43318 40.7226 5.43318C40.1512 5.43318 39.6285 5.56848 39.1546 5.83909C38.6807 6.09545 38.2974 6.48 38.0047 6.99273C37.7259 7.49121 37.5866 8.125 37.5866 8.89409V9.49227C37.5866 10.2898 37.7259 10.9664 38.0047 11.5218C38.2974 12.063 38.6807 12.4761 39.1546 12.7609C39.6285 13.0315 40.1442 13.1668 40.7017 13.1668C41.3707 13.1668 41.9213 13.0173 42.3534 12.7182C43.1378 12.1752 43.9418 11.5005 44.899 11.5005H45.4058C45.2246 12.1556 44.9179 12.7467 44.4859 13.2736C44.0538 13.7864 43.5172 14.1923 42.876 14.4914C42.2488 14.7905 41.5241 14.94 40.7017 14.94Z" fill="black"/><path d="M51.8712 14.94C50.8985 14.94 50.0475 14.7905 49.318 14.4914C48.5884 14.1923 48.0109 13.7721 47.5854 13.2309C47.1598 12.6897 46.9015 12.0559 46.8103 11.3295H48.0841C48.6982 11.3295 49.2036 11.7807 49.5687 12.2695C49.7967 12.5544 50.1007 12.7823 50.4806 12.9532C50.8758 13.1241 51.3393 13.2095 51.8712 13.2095C52.3728 13.2095 52.7831 13.1455 53.1023 13.0173C53.4366 12.8748 53.6798 12.6897 53.8318 12.4618C53.9837 12.2197 54.0597 11.9633 54.0597 11.6927C54.0597 11.2939 53.9534 10.9949 53.7406 10.7955C53.543 10.5818 53.239 10.418 52.8287 10.3041C52.4336 10.1759 51.9548 10.062 51.3925 9.96227C50.8606 9.87682 50.3438 9.76288 49.8423 9.62045C49.3559 9.46379 48.9152 9.27151 48.5201 9.04364C48.1401 8.81576 47.8361 8.53091 47.6082 8.18909C47.3802 7.83303 47.2662 7.39864 47.2662 6.88591C47.2662 6.27349 47.441 5.72515 47.7905 5.24091C48.1401 4.74242 48.634 4.35788 49.2724 4.08727C49.9259 3.80242 50.6934 3.66 51.5749 3.66C52.8515 3.66 53.8774 3.94485 54.6525 4.51455C55.4276 5.08424 55.8835 5.88894 56.0203 6.92864H55.1685C54.392 6.92864 53.7746 6.23912 53.1251 5.81773C52.7299 5.54712 52.2056 5.41182 51.5521 5.41182C50.8986 5.41182 50.397 5.53288 50.0475 5.775C49.6979 6.01712 49.5231 6.33758 49.5231 6.73636C49.5231 6.99273 49.6219 7.22061 49.8195 7.42C50.0171 7.61939 50.3058 7.7903 50.6858 7.93273C51.0809 8.06091 51.5597 8.18197 52.122 8.29591C52.9275 8.43833 53.6494 8.61636 54.2877 8.83C54.926 9.04364 55.4352 9.35697 55.8151 9.77C56.1951 10.183 56.385 10.7741 56.385 11.5432C56.4002 12.2126 56.2179 12.8036 55.8379 13.3164C55.4732 13.8291 54.9488 14.2279 54.2649 14.5127C53.5962 14.7976 52.7983 14.94 51.8712 14.94Z" fill="black"/><path d="M62.2815 14.94C61.3581 14.94 60.5501 14.7905 59.8575 14.4914C59.165 14.1923 58.6167 13.7721 58.2127 13.2309C57.8087 12.6897 57.5634 12.0559 57.4768 11.3295H58.6424C59.2495 11.3295 59.7468 11.7777 60.0956 12.2695C60.312 12.5544 60.6006 12.7823 60.9613 12.9532C61.3364 13.1241 61.7765 13.2095 62.2815 13.2095C62.7576 13.2095 63.1472 13.1455 63.4502 13.0173C63.7676 12.8748 63.9985 12.6897 64.1428 12.4618C64.2871 12.2197 64.3592 11.9633 64.3592 11.6927C64.3592 11.2939 64.2582 10.9949 64.0562 10.7955C63.8686 10.5818 63.5801 10.418 63.1905 10.3041C62.8154 10.1759 62.3609 10.062 61.827 9.96227C61.322 9.87682 60.8314 9.76288 60.3553 9.62045C59.8936 9.46379 59.4752 9.27151 59.1 9.04364C58.7393 8.81576 58.4507 8.53091 58.2343 8.18909C58.0179 7.83303 57.9097 7.39864 57.9097 6.88591C57.9097 6.27349 58.0756 5.72515 58.4074 5.24091C58.7393 4.74242 59.2082 4.35788 59.8142 4.08727C60.4347 3.80242 61.1633 3.66 62.0002 3.66C63.2121 3.66 64.1861 3.94485 64.9219 4.51455C65.6578 5.08424 66.0906 5.88894 66.2205 6.92864H65.4603C64.6966 6.92864 64.1004 6.24725 63.4719 5.81773C63.0967 5.54712 62.5989 5.41182 61.9785 5.41182C61.3581 5.41182 60.8819 5.53288 60.5501 5.775C60.2182 6.01712 60.0523 6.33758 60.0523 6.73636C60.0523 6.99273 60.1461 7.22061 60.3337 7.42C60.5212 7.61939 60.7954 7.7903 61.1561 7.93273C61.5312 8.06091 61.9857 8.18197 62.5196 8.29591C63.2843 8.43833 63.9696 8.61636 64.5756 8.83C65.1816 9.04364 65.665 9.35697 66.0257 9.77C66.3864 10.183 66.5668 10.7741 66.5668 11.5432C66.5812 12.2126 66.4081 12.8036 66.0473 13.3164C65.7011 13.8291 65.2033 14.2279 64.554 14.5127C63.9191 14.7976 63.1616 14.94 62.2815 14.94Z" fill="black"/><path d="M92.4444 14.9998C91.418 14.9998 90.6025 14.7562 89.9979 14.269C89.3933 13.7679 89.091 12.8839 89.091 11.6172V6.52251H86.4547V4.64331H88.0154C88.7325 4.64331 89.1543 3.93531 89.2808 3.23931C89.4643 2.27076 90.3312 1.56891 91.3266 1.56891V4.64331H95.4604C95.4604 4.64331 94.619 6.52251 93.5812 6.52251H91.3266V11.5755C91.3266 12.1183 91.4461 12.5011 91.6852 12.7239C91.9382 12.9327 92.3671 13.0371 92.9717 13.0371H97C97 13.0371 96.1213 14.9998 95.0373 14.9998H84.9341H92.4444Z" fill="black"/><path d="M81.6182 14.9997C81.0157 14.9997 80.5273 14.5162 80.5273 13.9197V13.0788H82.5405V7.25326C82.5405 6.7939 82.3156 6.56422 81.8656 6.56422H81.486C80.4144 6.56422 79.5457 5.70418 79.5457 4.64326H82.2664C83.1381 4.64326 83.7708 4.8451 84.1645 5.24878C84.5723 5.63854 84.7762 6.26494 84.7762 7.12798V13.0788H86.2719C87.3435 13.0788 88.2122 13.9388 88.2122 14.9997H81.6182Z" fill="black"/><path d="M9.78042 5.4C9.78042 3.67687 8.36946 2.28 6.62894 2.28C4.88843 2.28 3.47747 3.67687 3.47747 5.4V9.06293C3.47747 9.98148 3.35845 10.8963 3.1233 11.7848L2.39083 14.5911H0L0.895467 11.207C1.08069 10.5071 1.17446 9.78648 1.17446 9.06293V5.4C1.17446 2.41766 3.61652 0 6.62894 0C9.64137 0 12.0834 2.41766 12.0834 5.4V14.58C10.8115 14.58 9.78042 13.5592 9.78042 12.3V5.4Z" fill="black"/><path d="M11.7241 9.06H7.05745C5.85248 9.06 4.87566 8.09294 4.87566 6.9H11.7241V9.06Z" fill="black"/><path fill-rule="evenodd" clip-rule="evenodd" d="M73.186 0.06C74.2466 0.06 75.1329 0.230013 75.8448 0.570117C76.5568 0.89606 77.087 1.34964 77.4357 1.93066C77.799 2.49752 77.9806 3.14234 77.9806 3.86508C77.9806 4.61614 77.8136 5.24679 77.4794 5.75695C77.1452 6.26712 76.7021 6.66392 76.15 6.94734C76.1015 6.97165 76.0544 6.99473 76.0088 7.01719C76.7036 7.23969 77.4378 7.53877 77.7544 7.73379C78.3065 8.05973 78.7424 8.49911 79.062 9.0518C79.3816 9.60447 79.5414 10.2139 79.5414 10.8799C79.5414 11.6452 79.3525 12.3395 78.9748 12.963C78.597 13.5724 78.0376 14.0543 77.2966 14.4086C76.5557 14.7628 75.6476 14.94 74.5725 14.94H68.7537V0.06H73.186ZM70.933 6.47965H70.9355V8.11629L70.933 8.11641V13.1756H74.2892C75.2481 13.1756 75.9891 12.963 76.5121 12.5379C77.0497 12.0986 77.3184 11.4822 77.3184 10.6886C77.3184 9.90913 77.0424 9.28554 76.4903 8.81789C75.9641 8.36017 75.2582 8.11084 74.3294 8.10047V6.26836C74.6032 6.1686 74.8396 6.0337 75.0385 5.86324C75.518 5.4381 75.7577 4.85699 75.7577 4.12008C75.7577 3.41152 75.518 2.85175 75.0385 2.44078C74.5591 2.01565 73.8399 1.80305 72.881 1.80305H70.933V6.47965Z" fill="black"/><path d="M75.9093 8.1H74.3336C73.2625 8.1 72.3942 7.24039 72.3942 6.18H76.3941L74.6972 6.96L75.9093 8.1Z" fill="black"/><path d="M75.602 5.10001C75.2141 5.86801 74.2325 6.2 73.8487 6.24L74.2687 6.66L74.3899 6.78L75.4202 6.66L76.3293 5.88001C76.2485 5.3 75.9899 4.33201 75.602 5.10001Z" fill="black"/><path d="M81.8172 0.12H83.3323C84.1022 0.12 84.7262 0.737847 84.7262 1.5C84.7262 2.26215 84.1022 2.88 83.3323 2.88H83.2111C82.4413 2.88 81.8172 2.26215 81.8172 1.5V0.12Z" fill="black"/></g></svg>`;
 const PREVIEW_FOOTER_POWERED_SVG = `<svg width="77" height="22" viewBox="0 0 77 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M74.3028 8.09633C75.3439 8.09633 76.1879 7.25235 76.1879 6.21125C76.1879 5.17015 75.3439 4.32617 74.3028 4.32617C73.2617 4.32617 72.4177 5.17015 72.4177 6.21125C72.4177 7.25235 73.2617 8.09633 74.3028 8.09633Z" fill="black"/><path d="M71.1608 11.8782C71.9349 11.8782 72.5625 11.2506 72.5625 10.4764C72.5625 9.70228 71.9349 9.07471 71.1608 9.07471C70.3866 9.07471 69.759 9.70228 69.759 10.4764C69.759 11.2506 70.3866 11.8782 71.1608 11.8782Z" fill="black"/><path d="M76.574 13.1726C76.574 13.5444 76.4263 13.9009 76.1635 14.1638C75.9006 14.4267 75.5441 14.5743 75.1723 14.5743H75.0959C74.842 14.5605 74.5966 14.4779 74.3861 14.3354C74.1755 14.1928 74.0077 13.9956 73.9006 13.765C73.7935 13.5344 73.7512 13.279 73.7782 13.0261C73.8051 12.7733 73.9003 12.5325 74.0536 12.3296C74.2069 12.1268 74.4125 11.9694 74.6484 11.8744C74.8843 11.7794 75.1415 11.7504 75.3926 11.7904C75.6437 11.8305 75.8792 11.938 76.0739 12.1016C76.2685 12.2653 76.415 12.4787 76.4976 12.7192C76.5003 12.7265 76.5026 12.7339 76.5044 12.7415C76.5507 12.8805 76.5742 13.0261 76.574 13.1726Z" fill="black"/><path d="M12.165 12.8496C14.6628 12.8497 16.1582 14.4436 16.1582 17.04C16.1582 17.3522 16.126 17.6809 16.126 17.7168H10.3408C10.3902 18.7801 11.2943 19.5537 12.3789 19.5537C13.3976 19.5536 13.9568 19.0433 14.2158 18.3203L16.0439 18.8613C15.6331 20.2581 14.3506 21.4247 12.3623 21.4248C10.1389 21.4247 8.18848 19.8305 8.18848 17.1025C8.18859 14.5226 10.0945 12.8497 12.165 12.8496ZM59.3467 19.7158C59.3467 20.2581 59.3792 20.85 59.4121 21.1787H57.3252C57.2715 20.8695 57.2442 20.5561 57.2432 20.2422C56.8816 20.883 56.059 21.3759 54.9746 21.376C52.8649 21.3758 51.3092 19.8551 51.0654 17.7168H45.5918C45.6412 18.7801 46.5453 19.5537 47.6299 19.5537C48.6477 19.5536 49.2068 19.0433 49.4668 18.3203L51.2959 18.8613C50.885 20.2581 49.6026 21.4247 47.6143 21.4248C45.3958 21.4247 43.4414 19.8305 43.4414 17.1025C43.4415 14.5226 45.3474 12.8498 47.418 12.8496C49.4353 12.8497 50.7994 13.8901 51.249 15.6592C51.7594 14.0335 53.1236 12.8985 54.9092 12.8984C56.3059 12.8985 56.9633 13.4789 57.1934 13.9014V9.28027H59.3467V19.7158ZM66.375 12.8428C68.9385 12.8429 69.8926 14.293 69.8926 15.916V19.9014C69.8944 20.3304 69.9267 20.7591 69.9893 21.1836H67.9922C67.9363 20.8645 67.9079 20.5408 67.9092 20.2168C67.4983 20.8575 66.7257 21.4159 65.5264 21.416C63.8011 21.4159 62.7492 20.2496 62.749 18.9844C62.749 17.5305 63.8175 16.7246 65.165 16.5273L67.1494 16.2275C67.6094 16.1618 67.7578 15.9317 67.7578 15.6523C67.7576 15.0726 67.3134 14.6007 66.3936 14.6006C65.4406 14.6007 64.9144 15.2094 64.8467 15.916L62.9082 15.5049C63.0397 14.2396 64.2061 12.843 66.375 12.8428ZM40.4004 12.8633C41.8957 12.8634 43.3241 13.7675 43.3242 15.9365V21.1787H41.2061V16.3809C41.206 15.5111 40.7783 14.8529 39.7764 14.8525C38.8396 14.8525 38.2803 15.5753 38.2803 16.4463V21.1826H36.1113V16.3809C36.1113 15.511 35.6673 14.8528 34.6816 14.8525C33.7285 14.8525 33.169 15.5589 33.1689 16.4463V21.1826L30.9834 21.1787V13.0938H33.0703V14.0801C33.5141 13.2913 34.5501 12.8633 35.4375 12.8633C36.5383 12.8634 37.4261 13.3401 37.8369 14.2109C38.4778 13.2252 39.3323 12.8633 40.4004 12.8633ZM5.14844 12.8799C7.15315 12.88 8.07418 14.3092 8.07422 16.084V21.1787H5.88867V16.4619C5.88861 15.5582 5.44409 14.8517 4.39258 14.8516C3.43979 14.8517 2.88105 15.591 2.88086 16.5273V21.1787H0.695312V13.0928H2.81543V14.0957C3.30839 13.2578 4.2776 12.88 5.14844 12.8799ZM19.0859 18.2861L20.8457 13.0928H23.1455L24.8848 18.3027L26.3809 13.0928H28.5498L26.0195 21.1787H23.835L21.9453 15.6562L20.0889 21.1787H17.8701L15.29 13.0928H17.5908L19.0859 18.2861ZM62.4043 21.1787H60.2188V13.0928H62.4043V21.1787ZM65.9375 17.8262C65.3788 17.9084 64.9356 18.2204 64.9355 18.8447C64.9355 19.3213 65.2806 19.7812 65.9873 19.7812C66.9073 19.781 67.7617 19.3375 67.7617 17.9082V17.5469L65.9375 17.8262ZM55.2383 14.8467C54.1199 14.8467 53.2335 15.6682 53.2334 17.1143C53.2334 18.5605 54.0879 19.418 55.2383 19.418C56.3555 19.4177 57.2266 18.563 57.2266 17.0977C57.2264 15.6481 56.3564 14.8469 55.2383 14.8467ZM12.1982 14.6211C11.0646 14.6211 10.4402 15.4754 10.3906 16.2148H14.0059C13.9728 15.4098 13.4467 14.6213 12.1982 14.6211ZM47.4502 14.6211C46.3165 14.6211 45.6931 15.4754 45.6436 16.2148H49.2578C49.2248 15.4098 48.6987 14.6212 47.4502 14.6211ZM10.9482 3.56934C13.4462 3.56934 14.9414 5.16319 14.9414 7.75977C14.9414 8.07196 14.9092 8.40076 14.9092 8.43652H9.12402C9.17344 9.49978 10.0775 10.2734 11.1621 10.2734C12.1809 10.2734 12.74 9.76309 12.999 9.04004L14.8271 9.58105C14.4163 10.9779 13.134 12.1445 11.1455 12.1445C8.92691 12.1445 6.97168 10.5503 6.97168 7.82227C6.97176 5.24223 8.87761 3.56935 10.9482 3.56934ZM41.9922 3.56934C44.49 3.56946 45.9854 5.16329 45.9854 7.75977C45.9853 8.07196 45.9521 8.40076 45.9521 8.43652H40.168C40.2174 9.49963 41.1207 10.2732 42.2051 10.2734C43.224 10.2734 43.7829 9.76314 44.042 9.04004L45.8701 9.58105C45.4592 10.9778 44.1777 12.1444 42.1895 12.1445C39.9709 12.1445 38.0146 10.5503 38.0146 7.82227C38.0147 5.24222 39.9215 3.56934 41.9922 3.56934ZM3.2373 3.56445C5.53805 3.56445 6.31056 5.02743 6.40918 5.89844L4.58496 6.30957C4.51922 5.83298 4.17421 5.22461 3.25391 5.22461C2.6739 5.22462 2.21875 5.57013 2.21875 6.03027C2.21893 6.42445 2.51449 6.67076 2.95801 6.75293L4.1084 7C5.7025 7.32868 6.50781 8.2982 6.50781 9.48145C6.50762 10.796 5.48882 12.1435 3.36914 12.1436C0.936995 12.1436 0.0986557 10.5658 0 9.64551L1.87695 9.23535C1.92626 9.87628 2.40327 10.4678 3.35645 10.4678C4.07936 10.4678 4.41978 10.0903 4.41992 9.66309C4.41992 9.30155 4.17329 9.0055 3.5498 8.87402L2.48145 8.62793C0.920324 8.28284 0.213968 7.34574 0.213867 6.21094C0.213867 4.76093 1.4954 3.56454 3.2373 3.56445ZM19.1494 3.56445C21.7131 3.56447 22.666 5.0146 22.666 6.6377V10.6211C22.6678 11.0501 22.7001 11.4789 22.7627 11.9033H20.7598C20.7038 11.5842 20.6765 11.2605 20.6777 10.9365C20.2669 11.5774 19.4945 12.1357 18.2949 12.1357C16.5695 12.1357 15.5177 10.9694 15.5176 9.7041C15.5176 8.25017 16.5899 7.44428 17.9336 7.24707L19.9219 6.94824C20.3817 6.88253 20.5301 6.65221 20.5303 6.37305C20.5303 5.79307 20.0862 5.32136 19.166 5.32129C18.2128 5.32129 17.6868 5.92908 17.6191 6.63574L15.6797 6.22461C15.816 4.96307 16.9763 3.56445 19.1494 3.56445ZM26.8574 3.8125H28.4805V5.75098H26.8574V9.13477C26.8574 9.84128 27.1863 10.0712 27.8105 10.0713C28.0377 10.0737 28.2648 10.0519 28.4873 10.0059V11.8135C28.2939 11.8956 27.8956 12.0068 27.2549 12.0068C25.6773 12.0068 24.6914 11.07 24.6914 9.50879V5.75098H23.2256V3.8125H23.6367C24.4912 3.81244 24.8857 3.25328 24.8857 2.53027V1.39648H26.8574V3.8125ZM32.3291 3.8125H33.9561V5.75098H32.3291V9.13477C32.3291 9.84136 32.6578 10.0713 33.2832 10.0713C33.5105 10.0738 33.7374 10.052 33.96 10.0059V11.8135C33.7666 11.8956 33.3693 12.0068 32.7275 12.0068C31.1508 12.0068 30.165 11.07 30.165 9.50879V5.75098H28.6982V3.8125H29.1094C29.9637 3.81235 30.3584 3.25322 30.3584 2.53027V1.39648H32.3291V3.8125ZM36.9502 11.8984H34.7646V0H36.9502V11.8984ZM18.7061 8.5459C18.1474 8.62806 17.7032 8.9401 17.7031 9.56445C17.7031 10.041 18.0483 10.5009 18.7549 10.501C19.6752 10.501 20.5303 10.0577 20.5303 8.62793V8.2666L18.7061 8.5459ZM10.9814 5.34082C9.84773 5.34082 9.22335 6.19514 9.17383 6.93457H12.7891C12.756 6.12951 12.23 5.34095 10.9814 5.34082ZM42.0244 5.34082C40.8909 5.34099 40.2663 6.19521 40.2168 6.93457H43.832C43.799 6.12946 43.2732 5.34082 42.0244 5.34082Z" fill="black"/></svg>`;
@@ -11061,15 +11321,14 @@ const PublishScreen = ({ onBack, customizationData }) => {
         const checkSubscriptionStatus = () => PublishScreen_awaiter(void 0, void 0, void 0, function* () {
             try {
                 setIsCheckingSubscription(true);
-                let customDomain = getCustomDomain();
+                let customDomain = getStoredCustomDomain();
                 if (!customDomain) {
                     try {
-                        const siteId = yield getSiteId();
+                        const siteId = getStoredSiteId();
                         if (siteId) {
                             // Use backend proxy endpoint instead of calling Webflow API directly
                             // This prevents idToken leakage and uses accessToken stored during OAuth
-                            const base = WORKER_BASE_URL.replace(/\/+$/, '');
-                            const data = yield makeAuthenticatedRequest(`${base}/api/accessibility/custom-domains?siteId=${encodeURIComponent(siteId)}`, { method: 'GET' });
+                            const data = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/custom-domains?siteId=${encodeURIComponent(siteId)}`), { method: 'GET' });
                             // makeAuthenticatedRequest returns JSON directly (not Response object)
                             if (data && data.customDomains && Array.isArray(data.customDomains)) {
                                 // Find the default/primary custom domain
@@ -11114,7 +11373,7 @@ const PublishScreen = ({ onBack, customizationData }) => {
                         .replace(/\/$/, '')
                         .split('/')[0];
                     // Call backend to check payment status
-                    const response = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/check-payment-status?domain=${encodeURIComponent(normalizedDomain)}`, { method: 'GET' });
+                    const response = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/check-payment-status?domain=${encodeURIComponent(normalizedDomain)}`), { method: 'GET' });
                     if ((response === null || response === void 0 ? void 0 : response.hasAccess) === true && (response === null || response === void 0 ? void 0 : response.isStaging) !== true) {
                         setHasSubscription(true);
                     }
@@ -11140,14 +11399,10 @@ const PublishScreen = ({ onBack, customizationData }) => {
         handlePublish();
     };
     const handleCancelSubscription = () => {
-        // Open Stripe billing portal in new window
-        window.open('https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00', '_blank');
+        openTrustedStripeUrl(STRIPE_PORTAL_URL);
     };
     const handlePurchaseNow = () => {
-        const stripeUrl = isAnnual
-            ? `https://buy.stripe.com/3cI8wRgGjaLt0MY3x64Ni00`
-            : `https://buy.stripe.com/8x23cx9dRaLt2V6ffO4Ni01`;
-        window.open(stripeUrl, '_blank');
+        openTrustedStripeUrl(isAnnual ? STRIPE_BUY_ANNUAL_URL : STRIPE_BUY_MONTHLY_URL);
     };
     return (react.createElement("div", { className: "publish-screen", style: { paddingTop: '0' } },
         showPublishModal && (react.createElement("div", { className: "publish-modal-overlay" },
@@ -11419,131 +11674,100 @@ const App = () => {
     const [currentScreen, setCurrentScreen] = (0,react.useState)('welcome');
     const [customizationData, setCustomizationData] = (0,react.useState)(null);
     const [isLoadingExistingData, setIsLoadingExistingData] = (0,react.useState)(false);
-    const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, attemptSilentAuth, checkPublishedDataExists, getSessionToken, makeAuthenticatedRequest, user } = useAuth();
+    const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, makeAuthenticatedRequest, user } = useAuth();
     const [isAppInitializing, setIsAppInitializing] = (0,react.useState)(true);
     const [isCheckingAuth, setIsCheckingAuth] = (0,react.useState)(true);
     const [isAuthenticated, setIsAuthenticated] = (0,react.useState)(false);
     const [hasInitialized, setHasInitialized] = (0,react.useState)(false);
+    // Single source of truth: `userAuth.ts` dispatches this event whenever auth completes
     (0,react.useEffect)(() => {
-        // Only run when user is authenticated
+        const onAuthSuccess = () => {
+            try {
+                const raw = localStorage.getItem('accessbit-userinfo');
+                if (!raw)
+                    return;
+                const parsed = JSON.parse(raw);
+                if (parsed === null || parsed === void 0 ? void 0 : parsed.siteId) {
+                    setIsAuthenticated(true);
+                }
+            }
+            catch (_a) {
+                // ignore
+            }
+        };
+        window.addEventListener('accessbit-auth-success', onAuthSuccess, false);
+        return () => window.removeEventListener('accessbit-auth-success', onAuthSuccess);
+    }, []);
+    (0,react.useEffect)(() => {
         if (!isAuthenticated || isAuthLoading)
             return;
-        const detectAppInstallation = () => app_awaiter(void 0, void 0, void 0, function* () {
-            var _a, _b;
-            try {
-                const userData = localStorage.getItem('accessbit-userinfo');
-                if (!userData)
+        let cancelled = false;
+        const run = () => app_awaiter(void 0, void 0, void 0, function* () {
+            // Run installation detection after authentication is complete
+            setTimeout(() => app_awaiter(void 0, void 0, void 0, function* () {
+                if (cancelled)
                     return;
-                const parsed = JSON.parse(userData);
-                const { siteId, siteInfo } = parsed;
-                // SECURITY FIX: Email removed from localStorage (PII)
-                // Only siteId is required, email is retrieved from session token when needed
-                if (!siteId)
-                    return;
-                // Check if installation already exists on server
-                // Try to get the installation record directly from KV
-                let installationExists = false;
                 try {
-                    const checkData = yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`, {
-                        method: 'GET'
-                    });
-                    installationExists = (checkData === null || checkData === void 0 ? void 0 : checkData.exists) === true;
-                }
-                catch (checkError) {
-                    // If endpoint doesn't exist or returns 404, assume first install
-                    if (((_a = checkError === null || checkError === void 0 ? void 0 : checkError.message) === null || _a === void 0 ? void 0 : _a.includes('404')) || ((_b = checkError === null || checkError === void 0 ? void 0 : checkError.message) === null || _b === void 0 ? void 0 : _b.includes('not found'))) {
-                        installationExists = false;
-                    }
-                    else {
-                        // For other errors, assume first install
-                        installationExists = false;
-                    }
-                }
-                // Only send email on first install
-                // If installation already exists, skip webhook
-                if (!installationExists) {
-                    // Construct staging URL from shortName if available
-                    const shortName = (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName) || null;
-                    const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
-                    // SECURITY FIX: Get email from auth state (session token) instead of localStorage
-                    // Email is PII and should not be stored in localStorage
-                    const userEmail = (user === null || user === void 0 ? void 0 : user.email) || ''; // Get from auth state (decoded from session token)
-                    const installationPayload = {
-                        siteId: siteId,
-                        userId: parsed.userId || siteId, // Use siteId as fallback if userId not available
-                        userEmail: userEmail, // Get from auth state, not localStorage
-                        siteName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteName) || 'Unknown Site',
-                        installationData: {
-                            timestamp: new Date().toISOString(),
-                            source: 'webflow_app',
-                            firstName: parsed.firstName || 'User',
-                            email: userEmail, // Get from auth state, not localStorage
-                            customDomain: parsed.customDomain || null,
-                            stagingUrl: stagingUrl, // Include staging URL if available
-                            exp: parsed.exp || null,
-                            siteInfo: siteInfo || null,
-                            siteId: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId) || siteId,
-                            siteName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteName) || 'Unknown Site',
-                            shortName: shortName
-                        }
-                    };
-                    // Send installation data to worker
-                    try {
-                        yield makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/webflow/app-installed`, {
-                            method: 'POST',
-                            body: JSON.stringify(installationPayload)
-                        });
-                    }
-                    catch (error) {
-                        // Silent fail - installation data send failed
-                    }
-                }
-                else {
-                }
-            }
-            catch (error) {
-            }
-        });
-        // Run installation detection after authentication is complete
-        const timer = setTimeout(detectAppInstallation, 1000);
-        return () => clearTimeout(timer);
-    }, [isAuthenticated, isAuthLoading]);
-    // Load existing customization data when user becomes authenticated
-    (0,react.useEffect)(() => {
-        if (isAuthenticated && !isAuthLoading) {
-            loadExistingCustomizationData();
-            // Ensure the hosted script is registered and applied on app launch
-            (() => app_awaiter(void 0, void 0, void 0, function* () {
-                var _a;
-                try {
-                    const stored = localStorage.getItem('accessbit-userinfo');
-                    const siteId = stored ? (((_a = JSON.parse(stored)) === null || _a === void 0 ? void 0 : _a.siteId) || '') : '';
+                    const userData = localStorage.getItem('accessbit-userinfo');
+                    if (!userData)
+                        return;
+                    const parsed = JSON.parse(userData);
+                    const { siteId, siteInfo } = parsed;
                     if (!siteId)
                         return;
-                    const base = WORKER_BASE_URL.replace(/\/+$/, '');
+                    let installationExists = false;
                     try {
-                        yield makeAuthenticatedRequest(`${base}/api/accessibility/register-script?siteId=${encodeURIComponent(siteId)}`, {
-                            method: 'POST'
-                        });
+                        const checkData = yield makeAuthenticatedRequest(workerUrl(`/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`), { method: 'GET' });
+                        installationExists = (checkData === null || checkData === void 0 ? void 0 : checkData.exists) === true;
                     }
-                    catch (error) {
-                        // Silent fail; user can use Publish to repair
+                    catch (_a) {
+                        installationExists = false;
                     }
-                    try {
-                        yield makeAuthenticatedRequest(`${base}/api/accessibility/apply-script?siteId=${encodeURIComponent(siteId)}`, {
-                            method: 'POST',
-                            body: JSON.stringify({ targetType: 'site', scriptId: 'accessbit', location: 'header', version: '1.0.0' })
-                        });
-                    }
-                    catch (error) {
-                        // Silent fail; user can use Publish to repair
+                    if (!installationExists) {
+                        const shortName = (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.shortName) || null;
+                        const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
+                        const userEmail = (user === null || user === void 0 ? void 0 : user.email) || '';
+                        const installationPayload = {
+                            siteId: siteId,
+                            userId: parsed.userId || siteId,
+                            userEmail: userEmail,
+                            siteName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteName) || 'Unknown Site',
+                            installationData: {
+                                timestamp: new Date().toISOString(),
+                                source: 'webflow_app',
+                                firstName: parsed.firstName || 'User',
+                                email: userEmail,
+                                customDomain: parsed.customDomain || null,
+                                stagingUrl: stagingUrl,
+                                exp: parsed.exp || null,
+                                siteInfo: siteInfo || null,
+                                siteId: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteId) || siteId,
+                                siteName: (siteInfo === null || siteInfo === void 0 ? void 0 : siteInfo.siteName) || 'Unknown Site',
+                                shortName: shortName,
+                            },
+                        };
+                        try {
+                            yield makeAuthenticatedRequest(workerUrl("/api/webflow/app-installed"), {
+                                method: 'POST',
+                                body: JSON.stringify(installationPayload),
+                            });
+                        }
+                        catch (_b) {
+                            // silent
+                        }
                     }
                 }
-                catch (e) {
-                    // Silent fail; user can use Publish to repair
+                catch (_c) {
+                    // silent
                 }
-            }))();
-        }
+            }), 1000);
+            // Load existing customization data once authenticated
+            yield loadExistingCustomizationData();
+        });
+        run();
+        return () => {
+            cancelled = true;
+        };
     }, [isAuthenticated, isAuthLoading]);
     const loadExistingCustomizationData = () => app_awaiter(void 0, void 0, void 0, function* () {
         if (!isAuthenticated)
@@ -11591,19 +11815,6 @@ const App = () => {
                     if (storedData) {
                         const parsedData = JSON.parse(storedData);
                     }
-                    // Now check if published data exists for this user
-                    setTimeout(() => app_awaiter(void 0, void 0, void 0, function* () {
-                        try {
-                            const hasPublishedData = yield checkPublishedDataExists();
-                            if (hasPublishedData) {
-                                const existingData = yield loadExistingCustomizationData();
-                            }
-                            else {
-                            }
-                        }
-                        catch (error) {
-                        }
-                    }), 500); // Small delay to ensure auth state is updated
                     // Stay on welcome screen for authenticated users instead of auto-redirecting
                     setCurrentScreen('welcome');
                 }
@@ -11626,65 +11837,6 @@ const App = () => {
     const handleAuthorize = () => app_awaiter(void 0, void 0, void 0, function* () {
         try {
             yield openAuthScreen();
-            // Listen for auth success to update state
-            const handleAuthSuccess = () => {
-                // Check localStorage to verify auth data was saved
-                const userData = localStorage.getItem('accessbit-userinfo');
-                if (userData) {
-                    try {
-                        const parsed = JSON.parse(userData);
-                        if (parsed.siteId) {
-                            setIsAuthenticated(true);
-                            // Force React Query to refetch auth state
-                            window.dispatchEvent(new Event('storage'));
-                        }
-                        else {
-                        }
-                    }
-                    catch (e) {
-                    }
-                }
-                else {
-                }
-            };
-            // Set up listeners BEFORE auth completes (in case it's fast)
-            window.addEventListener('accessbit-auth-success', handleAuthSuccess, false);
-            // Also listen for storage events as fallback
-            const handleStorageChange = (e) => {
-                if (e.key === 'accessbit-userinfo' && e.newValue) {
-                    handleAuthSuccess();
-                }
-            };
-            window.addEventListener('storage', handleStorageChange, false);
-            // Fallback: Poll localStorage every second for 2 minutes
-            let pollCount = 0;
-            const maxPolls = 120; // 2 minutes
-            const pollInterval = setInterval(() => {
-                pollCount++;
-                const stored = localStorage.getItem('accessbit-userinfo');
-                if (stored) {
-                    try {
-                        const parsed = JSON.parse(stored);
-                        if (parsed.siteId) {
-                            clearInterval(pollInterval);
-                            handleAuthSuccess();
-                        }
-                    }
-                    catch (e) {
-                        // Ignore
-                    }
-                }
-                if (pollCount >= maxPolls) {
-                    clearInterval(pollInterval);
-                }
-            }, 1000);
-            // Cleanup listeners after 5 minutes
-            const cleanup = () => {
-                window.removeEventListener('accessbit-auth-success', handleAuthSuccess);
-                window.removeEventListener('storage', handleStorageChange);
-                clearInterval(pollInterval);
-            };
-            setTimeout(cleanup, 5 * 60 * 1000);
         }
         catch (error) {
         }
@@ -11711,6 +11863,11 @@ const App = () => {
 /* harmony default export */ const app = (App);
 
 ;// ./src/index.tsx
+
+
+
+
+
 
 
 

@@ -3,8 +3,7 @@ import WelcomeScreen from "./components/WelcomeScreen";
 import CustomizationScreen from "./components/CustomizationScreen";
 import PublishScreen from "./components/PublishScreen";
 import { useAuth} from "./hooks/userAuth";
-import { getAuthStorageItem,setAuthStorageItem,removeAuthStorageItem } from "./util/authStorage";
-import { WORKER_BASE_URL } from './util/constants';
+import { workerUrl } from './util/workerRequest';
 import { WebflowAPI } from './types/webflowtypes';
 
 // Webflow API is available globally in the Webflow Designer environment
@@ -17,139 +16,107 @@ const App: React.FC = () => {
   const [customizationData, setCustomizationData] = useState<any>(null);
   const [isLoadingExistingData, setIsLoadingExistingData] = useState(false);
  
-  const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, attemptSilentAuth, checkPublishedDataExists, getSessionToken, makeAuthenticatedRequest, user } = useAuth();
+  const { openAuthScreen, getPublishedSettings, attemptAutoRefresh, isAuthLoading, makeAuthenticatedRequest, user } = useAuth();
  
   const [isAppInitializing, setIsAppInitializing] = useState(true);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
 
+  // Single source of truth: `userAuth.ts` dispatches this event whenever auth completes
   useEffect(() => {
-    // Only run when user is authenticated
-    if (!isAuthenticated || isAuthLoading) return;
-
-    const detectAppInstallation = async () => {
+    const onAuthSuccess = () => {
       try {
-        const userData = localStorage.getItem('accessbit-userinfo');
-        if (!userData) return;
-
-        const parsed = JSON.parse(userData);
-        const { siteId, siteInfo } = parsed;
-        
-        // SECURITY FIX: Email removed from localStorage (PII)
-        // Only siteId is required, email is retrieved from session token when needed
-        if (!siteId) return;
-
-        // Check if installation already exists on server
-        // Try to get the installation record directly from KV
-        let installationExists = false;
-        try {
-          const checkData = await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`, {
-            method: 'GET'
-          });
-          installationExists = checkData?.exists === true;
-        } catch (checkError: any) {
-          // If endpoint doesn't exist or returns 404, assume first install
-          if (checkError?.message?.includes('404') || checkError?.message?.includes('not found')) {
-            installationExists = false;
-          } else {
-            // For other errors, assume first install
-            installationExists = false;
-          }
+        const raw = localStorage.getItem('accessbit-userinfo');
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed?.siteId) {
+          setIsAuthenticated(true);
         }
-        
-        // Only send email on first install
-        // If installation already exists, skip webhook
-        if (!installationExists) {
-          
-          
-          // Construct staging URL from shortName if available
-          const shortName = siteInfo?.shortName || null;
-          const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
-          
-          // SECURITY FIX: Get email from auth state (session token) instead of localStorage
-          // Email is PII and should not be stored in localStorage
-          const userEmail = user?.email || ''; // Get from auth state (decoded from session token)
-          
-          const installationPayload = {
-            siteId: siteId,
-            userId: parsed.userId || siteId, // Use siteId as fallback if userId not available
-            userEmail: userEmail, // Get from auth state, not localStorage
-            siteName: siteInfo?.siteName || 'Unknown Site',
-            installationData: {
-              timestamp: new Date().toISOString(),
-              source: 'webflow_app',
-              firstName: parsed.firstName || 'User',
-              email: userEmail, // Get from auth state, not localStorage
-              customDomain: parsed.customDomain || null,
-              stagingUrl: stagingUrl, // Include staging URL if available
-              exp: parsed.exp || null,
-              siteInfo: siteInfo || null,
-             
-              siteId: siteInfo?.siteId || siteId,
-              siteName: siteInfo?.siteName || 'Unknown Site',
-              shortName: shortName
-            }
-          };
-          
-          
-          
-          // Send installation data to worker
-          try {
-            await makeAuthenticatedRequest(`${WORKER_BASE_URL}/api/webflow/app-installed`, {
-              method: 'POST',
-              body: JSON.stringify(installationPayload)
-            });
-          } catch (error) {
-            // Silent fail - installation data send failed
-          }
-        } else {
-         
-        }
-      } catch (error) {
-    
+      } catch {
+        // ignore
       }
     };
-    
-    // Run installation detection after authentication is complete
-    const timer = setTimeout(detectAppInstallation, 1000);
-    return () => clearTimeout(timer);
-  }, [isAuthenticated, isAuthLoading]);
 
-  // Load existing customization data when user becomes authenticated
+    window.addEventListener('accessbit-auth-success', onAuthSuccess as EventListener, false);
+    return () => window.removeEventListener('accessbit-auth-success', onAuthSuccess as EventListener);
+  }, []);
+
   useEffect(() => {
-    if (isAuthenticated && !isAuthLoading) {
-      loadExistingCustomizationData();
-      // Ensure the hosted script is registered and applied on app launch
-      (async () => {
+    if (!isAuthenticated || isAuthLoading) return;
+
+    let cancelled = false;
+
+    const run = async () => {
+      // Run installation detection after authentication is complete
+      setTimeout(async () => {
+        if (cancelled) return;
         try {
-          const stored = localStorage.getItem('accessbit-userinfo');
-          const siteId = stored ? (JSON.parse(stored)?.siteId || '') : '';
+          const userData = localStorage.getItem('accessbit-userinfo');
+          if (!userData) return;
+
+          const parsed = JSON.parse(userData);
+          const { siteId, siteInfo } = parsed;
           if (!siteId) return;
-          
-          const base = WORKER_BASE_URL.replace(/\/+$/,'');
-          
+
+          let installationExists = false;
           try {
-            await makeAuthenticatedRequest(`${base}/api/accessibility/register-script?siteId=${encodeURIComponent(siteId)}`, {
-              method: 'POST'
-            });
-          } catch (error) {
-            // Silent fail; user can use Publish to repair
+            const checkData = await makeAuthenticatedRequest(
+              workerUrl(`/api/accessibility/check-installation?siteId=${encodeURIComponent(siteId)}`),
+              { method: 'GET' }
+            );
+            installationExists = checkData?.exists === true;
+          } catch {
+            installationExists = false;
           }
-          
-          try {
-            await makeAuthenticatedRequest(`${base}/api/accessibility/apply-script?siteId=${encodeURIComponent(siteId)}`, {
-              method: 'POST',
-              body: JSON.stringify({ targetType: 'site', scriptId: 'accessbit', location: 'header', version: '1.0.0' })
-            });
-          } catch (error) {
-            // Silent fail; user can use Publish to repair
+
+          if (!installationExists) {
+            const shortName = siteInfo?.shortName || null;
+            const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
+            const userEmail = user?.email || '';
+
+            const installationPayload = {
+              siteId: siteId,
+              userId: parsed.userId || siteId,
+              userEmail: userEmail,
+              siteName: siteInfo?.siteName || 'Unknown Site',
+              installationData: {
+                timestamp: new Date().toISOString(),
+                source: 'webflow_app',
+                firstName: parsed.firstName || 'User',
+                email: userEmail,
+                customDomain: parsed.customDomain || null,
+                stagingUrl: stagingUrl,
+                exp: parsed.exp || null,
+                siteInfo: siteInfo || null,
+                siteId: siteInfo?.siteId || siteId,
+                siteName: siteInfo?.siteName || 'Unknown Site',
+                shortName: shortName,
+              },
+            };
+
+            try {
+              await makeAuthenticatedRequest(workerUrl("/api/webflow/app-installed"), {
+                method: 'POST',
+                body: JSON.stringify(installationPayload),
+              });
+            } catch {
+              // silent
+            }
           }
-        } catch (e) {
-          // Silent fail; user can use Publish to repair
+        } catch {
+          // silent
         }
-      })();
-    }
+      }, 1000);
+
+      // Load existing customization data once authenticated
+      await loadExistingCustomizationData();
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
   }, [isAuthenticated, isAuthLoading]);
 
   const loadExistingCustomizationData = async () => {
@@ -212,24 +179,6 @@ const App: React.FC = () => {
         
           }
           
-          // Now check if published data exists for this user
-          setTimeout(async () => {
-            try {
-             
-              const hasPublishedData = await checkPublishedDataExists();
-              
-              if (hasPublishedData) {
-
-                const existingData = await loadExistingCustomizationData();
-
-              } else {
-
-              }
-            } catch (error) {
-
-            }
-          }, 500); // Small delay to ensure auth state is updated
-          
           // Stay on welcome screen for authenticated users instead of auto-redirecting
           setCurrentScreen('welcome');
         } else {
@@ -252,80 +201,6 @@ const App: React.FC = () => {
    
     try {
       await openAuthScreen();
-   
-      
-      // Listen for auth success to update state
-      const handleAuthSuccess = () => {
-  
-        // Check localStorage to verify auth data was saved
-        const userData = localStorage.getItem('accessbit-userinfo');
-        if (userData) {
-          try {
-            const parsed = JSON.parse(userData);
-           
-            if (parsed.siteId) {
-             
-              setIsAuthenticated(true);
-              // Force React Query to refetch auth state
-              window.dispatchEvent(new Event('storage'));
-            } else {
-           
-            }
-          } catch (e) {
-      
-          }
-        } else {
-       
-        }
-      };
-      
-      // Set up listeners BEFORE auth completes (in case it's fast)
-      window.addEventListener('accessbit-auth-success', handleAuthSuccess, false);
-     
-      
-      // Also listen for storage events as fallback
-      const handleStorageChange = (e: StorageEvent) => {
-        if (e.key === 'accessbit-userinfo' && e.newValue) {
-        
-          handleAuthSuccess();
-        }
-      };
-      window.addEventListener('storage', handleStorageChange, false);
-      
-      
-      // Fallback: Poll localStorage every second for 2 minutes
-      let pollCount = 0;
-      const maxPolls = 120; // 2 minutes
-      const pollInterval = setInterval(() => {
-        pollCount++;
-        const stored = localStorage.getItem('accessbit-userinfo');
-        if (stored) {
-          try {
-            const parsed = JSON.parse(stored);
-            if (parsed.siteId) {
-             
-              clearInterval(pollInterval);
-              handleAuthSuccess();
-            }
-          } catch (e) {
-            // Ignore
-          }
-        }
-        if (pollCount >= maxPolls) {
-       
-          clearInterval(pollInterval);
-        }
-      }, 1000);
-      
-      // Cleanup listeners after 5 minutes
-      const cleanup = () => {
-        window.removeEventListener('accessbit-auth-success', handleAuthSuccess);
-        window.removeEventListener('storage', handleStorageChange);
-        clearInterval(pollInterval);
-        
-      };
-      setTimeout(cleanup, 5 * 60 * 1000);
-     
     } catch (error: any) {
 
       
