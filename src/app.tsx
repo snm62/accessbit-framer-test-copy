@@ -71,10 +71,11 @@ const App: React.FC = () => {
           }
 
           if (!installationExists) {
-            const shortName = siteInfo?.shortName || null;
-            const stagingUrl = shortName ? `https://${shortName}.webflow.io` : null;
             const userEmail = user?.email || '';
 
+            // NOTE: staging/preview URL is derived server-side by the worker from
+            // the Webflow API; the client no longer constructs or sends any
+            // Webflow preview URL to avoid leaking staging references in the bundle.
             const installationPayload = {
               siteId: siteId,
               userId: parsed.userId || siteId,
@@ -86,12 +87,10 @@ const App: React.FC = () => {
                 firstName: parsed.firstName || 'User',
                 email: userEmail,
                 customDomain: parsed.customDomain || null,
-                stagingUrl: stagingUrl,
                 exp: parsed.exp || null,
                 siteInfo: siteInfo || null,
                 siteId: siteInfo?.siteId || siteId,
                 siteName: siteInfo?.siteName || 'Unknown Site',
-                shortName: shortName,
               },
             };
 
@@ -156,15 +155,18 @@ const App: React.FC = () => {
       
 
       try {
-        // Try fresh background authentication (silent) with timeout
+        // Try fresh background authentication (silent) with timeout.
+        // attemptAutoRefresh now retries up to 5 times with 2-second gaps
+        // to cover Cloudflare KV propagation after a Marketplace install,
+        // so the outer timeout here needs to be generous enough for the
+        // full retry loop (~12 seconds) plus network round-trip.
         const authPromise = attemptAutoRefresh();
         const timeoutPromise = new Promise<boolean>((resolve) => {
           setTimeout(() => {
-           
             resolve(false);
-          }, 5000); // 5 second timeout
+          }, 25000); // 25 second timeout — covers the full retry back-off (~20s) inside attemptAutoRefresh
         });
-        
+
         const refreshSuccess = await Promise.race([authPromise, timeoutPromise]);
         
         if (refreshSuccess) {
@@ -234,6 +236,7 @@ const App: React.FC = () => {
           onAuthorize={handleAuthorize}
           onNeedHelp={handleNeedHelp}
           authenticated={isAuthenticated}
+          isCheckingAuth={isCheckingAuth}
           handleWelcomeScreen={handleWelcomeScreen}
         />
       ) : currentScreen === 'customization' ? (

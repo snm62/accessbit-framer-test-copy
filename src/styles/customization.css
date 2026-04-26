@@ -781,29 +781,74 @@
   border: 1px solid rgba(57, 53, 83, 1);
   border-radius: 3px;
   background: #D9D9D905;
-  cursor: pointer;
   font-size: 14px;
   height: 25px;
+  box-sizing: border-box;
 }
 
 .color-preview {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 10.5px;
-  border: 0.3px solid #FFFFFF
+  border: 0.3px solid #FFFFFF;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  /* Reset the native <button> look so only the colored circle shows */
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
 }
 
-.color-text {
+.color-preview:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* The editable hex input that lives inside the .color-picker-button bar.
+   Reuses the visual treatment of the old .color-text span so the layout
+   matches the original design — just now it's typeable. */
+/* IMPORTANT: there is a generic rule above at `.form-group input` that
+   sets `max-height: 4px`, `padding: 12px`, `width: 100%`, `background`,
+   `border`, `border-radius`, and `color` on every input inside a
+   .form-group. Our hex input lives inside a .form-group so that rule
+   applies to it too. We reset EVERY property that rule touches so the
+   hex input can render at its natural height inside the color-picker
+   bar. Without these overrides the global rule clamps the input to
+   4px tall and the text appears clipped. */
+.color-picker-button .color-picker-hex-input {
+  flex: 1 1 auto;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
   margin-left: 10px;
-  /* flex-grow: 1; */
+  margin-right: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
   font-size: 12px;
-  line-height: 100%;
-  letter-spacing: -3%;
+  line-height: normal;
+  letter-spacing: -0.03em;
   color: rgba(255, 255, 255, 0.6);
-  ;
+  text-transform: lowercase;
+  outline: none;
+  transition: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
 
+.color-picker-button .color-picker-hex-input:focus {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.color-picker-button .color-picker-hex-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .dropdown-arrow {

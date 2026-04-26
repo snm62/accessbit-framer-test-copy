@@ -52,10 +52,16 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
 
   // colorpicker
   const [btnOpen, setBtnOpen] = useState(false);
+  // Text-input mirror of btnColor for the "type a hex" field inside the
+  // color picker dropdown. Kept as a separate piece of state so the user
+  // can type intermediate values (e.g. "#ff" while aiming for "#ff0000")
+  // without the wheel overwriting their input until they've typed a
+  // complete 7-char hex.
+  const [hexInput, setHexInput] = useState("#007bff");
   const btnPickerInstance = useRef<any>(null);
   const btnDropdownRef = useRef<HTMLDivElement | null>(null);
   const btnPickerRef = useRef<HTMLDivElement | null>(null);
-  
+
 
   // Load existing customization data when component mounts
   useEffect(() => {
@@ -95,6 +101,50 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     // Sync picker color with state when dropdown opens
     if (btnOpen && btnPickerInstance.current) btnPickerInstance.current.color.set(btnColor);
   }, [btnOpen])
+
+  
+  useEffect(() => {
+    setHexInput(btnColor);
+  }, [btnColor]);
+
+  
+  const isCompleteHex = (v: string) => /^#[0-9a-fA-F]{6}$/.test(v);
+
+  const handleHexInputChange = (rawValue: string) => {
+    let next = rawValue.trim();
+    // Auto-prepend "#" if the user didn't type it
+    if (next && !next.startsWith("#")) next = "#" + next;
+    // Hard cap at 7 characters (# + 6 hex digits)
+    if (next.length > 7) next = next.substring(0, 7);
+    // Always reflect what the user typed, even intermediate values
+    setHexInput(next);
+
+    // Push to the wheel + state only when the value is fully valid
+    if (isCompleteHex(next)) {
+      setBtnColor(next);
+      if (btnPickerInstance.current) {
+        try {
+          btnPickerInstance.current.color.set(next);
+        } catch {
+          // iro may throw on unexpected input — safely ignore
+        }
+      }
+    }
+  };
+
+  const handleHexInputBlur = () => {
+    // If the user left an invalid value in the input, snap back to the
+    // last committed color so the UI never shows a broken state.
+    if (!isCompleteHex(hexInput)) {
+      setHexInput(btnColor);
+    }
+  };
+
+  const handleHexInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      (e.target as HTMLInputElement).blur();
+    }
+  };
 
   useEffect(() => {
     // Handle click outside to close any open dropdowns or color pickers
@@ -375,11 +425,31 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                   <div>
                     <label>Background Color</label>
                     <div className="color-picker-dropdown" ref={btnDropdownRef}>
-                      <button className="color-picker-button" onClick={() => setBtnOpen(!btnOpen)}>
-                        <span className="color-text">{btnColor}</span>
-                        <div className="color-preview" style={{ backgroundColor: btnColor }}></div>
-                      </button>
-                      <div ref={btnPickerRef} className={`color-picker-container ${btnOpen ? "visible" : "hidden"}`}></div>
+                      <div className="color-picker-button">
+                        <input
+                          type="text"
+                          className="color-picker-hex-input"
+                          value={hexInput}
+                          onChange={(e) => handleHexInputChange(e.target.value)}
+                          onBlur={handleHexInputBlur}
+                          onKeyDown={handleHexInputKeyDown}
+                          spellCheck={false}
+                          autoComplete="off"
+                          aria-label="Hex color code"
+                          placeholder="#rrggbb"
+                          maxLength={7}
+                        />
+                        <button
+                          type="button"
+                          className="color-preview"
+                          style={{ backgroundColor: btnColor }}
+                          onClick={() => setBtnOpen(!btnOpen)}
+                          aria-label={btnOpen ? "Close color wheel" : "Open color wheel"}
+                        />
+                      </div>
+                      <div className={`color-picker-container ${btnOpen ? "visible" : "hidden"}`}>
+                        <div ref={btnPickerRef}></div>
+                      </div>
                     </div>
                   </div>
                 </div>

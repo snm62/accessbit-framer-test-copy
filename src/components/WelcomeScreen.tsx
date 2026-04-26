@@ -7,40 +7,31 @@ const rightLines = new URL("../assets/rightlines.svg", import.meta.url).href;
 type WelcomeScreenProps = {
   onAuthorize: () => void;
   onNeedHelp: () => void;
-  authenticated?:boolean;
+  authenticated?: boolean;
+  isCheckingAuth?: boolean;
   handleWelcomeScreen: () => void;
 };
 
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthorize, onNeedHelp ,authenticated,handleWelcomeScreen}) => {
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthorize, onNeedHelp, authenticated, isCheckingAuth: parentIsChecking, handleWelcomeScreen }) => {
   const [hasUserData, setHasUserData] = useState(false);
   const [isAuthorizing, setIsAuthorizing] = useState(false);
 
-  useEffect(() => {
-    
-    const checkUserAuth = () => {
-      const userinfo = localStorage.getItem("accessbit-userinfo");
-      const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
-     
-      setHasUserData(authenticated || !!hasData);
-    };
+ 
+  const isCheckingAuth = parentIsChecking ?? false;
 
-    
-    const timer = setTimeout(() => {
-      checkUserAuth();
-      setIsCheckingAuth(false);
-    }, 2000); // 2 second delay
-
-    return () => clearTimeout(timer);
-  }, [authenticated]); // Add authenticated back to dependencies to react to auth changes
-
-  // Separate useEffect to handle authentication changes
+  // React to authentication changes from parent
   useEffect(() => {
     if (authenticated) {
       setHasUserData(true);
       setIsAuthorizing(false);
+    } else if (!isCheckingAuth) {
+      
+      // as a fallback (e.g. if auth completed via storage event)
+      const userinfo = localStorage.getItem("accessbit-userinfo");
+      const hasData = userinfo && userinfo !== "null" && userinfo !== "undefined";
+      setHasUserData(!!hasData);
     }
-  }, [authenticated]);
+  }, [authenticated, isCheckingAuth]);
 
  
   // Listen for auth completion when authorizing

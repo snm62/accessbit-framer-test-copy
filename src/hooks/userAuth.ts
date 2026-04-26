@@ -40,6 +40,7 @@ const dispatchAuthSuccess = (detail: any) => {
 };
 
 const resolveCustomDomainFromSiteInfo = (siteInfo: any): string | undefined => {
+  
   try {
     if (siteInfo?.domains && Array.isArray(siteInfo.domains)) {
       const productionDomain = siteInfo.domains.find(
@@ -51,9 +52,6 @@ const resolveCustomDomainFromSiteInfo = (siteInfo: any): string | undefined => {
     }
   } catch {
     // ignore
-  }
-  if (siteInfo?.shortName) {
-    return `https://${siteInfo.shortName}.webflow.io`;
   }
   return undefined;
 };
@@ -88,13 +86,26 @@ const hasUsableSessionToken = () => {
   return inMemorySessionTokenExpiry - Date.now() > SESSION_TOKEN_BUFFER_MS;
 };
 
+
 const requestAuthToken = async (siteId: string) => {
+  
+  let idToken: string | null = null;
+  try {
+    idToken = await webflow.getIdToken();
+  } catch {
+    
+    idToken = null;
+  }
+
+  
   const response = await fetchWorker(workerUrl("/api/auth/token"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ siteId }),
+    body: JSON.stringify(idToken ? { siteId, idToken } : { siteId }),
   });
   const data = await response.json().catch(() => ({}));
+
+ 
   return { response, data };
 };
 
@@ -207,19 +218,24 @@ export function useAuth() {
   const openAuthScreen = async () => {
     // Get current site info first
     const siteInfo = await webflow.getSiteInfo();
-    
+
    
+    const randomBytes = new Uint8Array(16);
+    crypto.getRandomValues(randomBytes);
+    const randomHex = Array.from(randomBytes, (b) =>
+      b.toString(16).padStart(2, "0")
+    ).join("");
+    const expectedAuthState = `webflow_designer_${randomHex}`;
+
+    const authUrl = `${workerUrl("/api/auth/authorize")}?state=${encodeURIComponent(expectedAuthState)}&siteId=${encodeURIComponent(siteInfo.siteId)}`;
+
     
-    const authUrl = `${workerUrl("/api/auth/authorize")}?state=webflow_designer_${siteInfo.siteId}&siteId=${siteInfo.siteId}`;
- 
-    
-    // Try to open popup
     let authWindow: Window | null = null;
     try {
       authWindow = window.open(
         authUrl,
         "accessbit_auth",
-        "width=600,height=700,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=yes,noopener,noreferrer"
+        "width=600,height=700,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=yes"
       );
     } catch (e) {
       // Continue with server-state polling path even if popup handle is unavailable.
@@ -257,108 +273,107 @@ export function useAuth() {
       }
     };
 
-    // Monitor popup window for completion when a handle is available
-    const checkPopupClosed = setInterval(async () => {
-      if (authWindow && authWindow.closed) {
-        clearInterval(checkPopupClosed);
-        await completeFromServerState();
-      } else {
-        // Popup still open - try to check its URL (may fail due to cross-origin)
-        try {
-          if (authWindow && authWindow.location) {
-            const popupUrl = authWindow.location.href;
-           
-            if (popupUrl.includes('auth-success')) {
-             
-            } else if (popupUrl.includes('oauth/authorize')) {
-              
-            } else if (popupUrl === 'about:blank' || !popupUrl) {
-             
-            } else {
-           
-            }
-          }
-        } catch (e: any) {
-          // Expected - can't access popup URL due to cross-origin
-          // This is normal when popup is on different domain
-          if (e.message && e.message.includes('cross-origin')) {
-            // This is expected and normal
-          } else {
-           
-          }
-        }
-      }
-    }, 1000);
+   
+    let authCompleted = false;
+    const markAuthCompleted = () => {
+      authCompleted = true;
+    };
+
+   
+    const completionPollTimer: ReturnType<typeof setInterval> | null = null;
+    const completionPollStart = setTimeout(() => { /* no-op */ }, 0);
 
     
-    let noHandleCompletionPoll: ReturnType<typeof setInterval> | null = null;
-    let noHandleFocusListener: ((this: Window, ev: FocusEvent) => any) | null = null;
-    if (!authWindow) {
-      noHandleFocusListener = () => {
-        if (noHandleCompletionPoll) return;
-        let attempts = 0;
-        const maxAttempts = 20; // ~20s
-        noHandleCompletionPoll = setInterval(async () => {
-          attempts++;
-          await completeFromServerState();
-          const hasSiteId = !!readStoredUserInfo();
-          if (hasSiteId || attempts >= maxAttempts) {
-            if (noHandleCompletionPoll) {
-              clearInterval(noHandleCompletionPoll);
-              noHandleCompletionPoll = null;
+    const completionPollHardStop = setTimeout(() => {
+      if (completionPollTimer) clearInterval(completionPollTimer);
+    }, 120 * 1000);
+
+   
+    const checkPopupClosed: ReturnType<typeof setInterval> = setInterval(async () => {
+      if (authCompleted) {
+        clearInterval(checkPopupClosed);
+        return;
+      }
+      if (authWindow && authWindow.closed) {
+        clearInterval(checkPopupClosed);
+        // Popup closed. Give the worker a moment to finish writing
+        // auth-data to KV, then do a single fallback check.
+        setTimeout(async () => {
+          if (authCompleted) return;
+          try {
+            await completeFromServerState();
+            if (readStoredUserInfo()) {
+              markAuthCompleted();
             }
-            if (noHandleFocusListener) {
-              window.removeEventListener('focus', noHandleFocusListener);
-              noHandleFocusListener = null;
-            }
+          } catch {
+            // silent — user can click Authorize again if this fails
           }
-        }, 1000);
-      };
-      window.addEventListener('focus', noHandleFocusListener);
-    }
+        }, 500);
+      }
+    }, 500);
     
     // Listen for postMessage from popup
     const handleMessage = async (event: MessageEvent) => {
-      
+
       const safeData = event.data ? { ...event.data } : null;
       if (safeData && safeData.sessionToken) {
         safeData.sessionToken = '[REDACTED]'; // Remove sensitive token from logs
       }
-      
-      
 
-      
+
+
       const normalizeOrigin = (origin: string) => origin.replace(/\/+$/, '').toLowerCase();
       const normalizedAllowedOrigin = normalizeOrigin(WORKER_BASE_URL);
-      // Strict equality only: event.origin is the browser-supplied sender origin (scheme+host+port).
+      // Defense 1: strict origin equality. event.origin is browser-supplied
+      // and cannot be forged by the sending script.
       if (!event.origin || normalizeOrigin(event.origin) !== normalizedAllowedOrigin) {
         return;
       }
+
+     
+      if (authWindow) {
+        // Exact-window binding (strongest)
+        if (event.source !== authWindow) {
+          return;
+        }
+      } else {
+        // Window-type validation (fallback when noopener nulls the handle)
+        if (!event.source) {
+          return;
+        }
+      }
+
       
+      if (!event.data || event.data.state !== expectedAuthState) {
+        return;
+      }
+
       // Only process AUTH_SUCCESS messages
       if (event.data && event.data.type === 'AUTH_SUCCESS') {
-       
-        clearInterval(checkPopupClosed);
         
+        markAuthCompleted();
+        clearInterval(checkPopupClosed);
+        clearTimeout(completionPollStart);
+        if (completionPollTimer) clearInterval(completionPollTimer);
+        clearTimeout(completionPollHardStop);
+
         try {
           if (authWindow && !authWindow.closed) {
             authWindow.close();
           }
         } catch (e) {
-          
+          // ignore — with noopener we can't close the popup from here anyway
         }
-        
+
         // Process the auth success with the data from the popup
         const { sessionToken, user, siteInfo } = event.data;
+
         
-        
-        
-        // If popup sends a minimal success payload (no user/siteInfo), complete via backend.
         if (!siteInfo || !siteInfo.siteId) {
           await completeFromServerState();
           return;
         }
-        
+
         // Convert worker data format to our internal format
         const authData = {
           sessionToken: sessionToken || '',
@@ -368,31 +383,28 @@ export function useAuth() {
           siteName: siteInfo?.siteName || '',
           shortName: siteInfo?.shortName || ''
         };
-        
-        
-        
+
         // Process if we have siteId
         if (authData.siteId) {
           processAuthSuccessFromData(authData);
-        } else {
-        
         }
-      } else {
-       
       }
     };
     
     // Listen for storage events (when popup stores data)
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === 'accessbit-userinfo' && event.newValue) {
-        
+        markAuthCompleted();
         clearInterval(checkPopupClosed);
-        
+        clearTimeout(completionPollStart);
+        if (completionPollTimer) clearInterval(completionPollTimer);
+        clearTimeout(completionPollHardStop);
+
         try {
           const authData = JSON.parse(event.newValue);
           processAuthSuccessFromData(authData);
         } catch (error) {
-          
+          // ignore parse errors
         }
       }
     };
@@ -401,14 +413,10 @@ export function useAuth() {
     const cleanup = () => {
       window.removeEventListener('message', handleMessage);
       window.removeEventListener('storage', handleStorageChange);
-      if (noHandleCompletionPoll) {
-        clearInterval(noHandleCompletionPoll);
-        noHandleCompletionPoll = null;
-      }
-      if (noHandleFocusListener) {
-        window.removeEventListener('focus', noHandleFocusListener);
-        noHandleFocusListener = null;
-      }
+      clearInterval(checkPopupClosed);
+      clearTimeout(completionPollStart);
+      if (completionPollTimer) clearInterval(completionPollTimer);
+      clearTimeout(completionPollHardStop);
     };
     
     // Add global message listener (will catch ALL postMessages)
@@ -422,8 +430,11 @@ export function useAuth() {
     setTimeout(cleanup, 5 * 60 * 1000);
     
     
-    // Helper function to process auth success from data object
+    
+    let authSuccessProcessed = false;
     const processAuthSuccessFromData = (authData: any) => {
+      if (authSuccessProcessed) return;
+      authSuccessProcessed = true;
       try {
         
         
@@ -677,19 +688,20 @@ export function useAuth() {
         
       }
 
-      // Attempt silent auth to refresh token with timeout
       
-      const silentAuthPromise = attemptSilentAuth();
-      const timeoutPromise = new Promise<boolean>((resolve) => {
-        setTimeout(() => {
-          
-          resolve(false);
-        }, 3000); // 3 second timeout for silent auth
-      });
-      
-      const result = await Promise.race([silentAuthPromise, timeoutPromise]);
-      
-      return result;
+      const backoffs = [0, 2000, 3000, 4000, 5000, 6000];
+      for (let attempt = 0; attempt < backoffs.length; attempt++) {
+        if (backoffs[attempt] > 0) {
+          await new Promise((resolve) => setTimeout(resolve, backoffs[attempt]));
+        }
+        try {
+          const ok = await attemptSilentAuth();
+          if (ok) return true;
+        } catch {
+          // swallow and retry
+        }
+      }
+      return false;
     } catch (error) {
       
       return false;
