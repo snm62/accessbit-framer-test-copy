@@ -1,8 +1,8 @@
 /* Welcome Screen Styles */
 .welcome-screen {
   position: relative;
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
   background-color: #0A081B;
   overflow: hidden;
   display: flex;
@@ -137,18 +137,111 @@
   opacity: 0.6;
 }
 
-/* Main content */
-.welcome-content {
+/* Need help trigger button */
+.help-trigger {
   position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 18px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 20;
+  user-select: none;
+  color: #FFFFFF;
+  opacity: 0.6;
+}
+
+.help-trigger svg {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px;
+  min-height: 18px;
+  flex-shrink: 0;
+}
+
+.help-trigger-text {
+  font-family: 'DM Sans', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 100% !important;
+  letter-spacing: -0.36px !important;
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+/* Help dropdown */
+.help-dropdown {
+  position: absolute;
+  top: 46px;
+  right: 20px;
+  width: 180px;
+  background: #1E1B35;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 8px;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 2px;
+}
+
+.help-dropdown-heading {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 6px 8px;
+  letter-spacing: -0.33px;
+}
+
+.help-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.help-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.help-dropdown-item--active {
+  background: #2E2A52;
+  color: #ffffff;
+}
+
+.help-dropdown-item--active:hover {
+  background: #3A3566;
+}
+
+/* Centre wrapper (flex column layout) */
+.welcome-center-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 9;
+}
+
+/* Main content */
+.welcome-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
-  z-index: 9;
   width: 100%;
   max-width: 600px;
   padding: 0 40px;
@@ -157,11 +250,11 @@
 .welcome-title {
   font-family: 'DM Sans', sans-serif;
   font-weight: 400;
-  font-style: 9pt Regular;
+  font-style: normal;
   font-size: 20px;
-  line-height: 100%;
-  letter-spacing: -3%;
-
+  line-height: 1;
+  letter-spacing: -0.6px;
+  color: #ffffff;
 }
 
 .welcome-title-highlight {
@@ -182,17 +275,16 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
   max-width: 500px;
-  margin: 20px 0 30px 0;
+  margin: 12px 0 16px 0;
   opacity: 1;
 }
 
 .welcome-authorize-btn {
-  position: absolute;
+  position: relative;
   background: #262E84;
   width: 200px;
-  height: 28px;
-  top: 111%;
-  left: 35%;
+  height: 36px;
+  margin-top: 0;
   opacity: 1;
   gap: 8px;
   padding: 10px 51px;
@@ -210,12 +302,175 @@
   justify-content: center;
 }
 
-.welcome-authorize-btn.scan-project {
-  width: 200px;
-  left: 35%;
-}
-
 .welcome-authorize-btn:hover {
   background: #7A6BFF;
   transform: translateY(-2px);
+}
+
+/* OTP form */
+.otp-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.otp-input-field {
+  width: 260px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 0 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.otp-input-field::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.otp-input-field:focus {
+  border-color: rgba(89, 170, 251, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.otp-input-field.otp-code {
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 8px;
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.otp-error {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #f87171;
+  margin: 0;
+  text-align: center;
+  max-width: 260px;
+}
+
+.otp-resend-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color 0.2s ease;
+  margin-top: 2px;
+}
+
+.otp-resend-btn:hover:not(:disabled) {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.otp-resend-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Tutorial card */
+.tutorial-card {
+  position: relative;
+  margin-top: 28px;
+  width: 539px;
+  height: auto;
+  min-height: 147px;
+  background: #383167;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 11px;
+  display: flex;
+  overflow: hidden;
+  text-decoration: none;
+  z-index: 10;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tutorial-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.tutorial-thumbnail {
+  position: relative;
+  flex-shrink: 0;
+  width: 212px;
+  align-self: stretch;
+  overflow: hidden;
+  border-radius: 7px;
+  margin: 6px 0 6px 5px;
+}
+
+.tutorial-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tutorial-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.tutorial-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px 18px 20px 18px;
+  gap: 0;
+}
+
+.tutorial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #D9D9D94D;
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  width: fit-content;
+  margin-bottom: 16px;
+}
+
+.tutorial-title {
+  width: 276px;
+  margin: 0 0 21px 0;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.45px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.tutorial-subtitle {
+  width: 270px;
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.48px;
+  color: #FFFFFF;
+  opacity: 0.6;
 }

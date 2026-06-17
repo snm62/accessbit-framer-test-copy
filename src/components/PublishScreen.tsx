@@ -1,39 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/userAuth";
-import { workerUrl } from "../util/workerRequest";
-import { WebflowAPI } from "../types/webflowtypes";
+import { platform } from "../platform";
+import { framerEndpoints } from "../config/endpoints";
 import "../styles/publish.css";
 import "../styles/payment.css";
-
-
-declare const webflow: WebflowAPI;
-
-function getStoredSiteId(): string | null {
-  try {
-    const raw = localStorage.getItem('accessbit-userinfo');
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return parsed?.siteId || null;
-  } catch {
-    return null;
-  }
-}
-
-function getStoredCustomDomain(): string | null {
-  try {
-    const raw = localStorage.getItem('accessbit-userinfo');
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    const customDomain = parsed?.customDomain;
-    if (!customDomain) return null;
-    return String(customDomain)
-      .replace(/^https?:\/\//, '')
-      .replace(/\/$/, '')
-      .split('/')[0];
-  } catch {
-    return null;
-  }
-}
 
 const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
@@ -63,9 +33,9 @@ const iconOptions = [
 ];
 
 /** Exact Stripe URLs opened from this screen — only these may be passed to `window.open`. */
-const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/8x23cx9dRaLt2V6ffO4Ni01";
+const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/test_3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/test_3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/test_8x23cx9dRaLt2V6ffO4Ni01";
 const TRUSTED_STRIPE_URLS = new Set<string>([
   STRIPE_PORTAL_URL,
   STRIPE_BUY_ANNUAL_URL,
@@ -93,7 +63,7 @@ type PublishScreenProps = {
 };
 
 const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData }) => {
-  const { publishSettings, user, registerAccessibilityScript, applyAccessibilityScript, makeAuthenticatedRequest } = useAuth();
+  const { publishSettings, makeAuthenticatedRequest } = useAuth();
   const [showModal, setShowModal] = useState(true);
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -139,68 +109,39 @@ const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData
     setShowPublishModal(true);
   };
 const handleConfirmPublish = async () => {
-
   setIsPublishing(true);
   setPublishError(null);
   setPublishSuccess(false);
-  
+
   try {
+    // Step 1: Get Framer project info
+    const siteInfo = await platform.getSiteInfo();
+    if (!siteInfo?.siteId) throw new Error('Could not read Framer project ID.');
 
-    
-    // Step 1: Publish settings to KV store
+    // Step 2: Save customization + profiles to KV; worker returns scriptHtml with the widget URL
+    const publishData = await publishSettings(customizationData, accessibilityProfiles);
+    if (!publishData?.scriptHtml) {
+      throw new Error('Could not retrieve script from server. Please try again.');
+    }
 
-    const publishResult = await publishSettings(customizationData, accessibilityProfiles);
+    // Step 3: Inject AccessBit widget script into site footer (bodyEnd)
+    const injected = await platform.injectScript({ html: publishData.scriptHtml, location: 'bodyEnd' });
 
-    // Step 2: Handle script registration
-
-    const registerResult = await registerAccessibilityScript();
-   
-    
-    // Determine success message based on result
-    let successMessage = '';
-    
-    if (registerResult.success) {
-      // Always attempt to apply to head to repair manual deletions
-      const applyData = {
-        targetType: 'site' as const,
-        scriptId: registerResult.result?.id || 'accessbit',
-        location: 'header' as const,
-        version: '1.0.0'
-      };
-      const applyResult = await applyAccessibilityScript(applyData);
-      if (applyResult.success) {
-        successMessage = applyResult.alreadyApplied
-          ? 'Settings published! Script was already active in head.'
-          : 'Settings published! Script has been registered and applied to your site.';
-      } else {
-        setPublishError('Settings published, but failed to apply script. Please try again.');
-        return;
-      }
-    } else {
-      setPublishError('Settings published, but failed to register script. Please try again.');
+    if (!injected) {
+      setPublishError(
+        'Settings saved, but the script could not be injected. ' +
+        'You may not have the "setCustomCode" permission — check your Framer plan.'
+      );
       return;
     }
-    
-    
-    
-    // Set success message immediately
-    setPublishSuccess(successMessage);
-    
+
+    setPublishSuccess('Accessibility settings published and script installed in your site footer!');
     setShowPublishModal(false);
-    
-    // Clear success message after 8 seconds
-    setTimeout(() => {
-    
-      setPublishSuccess(false);
-    }, 8000);
-    
+    setTimeout(() => setPublishSuccess(false), 8000);
   } catch (error) {
-   
-    const errorMessage = error instanceof Error ? error.message : "Failed to publish settings";
-    setPublishError(errorMessage);
+    setPublishError(error instanceof Error ? error.message : 'Failed to publish settings');
   } finally {
     setIsPublishing(false);
-    
   }
 };
 
@@ -229,101 +170,45 @@ const handleConfirmPublish = async () => {
     const checkSubscriptionStatus = async () => {
       try {
         setIsCheckingSubscription(true);
-        
-        
-        let customDomain = getStoredCustomDomain();
-        
-       
-        if (!customDomain) {
-          try {
-            
-            const siteId = getStoredSiteId();
-            
-            if (siteId) {
-              // Use backend proxy endpoint instead of calling Webflow API directly
-              // This prevents idToken leakage and uses accessToken stored during OAuth
-              const data = await makeAuthenticatedRequest(
-                workerUrl(`/api/accessibility/custom-domains?siteId=${encodeURIComponent(siteId)}`),
-                { method: 'GET' }
-              );
-              
-              // makeAuthenticatedRequest returns JSON directly (not Response object)
-              if (data && data.customDomains && Array.isArray(data.customDomains)) {
-                // Find the default/primary custom domain
-                const defaultDomain = data.customDomains.find((d: any) => d.default === true) || data.customDomains[0];
-                if (defaultDomain?.domain) {
-                  customDomain = defaultDomain.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-                }
-              }
-            }
-          } catch (error) {
-            
-            // Fallback to publishSite API if REST API fails
-            try {
-              const publishInfo = await webflow.publishSite();
-              if (publishInfo?.customDomains && Array.isArray(publishInfo.customDomains) && publishInfo.customDomains.length > 0) {
-                customDomain = publishInfo.customDomains[0].url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-              }
-            } catch (fallbackError) {
-             
-            }
-          }
-        }
-        
-        // Step 2: Check if it's a staging domain (always allow, no payment check needed)
-        if (customDomain) {
-          const isStaging = (
-            customDomain.includes('.webflow.io') ||
-            customDomain.includes('.webflow.com') ||
-            customDomain.includes('localhost') ||
-            customDomain.includes('127.0.0.1') ||
-            customDomain.includes('staging')
-          );
-          
-          if (isStaging) {
-            // Staging domain = no payment required
-            setHasSubscription(false);
-            setIsCheckingSubscription(false);
-            return;
-          }
-        }
-        
-       
-        if (customDomain) {
-          // Normalize domain (remove protocol, www, trailing slash)
-          const normalizedDomain = customDomain
-            .replace(/^https?:\/\//, '')
-            .replace(/^www\./, '')
-            .replace(/\/$/, '')
-            .split('/')[0];
-          
-          // Call backend to check payment status
-        
-          const response = await makeAuthenticatedRequest(
-            workerUrl(`/api/accessibility/check-payment-status?domain=${encodeURIComponent(normalizedDomain)}`),
-            { method: 'GET' }
-          );
-          
-          
-          if (response?.hasAccess === true && response?.isStaging !== true) {
-            setHasSubscription(true);
-          } else {
-            setHasSubscription(false);
-          }
-        } else {
-          // No custom domain = no subscription
+
+        // Get the site's production URL from Framer
+        const publishInfo = await platform.getPublishInfo();
+        const productionUrl = publishInfo.productionUrl || '';
+        const domain = productionUrl
+          .replace(/^https?:\/\//, '')
+          .replace(/^www\./, '')
+          .replace(/\/$/, '')
+          .split('/')[0];
+
+        // Framer staging domains (.framer.app) don't need a subscription
+        const isStaging = (
+          !domain ||
+          domain.includes('.framer.app') ||
+          domain.includes('.framer.com') ||
+          domain.includes('localhost') ||
+          domain.includes('127.0.0.1')
+        );
+
+        if (isStaging) {
           setHasSubscription(false);
+          return;
         }
-      } catch (error) {
-        
+
+        // Custom domain — check payment status via Framer worker
+        const response = await makeAuthenticatedRequest(
+          framerEndpoints.site.checkPayment(domain),
+          { method: 'GET' }
+        );
+        setHasSubscription(response?.hasAccess === true);
+      } catch {
         setHasSubscription(false);
       } finally {
         setIsCheckingSubscription(false);
       }
     };
-    
+
     checkSubscriptionStatus();
-  }, []); // Only run on mount
+  }, []);
 
   const handlePublishClick = () => {
     handlePublish();
