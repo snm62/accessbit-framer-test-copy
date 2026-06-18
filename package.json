@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "pack": "npm run build && bestzip accessbit-plugin.zip dist/",
+    "pack": "npm run build && bestzip plugin.zip dist/",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",
     "worker:dev": "wrangler dev",
