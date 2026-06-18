@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "pack": "npm run build && bestzip accessbit-plugin.zip dist/",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",
     "worker:dev": "wrangler dev",
@@ -20,6 +21,7 @@
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "bestzip": "^3.0.1",
     "eslint": "^8.5.7",
     "eslint-plugin-promise": "^6.1.1",
     "typescript": "^5.4.5",

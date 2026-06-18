@@ -72,7 +72,6 @@ const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [isAnnual, setIsAnnual] = useState(true);
-  const [publishWarning, setPublishWarning] = useState<string | false>(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [accessibilityProfiles, setAccessibilityProfiles] = useState({
     seizureSafe: false,
@@ -139,13 +138,6 @@ const handleConfirmPublish = async () => {
     setPublishSuccess('Accessibility settings published and script installed in your site footer!');
     setShowPublishModal(false);
     setTimeout(() => setPublishSuccess(false), 8000);
-
-    // Check if Framer site has been published — if not, nudge the user
-    const publishInfo = await platform.getPublishInfo().catch(() => ({ stagingUrl: null, productionUrl: null }));
-    if (!publishInfo.stagingUrl && !publishInfo.productionUrl) {
-      setPublishWarning('Your Framer site has not been published yet. Please publish it in Framer, then publish the plugin again.');
-      setTimeout(() => setPublishWarning(false), 10000);
-    }
   } catch (error) {
     setPublishError(error instanceof Error ? error.message : 'Failed to publish settings');
   } finally {
@@ -304,7 +296,7 @@ const handleConfirmPublish = async () => {
 
       {/* Success Toast Notification - Top Right */}
       {publishSuccess && (
-        <div className="success-toast" style={{
+        <div className="success-toast" style={{ 
           position: 'fixed',
           top: '20px',
           right: '20px',
@@ -319,45 +311,16 @@ const handleConfirmPublish = async () => {
           animation: 'slideInRight 0.3s ease-out'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
+            <div style={{ 
+              width: '8px', 
+              height: '8px', 
+              borderRadius: '50%', 
               backgroundColor: '#10b981',
               flexShrink: 0
             }}></div>
             <span style={{ fontSize: '14px', lineHeight: '1.5' }}>
               {typeof publishSuccess === 'string' ? publishSuccess : 'Accessibility settings published successfully!'}
             </span>
-          </div>
-        </div>
-      )}
-
-      {/* Warning Toast - shown when Framer site has no published URL yet */}
-      {publishWarning && (
-        <div style={{
-          position: 'fixed',
-          top: publishSuccess ? '90px' : '20px',
-          right: '20px',
-          backgroundColor: 'rgba(10, 8, 27, 1)',
-          color: '#ffffff',
-          padding: '16px 20px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-          zIndex: 10000,
-          maxWidth: '400px',
-          border: '1px solid rgba(255, 180, 0, 0.4)',
-          animation: 'slideInRight 0.3s ease-out'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              backgroundColor: '#f59e0b',
-              flexShrink: 0
-            }}></div>
-            <span style={{ fontSize: '14px', lineHeight: '1.5' }}>{publishWarning}</span>
           </div>
         </div>
       )}
