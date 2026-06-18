@@ -4,6 +4,7 @@ import CustomizationScreen from "./components/CustomizationScreen";
 import PublishScreen from "./components/PublishScreen";
 import { useAuth } from "./hooks/userAuth";
 import { platform } from "./platform";
+import { loadStoredFramerToken, decodeJWTPayload } from "./api/framer";
 
 type AppState = 'welcome' | 'customization' | 'publish';
 
@@ -43,7 +44,18 @@ const App: React.FC = () => {
       setIsCheckingAuth(true);
       try {
         const ok = await attemptAutoRefresh();
-        setIsAuthenticated(ok);
+        if (ok) {
+          // JWT is valid — but check if it belongs to THIS project.
+          // If the user opens the plugin in a different Framer project,
+          // the JWT siteId won't match and we must show OTP to register the new site.
+          const token = loadStoredFramerToken();
+          const payload = token ? decodeJWTPayload(token) : null;
+          const currentSite = await platform.getSiteInfo().catch(() => null);
+          const isSameProject = payload?.siteId && currentSite?.siteId && payload.siteId === currentSite.siteId;
+          setIsAuthenticated(!!isSameProject);
+        } else {
+          setIsAuthenticated(false);
+        }
         setCurrentScreen('welcome');
       } catch {
         setIsAuthenticated(false);
