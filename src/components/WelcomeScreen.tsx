@@ -14,7 +14,6 @@ type WelcomeScreenProps = {
   authenticated?: boolean;
   isCheckingAuth?: boolean;
   handleWelcomeScreen: () => void;
-  siteNotPublished?: boolean;
 };
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
@@ -24,7 +23,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   authenticated,
   isCheckingAuth: parentIsChecking,
   handleWelcomeScreen,
-  siteNotPublished,
 }) => {
   const [step, setStep] = useState<Step>(authenticated ? "done" : "email");
   const [email, setEmail] = useState("");
@@ -121,27 +119,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
 
     if (step === "done") {
       return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '100%' }}>
-          {siteNotPublished && (
-            <div style={{
-              background: 'rgba(255, 180, 0, 0.12)',
-              border: '1px solid rgba(255, 180, 0, 0.4)',
-              borderRadius: '8px',
-              padding: '10px 14px',
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '8px',
-              maxWidth: '280px',
-              textAlign: 'left',
-            }}>
-              <span style={{ fontSize: '14px', flexShrink: 0 }}>⚠️</span>
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(255,220,80,0.95)', lineHeight: '1.5' }}>
-                Your Framer site hasn't been published yet. Please publish it in Framer first, then come back — this ensures we capture your site URL.
-              </span>
-            </div>
-          )}
-          <button className="welcome-authorize-btn" onClick={handleWelcomeScreen}>Next</button>
-        </div>
+        <button className="welcome-authorize-btn" onClick={handleWelcomeScreen}>Next</button>
       );
     }
 

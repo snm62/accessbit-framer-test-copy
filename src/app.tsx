@@ -15,22 +15,11 @@ const App: React.FC = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
-  const [siteNotPublished, setSiteNotPublished] = useState(false);
-
   const { requestOTP, verifyOTP, getPublishedSettings, attemptAutoRefresh } = useAuth();
 
   // Listen for auth success events (fired after OTP verification)
   useEffect(() => {
-    const onAuthSuccess = async () => {
-      setIsAuthenticated(true);
-      try {
-        const publishInfo = await platform.getPublishInfo();
-        const hasUrl = !!(publishInfo?.stagingUrl || publishInfo?.productionUrl);
-        setSiteNotPublished(!hasUrl);
-      } catch {
-        setSiteNotPublished(true);
-      }
-    };
+    const onAuthSuccess = () => setIsAuthenticated(true);
     window.addEventListener('accessbit-auth-success', onAuthSuccess);
     return () => window.removeEventListener('accessbit-auth-success', onAuthSuccess);
   }, []);
@@ -110,7 +99,6 @@ const App: React.FC = () => {
           authenticated={isAuthenticated}
           isCheckingAuth={isCheckingAuth}
           handleWelcomeScreen={handleWelcomeScreen}
-          siteNotPublished={siteNotPublished}
         />
       ) : currentScreen === 'customization' ? (
         <CustomizationScreen
