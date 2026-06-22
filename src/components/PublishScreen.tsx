@@ -34,8 +34,8 @@ const iconOptions = [
 
 /** Exact Stripe URLs opened from this screen — only these may be passed to `window.open`. */
 const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/test_3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/test_3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/test_8x23cx9dRaLt2V6ffO4Ni01";
+const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/test_8x23cx9dRaLt2V6ffO4Ni01";
+const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/test_3cI8wRgGjaLt0MY3x64Ni00";
 const TRUSTED_STRIPE_URLS = new Set<string>([
   STRIPE_PORTAL_URL,
   STRIPE_BUY_ANNUAL_URL,
