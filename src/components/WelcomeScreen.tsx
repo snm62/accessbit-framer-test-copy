@@ -10,7 +10,6 @@ type Step = "email" | "otp" | "done";
 type WelcomeScreenProps = {
   requestOTP: (email: string, firstName?: string) => Promise<void>;
   verifyOTP: (email: string, otp: string) => Promise<void>;
-  onNeedHelp: () => void;
   authenticated?: boolean;
   isCheckingAuth?: boolean;
   handleWelcomeScreen: () => void;
@@ -19,7 +18,6 @@ type WelcomeScreenProps = {
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   requestOTP,
   verifyOTP,
-  onNeedHelp,
   authenticated,
   isCheckingAuth: parentIsChecking,
   handleWelcomeScreen,

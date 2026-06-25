@@ -10,6 +10,18 @@ const mobile = new URL("../assets/mobile.svg", import.meta.url).href;
 const monitor = new URL("../assets/monitor.svg", import.meta.url).href;
 const icon1 = new URL("../assets/Accessibility.webp", import.meta.url).href;
 
+/** Mirrors the TRUSTED_STRIPE_URLS pattern in PublishScreen — only these protocols are allowed for user-supplied URLs. */
+const ALLOWED_LINK_PROTOCOLS = new Set<string>(["https:", "http:"]);
+
+const isValidStatementLink = (url: string): boolean => {
+  if (!url) return true;
+  try {
+    return ALLOWED_LINK_PROTOCOLS.has(new URL(url).protocol);
+  } catch {
+    return false;
+  }
+};
+
 type CustomizationData = {
   selectedIcon: string;
   triggerButtonColor: string;
@@ -17,7 +29,6 @@ type CustomizationData = {
   triggerHorizontalPosition: string;
   triggerVerticalPosition: string;
   triggerButtonSize: string;
-  interfaceLanguage: string;
 };
 
 type CustomizationScreenProps = {
@@ -32,6 +43,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
 
   // Customization state
   const [accessibilityStatementLink, setAccessibilityStatementLink] = useState("");
+  const [linkError, setLinkError] = useState<string | null>(null);
   const [triggerVerticalPosition, setTriggerVerticalPosition] = useState("Bottom");
   const [triggerButtonSize, setTriggerButtonSize] = useState("Medium");
   const [triggerButtonShape, setTriggerButtonShape] = useState("Circle");
@@ -174,8 +186,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
 
 
   const dropdownRefs = {
-    interfaceLanguage: useRef<HTMLDivElement>(null),
-    interfacePosition: useRef<HTMLDivElement>(null),
     triggerHorizontalPosition: useRef<HTMLDivElement>(null),
     triggerVerticalPosition: useRef<HTMLDivElement>(null),
     triggerButtonSize: useRef<HTMLDivElement>(null),
@@ -193,13 +203,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   };
 
   // Dropdown options
-  const languageOptions = [
-    { label: "German", value: "German" },
-    { label: "English", value: "English" },
-    { label: "Spanish", value: "Spanish" },
-    { label: "French", value: "French" },
-  ];
-
   const positionOptions = [
     { label: "Left", value: "Left" },
     { label: "Right", value: "Right" },
@@ -221,14 +224,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     { label: "Circle", value: "Circle" },
     { label: "Square", value: "Square" },
     { label: "Rounded", value: "Rounded" },
-  ];
-
-  const offsetOptions = [
-    { label: "0px", value: "0px" },
-    { label: "5px", value: "5px" },
-    { label: "10px", value: "10px" },
-    { label: "15px", value: "15px" },
-    { label: "20px", value: "20px" },
   ];
 
   const yesNoOptions = [
@@ -253,22 +248,16 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     { label: "Circle", value: "Circle" },
   ];
 
-  const mobileOffsetOptions = [
-    { label: "0", value: "0" },
-    { label: "1", value: "1" },
-    { label: "2", value: "2" },
-    { label: "3", value: "3" },
-    { label: "4", value: "4" },
-    { label: "5", value: "5" },
-  ];
-
-
   const getLabel = (opts: any[], val: string) =>
     (opts.find((o) => o.value === val) || {}).label || val;
 
   // (Consolidated click-outside handling in the effect above)
 
   const handleNextPayment = async () => {
+    if (!isValidStatementLink(accessibilityStatementLink)) {
+      setLinkError("Please enter a valid URL starting with https:// or http://");
+      return;
+    }
 
     try {
       const customizationData = {
@@ -300,12 +289,6 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       
     }
   };
-
-
-  const handleBack = () => {
-    onBack();
-  };
-
 
 
   const handleColorChange = (color: string) => {
@@ -373,7 +356,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       <div className="customization-header">
         <div className="app-name"></div>
         <div className="header-buttons">
-          <button className="back-btn" onClick={handleBack}>
+          <button className="back-btn" onClick={onBack}>
             <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
             Back
           </button>
@@ -409,10 +392,23 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                   <label>Accessibility Statement Link</label>
                   <input
                     type="text"
-                    placeholder="Link here."
+                    placeholder="https://example.com/accessibility"
                     value={accessibilityStatementLink}
-                    onChange={(e) => setAccessibilityStatementLink(e.target.value)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setAccessibilityStatementLink(val);
+                      setLinkError(isValidStatementLink(val) ? null : "Please enter a valid URL starting with https:// or http://");
+                    }}
+                    onBlur={() => {
+                      if (!isValidStatementLink(accessibilityStatementLink)) {
+                        setLinkError("Please enter a valid URL starting with https:// or http://");
+                      }
+                    }}
+                    style={linkError ? { borderColor: "#ef4444" } : undefined}
                   />
+                  {linkError && (
+                    <p style={{ color: "#ef4444", fontSize: "12px", marginTop: "4px" }}>{linkError}</p>
+                  )}
                 </div>
               </div>
             </div>

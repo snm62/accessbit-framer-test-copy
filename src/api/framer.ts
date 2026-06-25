@@ -1,7 +1,4 @@
-// All Framer-specific network calls and JWT management live here.
-// The plugin submits to Framer once. Everything in this file is called by
-// the plugin but the real logic lives in the Cloudflare worker — so most
-// business-rule changes only require deploying a new worker, not resubmitting.
+
 
 import { framerEndpoints } from '../config/endpoints';
 import { platform } from '../platform';

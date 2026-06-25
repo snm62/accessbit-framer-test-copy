@@ -1,6 +1,4 @@
-// State management only — all network calls and JWT logic live in api/framer.ts.
-// Keeping this file thin means future API changes only require a worker deploy,
-// not a Framer plugin resubmission.
+
 
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { User } from "../types/types";

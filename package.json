@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "postbuild": "node scripts/remove-function-constroctor.js",
     "pack": "npm run build && bestzip plugin.zip dist/",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",

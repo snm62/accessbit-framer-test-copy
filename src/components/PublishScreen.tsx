@@ -33,9 +33,9 @@ const iconOptions = [
 ];
 
 /** Exact Stripe URLs opened from this screen — only these may be passed to `window.open`. */
-const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/test_3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/test_8x23cx9dRaLt2V6ffO4Ni01";
-const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/test_3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/3cI8wRgGjaLt0MY3x64Ni00";
+const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/8x23cx9dRaLt2V6ffO4Ni01";
 const TRUSTED_STRIPE_URLS = new Set<string>([
   STRIPE_PORTAL_URL,
   STRIPE_BUY_ANNUAL_URL,
@@ -72,7 +72,6 @@ const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [isAnnual, setIsAnnual] = useState(true);
-  const [reduceMotion, setReduceMotion] = useState(false);
   const [accessibilityProfiles, setAccessibilityProfiles] = useState({
     seizureSafe: false,
     visionImpaired: false,
@@ -80,6 +79,7 @@ const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData
     cognitiveDisability: false,
     keyboardNavigation: false,
     blindUsers: false,
+    reduceMotion: false,
   });
 
   const handleToggle = (profile: keyof typeof accessibilityProfiles) => {
@@ -158,6 +158,7 @@ const handleConfirmPublish = async () => {
       cognitiveDisability: false,
       keyboardNavigation: false,
       blindUsers: false,
+      reduceMotion: false,
     });
   };
 
@@ -209,10 +210,6 @@ const handleConfirmPublish = async () => {
 
     checkSubscriptionStatus();
   }, []);
-
-  const handlePublishClick = () => {
-    handlePublish();
-  };
 
   const handleCancelSubscription = () => {
     openTrustedStripeUrl(STRIPE_PORTAL_URL);
@@ -285,7 +282,7 @@ const handleConfirmPublish = async () => {
               )}
               <button 
                 className="publish-btn" 
-                onClick={handlePublishClick}
+                onClick={handlePublish}
               >
                 {hasSubscription === true ? 'Publish to live domain' : 'Publish to Staging'}
                 <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
@@ -534,7 +531,7 @@ const handleConfirmPublish = async () => {
                           </label>
                         </div>
 
-                        <div className={`profile-item ${reduceMotion ? "is-on" : ""}`}>
+                        <div className={`profile-item ${accessibilityProfiles.reduceMotion ? "is-on" : ""}`}>
                           <div className="ab-profile-item-icon">
                             <svg
                               width="24"
@@ -564,8 +561,8 @@ const handleConfirmPublish = async () => {
                             <input
                               type="checkbox"
                               id="reduceMotion"
-                              checked={reduceMotion}
-                              onChange={() => setReduceMotion((v: boolean) => !v)}
+                              checked={accessibilityProfiles.reduceMotion}
+                              onChange={() => handleToggle("reduceMotion")}
                             />
                             <span className="ab-slider"></span>
                           </label>

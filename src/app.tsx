@@ -80,7 +80,6 @@ const App: React.FC = () => {
     return () => { cancelled = true; };
   }, [isAuthenticated]);
 
-  const handleNeedHelp = () => {};
   const handleWelcomeScreen = () => setCurrentScreen('customization');
   const handleBackToWelcome = () => setCurrentScreen('welcome');
   const handleBackToCustomization = () => setCurrentScreen('customization');
@@ -95,7 +94,6 @@ const App: React.FC = () => {
         <WelcomeScreen
           requestOTP={requestOTP}
           verifyOTP={verifyOTP}
-          onNeedHelp={handleNeedHelp}
           authenticated={isAuthenticated}
           isCheckingAuth={isCheckingAuth}
           handleWelcomeScreen={handleWelcomeScreen}

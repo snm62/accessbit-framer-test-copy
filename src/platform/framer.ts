@@ -1,23 +1,3 @@
-/* =============================================================================
- *  platform/framer.ts  —  FRAMER IMPLEMENTATION OF `PlatformAdapter`
- * =============================================================================
- *
- *  This is the ONLY file in the codebase that imports `framer-plugin`. Every
- *  Framer-specific call lives here. The rest of the app talks to the
- *  `PlatformAdapter` interface — so swapping to Webflow / WordPress / Wix /
- *  Shopify is "write a sibling file with the same shape, change the import
- *  in `platform/index.ts`".
- *
- *  Mapping (Framer SDK → adapter method)
- *  --------------------------------------
- *    framer.getProjectInfo()              → getSiteId() / getSiteInfo()
- *    framer.getPublishInfo()              → getPublishInfo() / getProductionUrl() / getStagingUrl()
- *    framer.isAllowedTo("setCustomCode")  → canInjectScript()
- *    framer.setCustomCode(...)            → injectScript(...)
- *    framer.showUI(...)                   → showPluginUI(...)
- *
- *  Do NOT add product/business logic here — this file is the platform shim.
- * ===========================================================================*/
 
 import { framer } from "framer-plugin";
 import type { PlatformAdapter, PluginUIOptions, PublishInfo, ScriptInjection, SiteInfo } from "./types";
