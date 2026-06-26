@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build && node scripts/remove-function-constroctor.js",
     "postbuild": "node scripts/remove-function-constroctor.js",
-    "pack": "npm run build && bestzip AccessBit.zip dist/",
+    "pack": "cd dist && bestzip ../plugin.zip *",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",
     "worker:dev": "wrangler dev",
