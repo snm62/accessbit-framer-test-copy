@@ -1,9 +1,8 @@
 {
+  "id": "415f7f",
   "name": "AccessBit",
-  "version": "1.0.0",
-  "main": "index.html",
   "modes": [
     "canvas"
   ],
-  "icon": "icon.svg"
+  "icon": "/icon.svg"
 }

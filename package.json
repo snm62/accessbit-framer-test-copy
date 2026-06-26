@@ -8,13 +8,8 @@
     "postbuild": "node scripts/remove-function-constroctor.js",
     "pack": "cd dist && bestzip ../plugin.zip *",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx",
-    "worker:dev": "wrangler dev",
-    "worker:deploy": "wrangler deploy",
-    "worker:deploy:staging": "wrangler deploy --env staging",
-    "worker:deploy:prod": "wrangler deploy --env production",
-    "kv:create": "wrangler kv namespace create ACCESSIBILITY_AUTH",
-    "kv:list": "wrangler kv namespace list"
+    "lint": "eslint . --ext .ts,.tsx"
+    
   },
   "devDependencies": {
     "@types/react": "^18.3.28",
