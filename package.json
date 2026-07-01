@@ -6,7 +6,7 @@
     "dev": "vite --host",
     "build": "vite build && node scripts/remove-function-constroctor.js",
     "postbuild": "node scripts/remove-function-constroctor.js",
-    "pack": "cd dist && bestzip ../plugin.zip *",
+    "pack": "xcopy /E /I /Q /Y src dist\\src\\ && cd dist && bestzip ../plugin.zip * && cd .. && rmdir /S /Q dist\\src",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx"
     

@@ -118,14 +118,16 @@ const handleConfirmPublish = async () => {
     const siteInfo = await platform.getSiteInfo();
     if (!siteInfo?.siteId) throw new Error('Could not read Framer project ID.');
 
-    // Step 2: Save customization + profiles to KV; worker returns scriptHtml with the widget URL
+    // Step 2: Save customization + profiles to KV; worker returns siteId + siteToken
     const publishData = await publishSettings(customizationData, accessibilityProfiles);
-    if (!publishData?.scriptHtml) {
-      throw new Error('Could not retrieve script from server. Please try again.');
+    if (!publishData?.siteId) {
+      throw new Error('Could not save settings to server. Please try again.');
     }
 
-    // Step 3: Inject AccessBit widget script into site footer (bodyEnd)
-    const injected = await platform.injectScript({ html: publishData.scriptHtml, location: 'bodyEnd' });
+    // Step 3: Build script tag locally from fixed, hardcoded widget URL (never from backend)
+    const widgetUrl = 'https://accessbit.pages.dev/widget.js';
+    const scriptHtml = `<script src="${widgetUrl}?siteId=${encodeURIComponent(publishData.siteId)}&siteToken=${encodeURIComponent(publishData.siteToken || '')}&platform=framer" defer></script>`;
+    const injected = await platform.injectScript({ html: scriptHtml, location: 'bodyEnd' });
 
     if (!injected) {
       setPublishError(
