@@ -48,7 +48,12 @@ export const framerAdapter: PlatformAdapter = {
       );
       return false;
     }
-    await framer.setCustomCode({ html, location });
+    try {
+      framer.setCustomCode({ html, location });
+    } catch (err) {
+      console.error("[platform/framer] setCustomCode failed:", err);
+      return false;
+    }
     return true;
   },
 

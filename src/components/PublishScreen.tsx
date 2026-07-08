@@ -64,7 +64,7 @@ type PublishScreenProps = {
 
 const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData }) => {
   const { publishSettings, makeAuthenticatedRequest } = useAuth();
-  const [showModal, setShowModal] = useState(true);
+  const [showPreviewPanel, setShowPreviewPanel] = useState(true);
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
@@ -126,14 +126,14 @@ const handleConfirmPublish = async () => {
 
     // Step 3: Build script tag locally from fixed, hardcoded widget URL (never from backend)
     const widgetUrl = 'https://accessbit.pages.dev/widget.js';
-    const scriptHtml = `<script src="${widgetUrl}?siteId=${encodeURIComponent(publishData.siteId)}&siteToken=${encodeURIComponent(publishData.siteToken || '')}&platform=framer" defer></script>`;
+    const safeSiteId = typeof publishData.siteId === 'string' ? publishData.siteId : '';
+    const safeSiteToken = typeof publishData.siteToken === 'string' ? publishData.siteToken : '';
+    if (!safeSiteId) throw new Error('Invalid site ID returned from server.');
+    const scriptHtml = `<script src="${widgetUrl}?siteId=${encodeURIComponent(safeSiteId)}&siteToken=${encodeURIComponent(safeSiteToken)}&platform=framer" defer></script>`;
     const injected = await platform.injectScript({ html: scriptHtml, location: 'bodyEnd' });
 
     if (!injected) {
-      setPublishError(
-        'Settings saved, but the script could not be injected. ' +
-        'You may not have the "setCustomCode" permission — check your Framer plan.'
-      );
+      setPublishError('Settings saved, but the script could not be injected.');
       return;
     }
 
@@ -165,7 +165,7 @@ const handleConfirmPublish = async () => {
   };
 
   const handleHideInference = () => {
-    setShowModal(false);
+    setShowPreviewPanel(false);
   };
 
 
@@ -357,7 +357,7 @@ const handleConfirmPublish = async () => {
               </div>
               <div className="browser-content">
                 {/* Accessibility Modal */}
-                {showModal && (
+                {showPreviewPanel && (
                   <div
                     className={`accessibility-modal ${customizationData?.triggerHorizontalPosition === 'Left' ? 'position-left' :
                       customizationData?.triggerHorizontalPosition === 'Right' ? 'position-right' : 'position-center'
@@ -757,7 +757,7 @@ const handleConfirmPublish = async () => {
                     <div
                       className={`widget-trigger ${customizationData?.triggerButtonShape?.toLowerCase() || 'circle'} ${customizationData?.triggerButtonSize?.toLowerCase() || 'medium'}`}
                       style={{ backgroundColor: customizationData?.triggerButtonColor || '#007bff' }}
-                      onClick={() => setShowModal(!showModal)}
+                      onClick={() => setShowPreviewPanel(!showPreviewPanel)}
                     >
                       <img
                         src={iconOptions.find(icon => icon.id === customizationData?.selectedIcon)?.label || icon1}
