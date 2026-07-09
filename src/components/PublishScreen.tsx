@@ -228,7 +228,7 @@ const handleConfirmPublish = async () => {
         <div className="publish-modal-overlay">
           <div className="publish-modal">
             <div className="publish-modal-content">
-              <p>We are installing the script in your site custom code.</p>
+              <p>This will publish your accessibility settings and install the AccessBit widget on your site.</p>
               <p>Click confirm to proceed.</p>
               <div className="publish-modal-buttons">
                 <button 
@@ -367,7 +367,7 @@ const handleConfirmPublish = async () => {
                       <div className="ab-preview-close-container" aria-hidden="true">
                         <button
                           className="ab-preview-close-btn"
-                          onClick={() => setShowModal(false)}
+                          onClick={() => setShowPreviewPanel(false)}
                           aria-label="Close accessibility panel"
                           type="button"
                         >

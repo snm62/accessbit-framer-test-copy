@@ -105,12 +105,14 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   useEffect(() => {
     if (!btnPickerInstance.current && btnPickerRef.current) {
       btnPickerInstance.current = iro.ColorPicker(btnPickerRef.current, { width: 100, color: btnColor, borderWidth: 2, borderColor: "#ccc" });
+    }
+    if (btnPickerInstance.current) {
+      btnPickerInstance.current.off("color:change");
       btnPickerInstance.current.on("color:change", (newColor: any) => handleColorChange(newColor.hexString));
     }
     return () => {
       if (btnPickerInstance.current) {
-        try { btnPickerInstance.current.off("color:change"); } catch {}
-        btnPickerInstance.current = null;
+        btnPickerInstance.current.off("color:change");
       }
     };
   }, [])
