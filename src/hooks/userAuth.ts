@@ -95,16 +95,19 @@ export function useAuth() {
     const { token, user } = await verifyOTPNetwork(email, otp);
     processAuthSuccessFromData(token, user);
     // Register the site in a separate post-auth call — never bundled with OTP verify.
+    // Returns a new JWT with siteId embedded; store it so silent auth works on next open.
     // Failure here does not block the user; they are already authenticated.
     try {
-      const { siteId } = await registerSite();
-      if (siteId) {
+      const result = await registerSite();
+      if (result?.siteId && result?.token) {
+        // registerSite() already stored the new token in localStorage + memory.
+        // Update React Query state to reflect the siteId.
         queryClient.setQueryData<AuthState>(["auth"], (prev) => ({
-          user: { ...prev?.user, siteId },
+          user: { ...(prev?.user || {}), siteId: result.siteId },
         }));
       }
     } catch {
-      // Non-blocking — site will be registered on next publish if this fails
+      // Non-blocking — site will be registered on next OTP verify if this fails
     }
   };
 
@@ -119,20 +122,11 @@ export function useAuth() {
       setInMemorySessionToken(token);
       const payload = decodeJWTPayload(token);
 
-      // Get siteId from JWT if present (old tokens), otherwise from platform
-      let siteId = payload?.siteId || "";
-      if (!siteId) {
-        try {
-          const siteInfo = await platform.getSiteInfo();
-          siteId = siteInfo?.siteId || "";
-        } catch {}
-      }
-
       queryClient.setQueryData<AuthState>(["auth"], {
         user: {
           firstName: payload?.firstName || "",
           email: payload?.email || "",
-          siteId,
+          siteId: payload?.siteId || "",
         },
       });
 
@@ -177,21 +171,6 @@ export function useAuth() {
 
   const getSessionToken = async () => getValidSessionToken();
 
-  // Called during silent auth for new-format tokens that don't embed siteId.
-  // Registers the current site if not already registered — non-blocking.
-  const registerSiteIfNeeded = async (): Promise<void> => {
-    try {
-      const { siteId } = await registerSite();
-      if (siteId) {
-        queryClient.setQueryData<AuthState>(["auth"], (prev) => ({
-          user: { ...(prev?.user || {}), siteId },
-        }));
-      }
-    } catch {
-      // Non-blocking — site will be registered on next OTP verify if this fails
-    }
-  };
-
   const openAuthScreen = async () => {
     throw new Error("Use requestOTP() and verifyOTP() instead.");
   };
@@ -213,7 +192,6 @@ export function useAuth() {
     applyAccessibilityScript,
     attemptSilentAuth,
     attemptAutoRefresh,
-    registerSiteIfNeeded,
     getSessionToken,
   };
 }

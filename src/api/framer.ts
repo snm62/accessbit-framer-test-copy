@@ -149,16 +149,23 @@ export const verifyOTPNetwork = async (email: string, otp: string): Promise<{ to
 
 // Called immediately after OTP verification — registers the site in a separate
 // authenticated step so site metadata is never bundled with the auth request.
-export const registerSite = async (): Promise<{ siteId: string; siteToken: string }> => {
+// Returns a new JWT with siteId embedded so silent auth works correctly.
+export const registerSite = async (): Promise<{ siteId: string; siteToken: string; token: string }> => {
   const siteInfo = await platform.getSiteInfo();
   if (!siteInfo?.siteId) throw new Error('No site information available');
-  return makeAuthenticatedRequest(framerEndpoints.otp.registerSite(), {
+  const result = await makeAuthenticatedRequest(framerEndpoints.otp.registerSite(), {
     method: 'POST',
     body: JSON.stringify({
       siteId: siteInfo.siteId,
       siteName: siteInfo.siteName || null,
     }),
   });
+  // Store the new token (with siteId) immediately so all subsequent requests use it
+  if (result?.token) {
+    setInMemorySessionToken(result.token);
+    localStorage.setItem(FRAMER_TOKEN_KEY, result.token);
+  }
+  return result;
 };
 
 // ─── Publish / settings ───────────────────────────────────────────────────────
