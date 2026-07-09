@@ -5,8 +5,9 @@ export const FRAMER_WORKER_URL = "https://accessbit-framer.web-8fb.workers.dev";
 
 export const framerEndpoints = {
   otp: {
-    request: () => `${FRAMER_WORKER_URL}/email/request-otp`,
-    verify:  () => `${FRAMER_WORKER_URL}/email/verify-otp`,
+    request:      () => `${FRAMER_WORKER_URL}/email/request-otp`,
+    verify:       () => `${FRAMER_WORKER_URL}/email/verify-otp`,
+    registerSite: () => `${FRAMER_WORKER_URL}/api/register-site`,
   },
   site: {
     publish:        (siteId: string) => `${FRAMER_WORKER_URL}/api/publish?siteId=${encodeURIComponent(siteId)}`,

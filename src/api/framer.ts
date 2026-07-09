@@ -125,21 +125,14 @@ export const requestOTP = async (email: string, firstName?: string): Promise<voi
 };
 
 // Returns raw token + user so the hook can update React state after the network call.
+// Only sends email + otp — no site metadata in the auth request.
 export const verifyOTPNetwork = async (email: string, otp: string): Promise<{ token: string; user: User }> => {
-  const [siteInfo, publishInfo] = await Promise.all([
-    platform.getSiteInfo(),
-    platform.getPublishInfo().catch(() => ({ productionUrl: null, stagingUrl: null })),
-  ]);
   const res = await fetch(framerEndpoints.otp.verify(), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       email: email.trim().toLowerCase(),
       otp: otp.trim(),
-      siteId: siteInfo.siteId || "",
-      siteName: siteInfo.siteName || null,
-      stagingUrl: publishInfo.stagingUrl || null,
-      productionUrl: publishInfo.productionUrl || null,
     }),
   });
   const data = await res.json() as any;
@@ -149,9 +142,23 @@ export const verifyOTPNetwork = async (email: string, otp: string): Promise<{ to
   const user: User = {
     firstName: data.user?.firstName || "",
     email: data.user?.email || email,
-    siteId: data.user?.siteId || siteInfo.siteId || "",
+    siteId: "",
   };
   return { token, user };
+};
+
+// Called immediately after OTP verification — registers the site in a separate
+// authenticated step so site metadata is never bundled with the auth request.
+export const registerSite = async (): Promise<{ siteId: string; siteToken: string }> => {
+  const siteInfo = await platform.getSiteInfo();
+  if (!siteInfo?.siteId) throw new Error('No site information available');
+  return makeAuthenticatedRequest(framerEndpoints.otp.registerSite(), {
+    method: 'POST',
+    body: JSON.stringify({
+      siteId: siteInfo.siteId,
+      siteName: siteInfo.siteName || null,
+    }),
+  });
 };
 
 // ─── Publish / settings ───────────────────────────────────────────────────────
@@ -159,7 +166,7 @@ export const verifyOTPNetwork = async (email: string, otp: string): Promise<{ to
 export const publishSettings = async (customizationData: any, accessibilityProfiles: any): Promise<any> => {
   const [siteInfo, publishInfo] = await Promise.all([
     platform.getSiteInfo(),
-    platform.getPublishInfo().catch(() => ({ stagingUrl: null, productionUrl: null })),
+    platform.getPublishInfo().catch((e) => { console.error("[publishSettings] getPublishInfo error:", e); return { stagingUrl: null, productionUrl: null }; }),
   ]);
   if (!siteInfo?.siteId) throw new Error('No site information available');
   return makeAuthenticatedRequest(

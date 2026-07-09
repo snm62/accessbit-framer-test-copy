@@ -172,6 +172,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         <button className="otp-resend-btn" onClick={handleResend} disabled={isLoading}>
           Resend code
         </button>
+        <p className="otp-disclosure">We'll save your site info to set up your accessibility widget.</p>
       </div>
     );
   };

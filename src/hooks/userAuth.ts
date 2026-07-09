@@ -13,6 +13,7 @@ import {
   makeAuthenticatedRequest,
   requestOTP,
   verifyOTPNetwork,
+  registerSite,
   publishSettings,
   getPublishedSettings,
   connectCustomDomain,
@@ -93,6 +94,18 @@ export function useAuth() {
   const verifyOTP = async (email: string, otp: string): Promise<void> => {
     const { token, user } = await verifyOTPNetwork(email, otp);
     processAuthSuccessFromData(token, user);
+    // Register the site in a separate post-auth call — never bundled with OTP verify.
+    // Failure here does not block the user; they are already authenticated.
+    try {
+      const { siteId } = await registerSite();
+      if (siteId) {
+        queryClient.setQueryData<AuthState>(["auth"], (prev) => ({
+          user: { ...prev?.user, siteId },
+        }));
+      }
+    } catch {
+      // Non-blocking — site will be registered on next publish if this fails
+    }
   };
 
   // ── Silent auth (restore from JWT on startup, no server call) ───────────────
@@ -106,11 +119,20 @@ export function useAuth() {
       setInMemorySessionToken(token);
       const payload = decodeJWTPayload(token);
 
+      // Get siteId from JWT if present (old tokens), otherwise from platform
+      let siteId = payload?.siteId || "";
+      if (!siteId) {
+        try {
+          const siteInfo = await platform.getSiteInfo();
+          siteId = siteInfo?.siteId || "";
+        } catch {}
+      }
+
       queryClient.setQueryData<AuthState>(["auth"], {
         user: {
           firstName: payload?.firstName || "",
           email: payload?.email || "",
-          siteId: payload?.siteId || "",
+          siteId,
         },
       });
 
