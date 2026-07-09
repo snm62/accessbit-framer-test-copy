@@ -177,6 +177,21 @@ export function useAuth() {
 
   const getSessionToken = async () => getValidSessionToken();
 
+  // Called during silent auth for new-format tokens that don't embed siteId.
+  // Registers the current site if not already registered — non-blocking.
+  const registerSiteIfNeeded = async (): Promise<void> => {
+    try {
+      const { siteId } = await registerSite();
+      if (siteId) {
+        queryClient.setQueryData<AuthState>(["auth"], (prev) => ({
+          user: { ...(prev?.user || {}), siteId },
+        }));
+      }
+    } catch {
+      // Non-blocking — site will be registered on next OTP verify if this fails
+    }
+  };
+
   const openAuthScreen = async () => {
     throw new Error("Use requestOTP() and verifyOTP() instead.");
   };
@@ -198,6 +213,7 @@ export function useAuth() {
     applyAccessibilityScript,
     attemptSilentAuth,
     attemptAutoRefresh,
+    registerSiteIfNeeded,
     getSessionToken,
   };
 }

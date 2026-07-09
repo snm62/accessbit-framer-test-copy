@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
-  const { requestOTP, verifyOTP, getPublishedSettings, attemptAutoRefresh } = useAuth();
+  const { requestOTP, verifyOTP, getPublishedSettings, attemptAutoRefresh, registerSiteIfNeeded } = useAuth();
 
   // Listen for auth success events (fired after OTP verification)
   useEffect(() => {
@@ -34,14 +34,20 @@ const App: React.FC = () => {
       try {
         const ok = await attemptAutoRefresh();
         if (ok) {
-          // JWT is valid — but check if it belongs to THIS project.
-          // If the user opens the plugin in a different Framer project,
-          // the JWT siteId won't match and we must show OTP to register the new site.
           const token = loadStoredFramerToken();
           const payload = token ? decodeJWTPayload(token) : null;
           const currentSite = await platform.getSiteInfo().catch(() => null);
-          const isSameProject = payload?.siteId && currentSite?.siteId && payload.siteId === currentSite.siteId;
-          setIsAuthenticated(!!isSameProject);
+
+          if (payload?.siteId) {
+            // Old token format — siteId was embedded. Check it matches current project.
+            const isSameProject = currentSite?.siteId && payload.siteId === currentSite.siteId;
+            setIsAuthenticated(!!isSameProject);
+          } else {
+            // New token format — siteId is registered separately via /api/register-site.
+            // Trust the JWT and register the current site in the background if needed.
+            setIsAuthenticated(true);
+            registerSiteIfNeeded().catch(() => {});
+          }
         } else {
           setIsAuthenticated(false);
         }
