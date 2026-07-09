@@ -10,6 +10,7 @@ export const framerEndpoints = {
     registerSite: () => `${FRAMER_WORKER_URL}/api/register-site`,
   },
   site: {
+    get:            (siteId: string) => `${FRAMER_WORKER_URL}/api/site?siteId=${encodeURIComponent(siteId)}`,
     publish:        (siteId: string) => `${FRAMER_WORKER_URL}/api/publish?siteId=${encodeURIComponent(siteId)}`,
     settings:       (siteId: string) => `${FRAMER_WORKER_URL}/api/settings?siteId=${encodeURIComponent(siteId)}`,
     domain:         ()               => `${FRAMER_WORKER_URL}/api/domain`,

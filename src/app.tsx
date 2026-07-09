@@ -5,6 +5,7 @@ import PublishScreen from "./components/PublishScreen";
 import { useAuth } from "./hooks/userAuth";
 import { platform } from "./platform";
 import { loadStoredFramerToken, decodeJWTPayload } from "./api/framer";
+import { framerEndpoints } from "./config/endpoints";
 
 type AppState = 'welcome' | 'customization' | 'publish';
 
@@ -43,10 +44,23 @@ const App: React.FC = () => {
             const isSameProject = currentSite?.siteId && payload.siteId === currentSite.siteId;
             setIsAuthenticated(!!isSameProject);
           } else {
-            // New token format — siteId is registered separately via /api/register-site.
-            // Trust the JWT and register the current site in the background if needed.
-            setIsAuthenticated(true);
-            registerSiteIfNeeded().catch(() => {});
+            // New token format — siteId registered separately. Check if THIS site is
+            // already registered on the backend before trusting the JWT silently.
+            // This prevents a JWT from Site A auto-authenticating on an unregistered Site B.
+            let siteIsRegistered = false;
+            if (currentSite?.siteId) {
+              try {
+                const res = await fetch(framerEndpoints.site.get(currentSite.siteId));
+                siteIsRegistered = res.ok;
+              } catch { siteIsRegistered = false; }
+            }
+            if (siteIsRegistered) {
+              setIsAuthenticated(true);
+              registerSiteIfNeeded().catch(() => {});
+            } else {
+              // Site not registered — user must go through OTP to register it
+              setIsAuthenticated(false);
+            }
           }
         } else {
           setIsAuthenticated(false);
