@@ -21,21 +21,10 @@ export const framerAdapter: PlatformAdapter = {
 
   async getPublishInfo(): Promise<PublishInfo> {
     const info = await framer.getPublishInfo();
-    console.log("[platform/framer] getPublishInfo raw:", JSON.stringify(info));
     return {
       productionUrl: info?.production?.url ?? null,
       stagingUrl: info?.staging?.url ?? null,
     };
-  },
-
-  async getProductionUrl(): Promise<string | null> {
-    const info = await framer.getPublishInfo();
-    return info?.production?.url ?? null;
-  },
-
-  async getStagingUrl(): Promise<string | null> {
-    const info = await framer.getPublishInfo();
-    return info?.staging?.url ?? null;
   },
 
   canInjectScript(): boolean {

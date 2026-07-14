@@ -2,7 +2,6 @@
 
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { User } from "../types/types";
-import { platform } from '../platform';
 import {
   FRAMER_TOKEN_KEY,
   decodeJWTPayload,
@@ -103,7 +102,11 @@ export function useAuth() {
         // registerSite() already stored the new token in localStorage + memory.
         // Update React Query state to reflect the siteId.
         queryClient.setQueryData<AuthState>(["auth"], (prev) => ({
-          user: { ...(prev?.user || {}), siteId: result.siteId },
+          user: {
+            firstName: prev?.user?.firstName || "",
+            email: prev?.user?.email || "",
+            siteId: result.siteId,
+          },
         }));
       }
     } catch {
@@ -145,35 +148,7 @@ export function useAuth() {
     }
   };
 
-  // ── Per-site auth check ──────────────────────────────────────────────────────
-
-  const isAuthenticatedForCurrentSite = async (): Promise<boolean> => {
-    try {
-      if (!authState?.user?.email) return false;
-      const currentSiteInfo = await platform.getSiteInfo();
-      if (!currentSiteInfo?.siteId) return false;
-      return authState.user.siteId === currentSiteInfo.siteId;
-    } catch {
-      return false;
-    }
-  };
-
-  // ── Convenience wrappers ────────────────────────────────────────────────────
-
-  const checkPublishedDataExists = async (): Promise<boolean> => {
-    try {
-      const result = await getPublishedSettings();
-      return !!(result && (result.customization || result.accessibilityProfiles));
-    } catch {
-      return false;
-    }
-  };
-
   const getSessionToken = async () => getValidSessionToken();
-
-  const openAuthScreen = async () => {
-    throw new Error("Use requestOTP() and verifyOTP() instead.");
-  };
 
   return {
     user: authState?.user || { firstName: "", email: "" },
@@ -181,16 +156,12 @@ export function useAuth() {
     logout,
     requestOTP,
     verifyOTP,
-    openAuthScreen,
-    isAuthenticatedForCurrentSite,
     makeAuthenticatedRequest,
     publishSettings,
     connectCustomDomain,
     getPublishedSettings,
-    checkPublishedDataExists,
     registerAccessibilityScript,
     applyAccessibilityScript,
-    attemptSilentAuth,
     attemptAutoRefresh,
     getSessionToken,
   };

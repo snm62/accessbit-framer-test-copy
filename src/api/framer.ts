@@ -173,7 +173,7 @@ export const registerSite = async (): Promise<{ siteId: string; siteToken: strin
 export const publishSettings = async (customizationData: any, accessibilityProfiles: any): Promise<any> => {
   const [siteInfo, publishInfo] = await Promise.all([
     platform.getSiteInfo(),
-    platform.getPublishInfo().catch((e) => { console.error("[publishSettings] getPublishInfo error:", e); return { stagingUrl: null, productionUrl: null }; }),
+    platform.getPublishInfo().catch(() => ({ stagingUrl: null, productionUrl: null })),
   ]);
   if (!siteInfo?.siteId) throw new Error('No site information available');
   return makeAuthenticatedRequest(

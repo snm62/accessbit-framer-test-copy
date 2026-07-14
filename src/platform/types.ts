@@ -34,12 +34,6 @@ export interface PlatformAdapter {
   /** Return both the production and staging URLs. */
   getPublishInfo(): Promise<PublishInfo>;
 
-  /** Return the live production URL, or null. */
-  getProductionUrl(): Promise<string | null>;
-
-  /** Return the staging/preview URL, or null. */
-  getStagingUrl(): Promise<string | null>;
-
   /** True if the current user may inject a <script> into the site. */
   canInjectScript(): boolean | Promise<boolean>;
 
