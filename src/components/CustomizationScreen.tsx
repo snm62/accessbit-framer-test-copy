@@ -49,7 +49,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const [triggerButtonShape, setTriggerButtonShape] = useState("Circle");
   const [triggerHorizontalOffset, setTriggerHorizontalOffset] = useState("0px");
   const [hideTriggerButton, setHideTriggerButton] = useState("No");
-  const [triggerVerticalOffset, setTriggerVerticalOffset] = useState("3px");
+  const [triggerVerticalOffset, setTriggerVerticalOffset] = useState("0px");
   const [triggerHorizontalPosition, setTriggerHorizontalPosition] = useState("Left");
   const [btnColor, setBtnColor] = useState("#007bff");
   const [showOnMobile, setShowOnMobile] = useState("Show");
@@ -57,8 +57,8 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const [mobileTriggerVerticalPosition, setMobileTriggerVerticalPosition] = useState("Bottom");
   const [mobileTriggerSize, setMobileTriggerSize] = useState("Medium");
   const [mobileTriggerShape, setMobileTriggerShape] = useState("Rounded");
-  const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = useState("3");
-  const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = useState("3");
+  const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = useState("0");
+  const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = useState("0");
   const [selectedIcon, setSelectedIcon] = useState("accessibility");
   const [selectedIconName, setSelectedIconName] = useState("Accessibility");
 
@@ -499,7 +499,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                     min="0"
                     max="50"
                     value={triggerHorizontalOffset.replace('px', '')}
-                    onChange={(e) => setTriggerHorizontalOffset(e.target.value + 'px')}
+                    onChange={(e) => setTriggerHorizontalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))) + 'px')}
                     className="offset-input"
                   />
                 </div>
@@ -511,7 +511,7 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                     min="0"
                     max="50"
                     value={triggerVerticalOffset.replace('px', '')}
-                    onChange={(e) => setTriggerVerticalOffset(e.target.value + 'px')}
+                    onChange={(e) => setTriggerVerticalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))) + 'px')}
                     className="offset-input"
                   />
                 </div>
@@ -563,9 +563,9 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                   <input
                     type="number"
                     min="0"
-                    max="10"
+                    max="50"
                     value={mobileTriggerHorizontalOffset}
-                    onChange={(e) => setMobileTriggerHorizontalOffset(e.target.value)}
+                    onChange={(e) => setMobileTriggerHorizontalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))))}
                     className="offset-input"
                   />
                 </div>
@@ -575,9 +575,9 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                   <input
                     type="number"
                     min="0"
-                    max="10"
+                    max="50"
                     value={mobileTriggerVerticalOffset}
-                    onChange={(e) => setMobileTriggerVerticalOffset(e.target.value)}
+                    onChange={(e) => setMobileTriggerVerticalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))))}
                     className="offset-input"
                   />
                 </div>
@@ -660,15 +660,15 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                         className="mobile-trigger-widget"
                         style={{
                           left: mobileTriggerHorizontalPosition === 'Left' ?
-                            `calc(8px + ${parseInt(mobileTriggerHorizontalOffset)}px)` :
+                            `calc(8px + ${Math.round(parseInt(mobileTriggerHorizontalOffset) * 0.4)}px)` :
                             mobileTriggerHorizontalPosition === 'Right' ? 'auto' : '50%',
                           right: mobileTriggerHorizontalPosition === 'Right' ?
-                            `calc(8px + ${parseInt(mobileTriggerHorizontalOffset)}px)` : 'auto',
+                            `calc(8px + ${Math.round(parseInt(mobileTriggerHorizontalOffset) * 0.4)}px)` : 'auto',
                           top: mobileTriggerVerticalPosition === 'Top' ?
-                            `calc(10px + ${parseInt(mobileTriggerVerticalOffset)}px)` :
+                            `calc(10px + ${Math.round(parseInt(mobileTriggerVerticalOffset) * 0.4)}px)` :
                             mobileTriggerVerticalPosition === 'Middle' ? '50%' : 'auto',
                           bottom: mobileTriggerVerticalPosition === 'Bottom' ?
-                            `calc(10px + ${parseInt(mobileTriggerVerticalOffset)}px)` : 'auto',
+                            `calc(10px + ${Math.round(parseInt(mobileTriggerVerticalOffset) * 0.4)}px)` : 'auto',
                           transform: mobileTriggerHorizontalPosition === 'Center' ?
                             (mobileTriggerVerticalPosition === 'Middle' ? 'translateX(-50%)' : 'translateX(-50%)') :
                             (mobileTriggerVerticalPosition === 'Middle' ? 'translateY(-50%)' : 'none')
