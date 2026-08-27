@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/userAuth";
 import { platform } from "../platform";
 import { framerEndpoints } from "../config/endpoints";
+import { loadStoredFramerToken, decodeJWTPayload } from "../api/framer";
 import "../styles/publish.css";
 import "../styles/payment.css";
 
@@ -72,6 +73,7 @@ const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [isAnnual, setIsAnnual] = useState(true);
+  const [siteDomain, setSiteDomain] = useState('');
   const [accessibilityProfiles, setAccessibilityProfiles] = useState({
     seizureSafe: false,
     visionImpaired: false,
@@ -192,6 +194,7 @@ const handleConfirmPublish = async () => {
           domain.includes('127.0.0.1')
         );
 
+        setSiteDomain(domain);
         if (isStaging) {
           setHasSubscription(false);
           return;
@@ -218,7 +221,16 @@ const handleConfirmPublish = async () => {
   };
 
   const handlePurchaseNow = () => {
-    openTrustedStripeUrl(isAnnual ? STRIPE_BUY_ANNUAL_URL : STRIPE_BUY_MONTHLY_URL);
+    try {
+      const jwt = loadStoredFramerToken();
+      const payload = jwt ? decodeJWTPayload(jwt) : null;
+      const email = (payload?.email || payload?.sub || '') as string;
+      const plan = isAnnual ? 'annually' : 'monthly';
+      const encoded = btoa(JSON.stringify({ email, plan, platform: 'framer', domain: siteDomain }));
+      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}&mode=test`, '_blank', 'noopener,noreferrer');
+    } catch {
+      openTrustedStripeUrl(isAnnual ? STRIPE_BUY_ANNUAL_URL : STRIPE_BUY_MONTHLY_URL);
+    }
   };
 
   return (
