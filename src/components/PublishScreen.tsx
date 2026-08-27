@@ -178,20 +178,25 @@ const handleConfirmPublish = async () => {
 
         // Get the site's production URL from Framer
         const publishInfo = await platform.getPublishInfo();
+        console.log('[AccessBit] publishInfo:', JSON.stringify(publishInfo));
         const productionUrl = publishInfo.productionUrl || '';
-        const domain = productionUrl
+        const stagingUrl = publishInfo.stagingUrl || '';
+        const extractDomain = (url: string) => url
           .replace(/^https?:\/\//, '')
           .replace(/^www\./, '')
           .replace(/\/$/, '')
           .split('/')[0];
+        const customDomain = extractDomain(productionUrl);
+        const stagingDomain = extractDomain(stagingUrl);
+        const domain = customDomain || stagingDomain;
 
         // Framer staging domains (.framer.app) don't need a subscription
         const isStaging = (
-          !domain ||
-          domain.includes('.framer.app') ||
-          domain.includes('.framer.com') ||
-          domain.includes('localhost') ||
-          domain.includes('127.0.0.1')
+          !customDomain ||
+          customDomain.includes('.framer.app') ||
+          customDomain.includes('.framer.com') ||
+          customDomain.includes('localhost') ||
+          customDomain.includes('127.0.0.1')
         );
 
         setSiteDomain(domain);

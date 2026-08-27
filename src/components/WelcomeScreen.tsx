@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/welcomescreen.css";
+import { platform } from "../platform";
 const leftLines = new URL("../assets/leftlines.svg", import.meta.url).href;
 const rightLines = new URL("../assets/rightlines.svg", import.meta.url).href;
 const tutorialThumb = new URL("../assets/tutorial-thumbnail.svg", import.meta.url).href;
@@ -63,6 +64,12 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
     setError(null);
     setIsLoading(true);
     try {
+      const publishInfo = await platform.getPublishInfo();
+      if (!publishInfo.productionUrl && !publishInfo.stagingUrl) {
+        setError("Please publish your Framer site first, then come back to authorize.");
+        setIsLoading(false);
+        return;
+      }
       await requestOTP(email.trim());
       setStep("otp");
     } catch (err: any) {
