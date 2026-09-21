@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { framer } from "framer-plugin";
 import { useAuth } from "../hooks/userAuth";
 import { platform } from "../platform";
 import { framerEndpoints } from "../config/endpoints";
@@ -35,12 +36,8 @@ const iconOptions = [
 
 /** Exact Stripe URLs opened from this screen — only these may be passed to `window.open`. */
 const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_ANNUAL_URL = "https://buy.stripe.com/3cI8wRgGjaLt0MY3x64Ni00";
-const STRIPE_BUY_MONTHLY_URL = "https://buy.stripe.com/8x23cx9dRaLt2V6ffO4Ni01";
 const TRUSTED_STRIPE_URLS = new Set<string>([
   STRIPE_PORTAL_URL,
-  STRIPE_BUY_ANNUAL_URL,
-  STRIPE_BUY_MONTHLY_URL,
 ]);
 
 function openTrustedStripeUrl(url: string): void {
@@ -135,7 +132,10 @@ const handleConfirmPublish = async () => {
     const injected = await platform.injectScript({ html: scriptHtml, location: 'bodyEnd' });
 
     if (!injected) {
-      setPublishError('Settings saved, but the script could not be injected.');
+      const msg = platform.canInjectScript()
+        ? 'Settings saved, but the script could not be injected. Please try again.'
+        : 'Settings saved, but AccessBit needs Custom Code permission to install the widget. Please ask a site owner to grant it in Framer.';
+      setPublishError(msg);
       return;
     }
 
@@ -178,8 +178,7 @@ const handleConfirmPublish = async () => {
 
         // Get the site's production URL from Framer
         const publishInfo = await platform.getPublishInfo();
-        console.log('[AccessBit] publishInfo:', JSON.stringify(publishInfo));
-        const productionUrl = publishInfo.productionUrl || '';
+const productionUrl = publishInfo.productionUrl || '';
         const stagingUrl = publishInfo.stagingUrl || '';
         const extractDomain = (url: string) => url
           .replace(/^https?:\/\//, '')
@@ -211,7 +210,9 @@ const handleConfirmPublish = async () => {
           { method: 'GET' }
         );
         setHasSubscription(response?.hasAccess === true);
-      } catch {
+      } catch (err) {
+        console.error('[AccessBit] checkSubscriptionStatus error:', err);
+        framer.notify("AccessBit could not check your subscription. Please reopen the plugin and try again.", { variant: "error" });
         setHasSubscription(false);
       } finally {
         setIsCheckingSubscription(false);
@@ -232,9 +233,9 @@ const handleConfirmPublish = async () => {
       const email = (payload?.email || payload?.sub || '') as string;
       const plan = isAnnual ? 'annually' : 'monthly';
       const encoded = btoa(JSON.stringify({ email, plan, platform: 'framer', domain: siteDomain }));
-      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}&mode=test`, '_blank', 'noopener,noreferrer');
-    } catch {
-      openTrustedStripeUrl(isAnnual ? STRIPE_BUY_ANNUAL_URL : STRIPE_BUY_MONTHLY_URL);
+      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}`, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.error('[AccessBit] handlePurchaseNow error:', err);
     }
   };
 

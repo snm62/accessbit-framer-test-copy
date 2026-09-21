@@ -147,9 +147,7 @@ export const verifyOTPNetwork = async (email: string, otp: string): Promise<{ to
   return { token, user };
 };
 
-// Called immediately after OTP verification — registers the site in a separate
-// authenticated step so site metadata is never bundled with the auth request.
-// Returns a new JWT with siteId embedded so silent auth works correctly.
+
 export const registerSite = async (): Promise<{ siteId: string; siteToken: string; token: string }> => {
   const siteInfo = await platform.getSiteInfo();
   if (!siteInfo?.siteId) throw new Error('No site information available');

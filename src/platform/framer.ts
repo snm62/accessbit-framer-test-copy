@@ -7,24 +7,39 @@ export const framerAdapter: PlatformAdapter = {
 
   async getSiteId(): Promise<string> {
     // Framer's project id doubles as our `siteId` in every backend call.
-    const info = await framer.getProjectInfo();
-    return info.id;
+    try {
+      const info = await framer.getProjectInfo();
+      return info.id;
+    } catch (err) {
+      framer.notify("AccessBit could not read project info. Please try again.", { variant: "error" });
+      throw err;
+    }
   },
 
   async getSiteInfo(): Promise<SiteInfo> {
-    const info = await framer.getProjectInfo();
-    return {
-      siteId: info.id,
-      siteName: info.name ?? undefined,
-    };
+    try {
+      const info = await framer.getProjectInfo();
+      return {
+        siteId: info.id,
+        siteName: info.name ?? undefined,
+      };
+    } catch (err) {
+      framer.notify("AccessBit could not read project info. Please try again.", { variant: "error" });
+      throw err;
+    }
   },
 
   async getPublishInfo(): Promise<PublishInfo> {
-    const info = await framer.getPublishInfo();
-    return {
-      productionUrl: info?.production?.url ?? null,
-      stagingUrl: info?.staging?.url ?? null,
-    };
+    try {
+      const info = await framer.getPublishInfo();
+      return {
+        productionUrl: info?.production?.url ?? null,
+        stagingUrl: info?.staging?.url ?? null,
+      };
+    } catch (err) {
+      framer.notify("AccessBit could not read publish info. Please try again.", { variant: "error" });
+      throw err;
+    }
   },
 
   canInjectScript(): boolean {
@@ -33,9 +48,7 @@ export const framerAdapter: PlatformAdapter = {
 
   async injectScript({ html, location = "headStart" }: ScriptInjection): Promise<boolean> {
     if (!framer.isAllowedTo("setCustomCode")) {
-      console.warn(
-        "[platform/framer] setCustomCode not allowed for this user — script not injected."
-      );
+      framer.notify("AccessBit needs Custom Code permission to install the widget. Please ask a site owner to grant it in Framer.", { variant: "error" });
       return false;
     }
     try {
