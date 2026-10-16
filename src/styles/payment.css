@@ -374,6 +374,401 @@
   transform: translateY(-1px);
 }
 
+/* ── Subscription Active Card ── */
+.publish-page-payment-window .subscription-active-card {
+  width: 100%;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.subscription-active-card {
+  background: #0f0d1f;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 18px 18px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.sub-active-success-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.sub-active-checkmark {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sub-active-success-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #46b586;
+  font-weight: 500;
+}
+
+.sub-active-plan-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.sub-active-plan-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.sub-active-badge {
+  background: rgba(70, 181, 134, 0.12);
+  color: #46b586;
+  border: 1px solid rgba(70, 181, 134, 0.35);
+  border-radius: 20px;
+  padding: 0 9px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.sub-active-plan-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 20px;
+}
+
+.sub-active-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 14px 0 14px;
+  margin-bottom: 0;
+}
+
+.sub-active-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sub-active-detail-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.sub-active-detail-value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.sub-active-invoice-link {
+  color: #6b7fff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+}
+
+.sub-active-invoice-link:hover {
+  color: #ffffff;
+}
+
+.sub-active-user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 14px;
+}
+
+.sub-active-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2b2c5f 0%, #11b5ae 130%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.sub-active-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sub-active-user-email {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  word-break: break-all;
+}
+
+.sub-active-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4f52e8;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 16px;
+  height: 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.sub-active-cta-btn:hover {
+  background: #5c60f0;
+}
+
+.sub-active-manage-link {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 6px;
+  width: 100%;
+  display: block;
+  transition: color 0.2s ease;
+}
+
+.sub-active-manage-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Payment processing / cancel modal ── */
+.cancel-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.cancel-modal {
+  background: #1a1830;
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.cancel-modal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(232, 168, 56, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.cancel-modal-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cancel-modal-body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cancel-modal-body strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.cancel-modal-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.cancel-modal-keep {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancel-modal-keep:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cancel-modal-confirm {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #e05252;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-modal-confirm:hover {
+  background: #c94444;
+}
+
+.cancel-modal-keep:disabled,
+.cancel-modal-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Subscription check loader ── */
+.subscription-check-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+}
+
+.subscription-spinner {
+  width: 48px;
+  height: 48px;
+}
+
+/* ── Invoices modal ── */
+.invoice-modal {
+  background: #1a1830;
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.invoice-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.invoice-modal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px 12px;
+  gap: 10px;
+}
+
+.invoice-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.invoice-modal-number {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.invoice-modal-date {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.invoice-modal-download {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #7c6bff;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.invoice-modal-download:hover {
+  color: #a99fff;
+}
+
 .purchase-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;

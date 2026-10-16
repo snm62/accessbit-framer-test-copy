@@ -16,5 +16,6 @@ export const framerEndpoints = {
     registerScript: (siteId: string) => `${FRAMER_WORKER_URL}/api/register-script?siteId=${encodeURIComponent(siteId)}`,
     applyScript:    (siteId: string) => `${FRAMER_WORKER_URL}/api/apply-script?siteId=${encodeURIComponent(siteId)}`,
     checkPayment:   (domain: string) => `${FRAMER_WORKER_URL}/api/check-payment?domain=${encodeURIComponent(domain)}`,
+    invoicePdf:     ()               => `${FRAMER_WORKER_URL}/api/invoice-pdf`,
   },
 };

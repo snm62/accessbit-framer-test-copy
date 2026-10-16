@@ -13689,32 +13689,85 @@ var iro;
   })(iro2.ui || (iro2.ui = {}));
 })(iro || (iro = {}));
 var iro$1 = iro;
+function stripControlChars(input) {
+  let out = "";
+  for (const ch2 of input) {
+    const code = ch2.codePointAt(0) || 0;
+    if (code <= 32 || code === 127 || code >= 128 && code <= 159) continue;
+    out += ch2;
+  }
+  return out;
+}
+const HAS_SCHEME = /^[a-zA-Z][a-zA-Z0-9+.-]*:/;
+function normalizeStatementLink(raw) {
+  if (raw === null || raw === void 0) return { ok: true, value: "" };
+  const trimmed = String(raw).trim();
+  if (!trimmed) return { ok: true, value: "" };
+  const cleaned = stripControlChars(trimmed);
+  if (!cleaned) return { ok: true, value: "" };
+  const candidate = HAS_SCHEME.test(cleaned) ? cleaned : `https://${cleaned.replace(/^\/+/, "")}`;
+  let parsed;
+  try {
+    parsed = new URL(candidate);
+  } catch {
+    return { ok: false, value: "", reason: "Enter a valid link, for example https://example.com/accessibility" };
+  }
+  if (parsed.protocol === "http:") {
+    parsed.protocol = "https:";
+  } else if (parsed.protocol !== "https:") {
+    return { ok: false, value: "", reason: "Link must start with https://" };
+  }
+  if (parsed.username || parsed.password) {
+    return { ok: false, value: "", reason: "Link must not contain a username or password" };
+  }
+  if (parsed.port && parsed.port !== "443") {
+    return { ok: false, value: "", reason: "Link must not specify a port" };
+  }
+  if (!parsed.hostname || !parsed.hostname.includes(".")) {
+    return { ok: false, value: "", reason: "Enter a valid link, for example https://example.com/accessibility" };
+  }
+  return { ok: true, value: parsed.toString() };
+}
+function sanitizeStatementLink(raw) {
+  const result = normalizeStatementLink(raw);
+  return result.ok ? result.value : "";
+}
+const brandLogo$1 = new URL("/assets/accessbit-logo-DzpDQ36u.svg", import.meta.url).href;
 const whitearrow$1 = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
 </svg>`);
-const mobile = new URL("data:image/svg+xml,%3csvg%20width='18'%20height='22'%20viewBox='0%200%2018%2022'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20opacity='0.5'%3e%3cpath%20d='M17%206V16C17%2020%2016%2021%2012%2021H6C2%2021%201%2020%201%2016V6C1%202%202%201%206%201H12C16%201%2017%202%2017%206Z'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M11%204.5H7'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M9%2018.1C9.85604%2018.1%2010.55%2017.406%2010.55%2016.55C10.55%2015.694%209.85604%2015%209%2015C8.14396%2015%207.45%2015.694%207.45%2016.55C7.45%2017.406%208.14396%2018.1%209%2018.1Z'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e", import.meta.url).href;
-const monitor = new URL("data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M6.44%202H17.55C21.11%202%2022%202.89%2022%206.44V12.77C22%2016.33%2021.11%2017.21%2017.56%2017.21H6.44C2.89%2017.22%202%2016.33%202%2012.78V6.44C2%202.89%202.89%202%206.44%202Z'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M12%2017.22V22'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M2%2013H22'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M7.5%2022H16.5'%20stroke='white'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e", import.meta.url).href;
 const icon1$1 = new URL("/assets/Accessibility-sUzXFXgh.webp", import.meta.url).href;
-const ALLOWED_LINK_PROTOCOLS = /* @__PURE__ */ new Set(["https:", "http:"]);
-const isValidStatementLink = (url) => {
-  if (!url) return true;
-  try {
-    return ALLOWED_LINK_PROTOCOLS.has(new URL(url).protocol);
-  } catch {
-    return false;
-  }
+const PREVIEW_OFFSET_SCALE = {
+  desktop: 0.2,
+  mobile: 80 / 390
+};
+const scalePreviewOffset = (value, scale) => {
+  const parsed = parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return 0;
+  return Math.round(parsed * scale * 100) / 100;
 };
 const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoadingExistingData = false }) => {
   const [isDesktopView, setIsDesktopView] = reactExports.useState(true);
   const [openDropdown, setOpenDropdown] = reactExports.useState(null);
+  const [siteDomain, setSiteDomain] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    platform.getPublishInfo().then((publishInfo) => {
+      const productionUrl = publishInfo?.productionUrl || "";
+      const extractDomain = (url) => url.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "").split("/")[0];
+      const customDomain = extractDomain(productionUrl);
+      const isStaging = !customDomain || customDomain.includes(".framer.app") || customDomain.includes(".framer.com") || customDomain.includes("localhost") || customDomain.includes("127.0.0.1");
+      if (!isStaging && customDomain) setSiteDomain(customDomain);
+    }).catch(() => {
+    });
+  }, []);
   const [accessibilityStatementLink, setAccessibilityStatementLink] = reactExports.useState("");
-  const [linkError, setLinkError] = reactExports.useState(null);
+  const [statementLinkError, setStatementLinkError] = reactExports.useState(null);
   const [triggerVerticalPosition, setTriggerVerticalPosition] = reactExports.useState("Bottom");
   const [triggerButtonSize, setTriggerButtonSize] = reactExports.useState("Medium");
   const [triggerButtonShape, setTriggerButtonShape] = reactExports.useState("Circle");
   const [triggerHorizontalOffset, setTriggerHorizontalOffset] = reactExports.useState("0px");
-  const [hideTriggerButton, setHideTriggerButton] = reactExports.useState("No");
-  const [triggerVerticalOffset, setTriggerVerticalOffset] = reactExports.useState("0px");
+  const [hideTrigger, setHideTrigger] = reactExports.useState(false);
+  const [triggerVerticalOffset, setTriggerVerticalOffset] = reactExports.useState("3px");
   const [triggerHorizontalPosition, setTriggerHorizontalPosition] = reactExports.useState("Left");
   const [btnColor, setBtnColor] = reactExports.useState("#007bff");
   const [showOnMobile, setShowOnMobile] = reactExports.useState("Show");
@@ -13722,10 +13775,11 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
   const [mobileTriggerVerticalPosition, setMobileTriggerVerticalPosition] = reactExports.useState("Bottom");
   const [mobileTriggerSize, setMobileTriggerSize] = reactExports.useState("Medium");
   const [mobileTriggerShape, setMobileTriggerShape] = reactExports.useState("Rounded");
-  const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = reactExports.useState("0");
-  const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = reactExports.useState("0");
+  const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = reactExports.useState("3");
+  const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = reactExports.useState("3");
   const [selectedIcon, setSelectedIcon] = reactExports.useState("accessibility");
   const [selectedIconName, setSelectedIconName] = reactExports.useState("Accessibility");
+  const [unsavedCount, setUnsavedCount] = reactExports.useState(0);
   const [btnOpen, setBtnOpen] = reactExports.useState(false);
   const [hexInput, setHexInput] = reactExports.useState("#007bff");
   const btnPickerInstance = reactExports.useRef(null);
@@ -13733,12 +13787,13 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
   const btnPickerRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
     if (existingCustomizationData) {
-      setAccessibilityStatementLink(existingCustomizationData.accessibilityStatementLink || "");
+      setAccessibilityStatementLink(sanitizeStatementLink(existingCustomizationData.accessibilityStatementLink));
+      setStatementLinkError(null);
       setTriggerVerticalPosition(existingCustomizationData.triggerVerticalPosition || "Bottom");
       setTriggerButtonSize(existingCustomizationData.triggerButtonSize || "Medium");
       setTriggerButtonShape(existingCustomizationData.triggerButtonShape || "Circle");
       setTriggerHorizontalOffset(existingCustomizationData.triggerHorizontalOffset || "0px");
-      setHideTriggerButton(existingCustomizationData.hideTriggerButton || "No");
+      setHideTrigger(existingCustomizationData.hideTriggerButton === "Yes");
       setTriggerVerticalOffset(existingCustomizationData.triggerVerticalOffset || "0px");
       setTriggerHorizontalPosition(existingCustomizationData.triggerHorizontalPosition || "Left");
       setBtnColor(existingCustomizationData.triggerButtonColor || "#007bff");
@@ -13751,21 +13806,14 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
       setMobileTriggerVerticalOffset(existingCustomizationData.mobileTriggerVerticalOffset || "0");
       setSelectedIcon(existingCustomizationData.selectedIcon || "accessibility");
       setSelectedIconName(existingCustomizationData.selectedIconName || "Accessibility");
+      setUnsavedCount(0);
     }
   }, [existingCustomizationData]);
   reactExports.useEffect(() => {
     if (!btnPickerInstance.current && btnPickerRef.current) {
       btnPickerInstance.current = iro$1.ColorPicker(btnPickerRef.current, { width: 100, color: btnColor, borderWidth: 2, borderColor: "#ccc" });
-    }
-    if (btnPickerInstance.current) {
-      btnPickerInstance.current.off("color:change");
       btnPickerInstance.current.on("color:change", (newColor) => handleColorChange(newColor.hexString));
     }
-    return () => {
-      if (btnPickerInstance.current) {
-        btnPickerInstance.current.off("color:change");
-      }
-    };
   }, []);
   reactExports.useEffect(() => {
     if (btnOpen && btnPickerInstance.current) btnPickerInstance.current.color.set(btnColor);
@@ -13790,14 +13838,27 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
     }
   };
   const handleHexInputBlur = () => {
-    if (!isCompleteHex(hexInput)) {
-      setHexInput(btnColor);
-    }
+    if (!isCompleteHex(hexInput)) setHexInput(btnColor);
   };
   const handleHexInputKeyDown = (e2) => {
-    if (e2.key === "Enter") {
-      e2.target.blur();
-    }
+    if (e2.key === "Enter") e2.target.blur();
+  };
+  const dropdownRefs = {
+    interfaceLanguage: reactExports.useRef(null),
+    interfacePosition: reactExports.useRef(null),
+    triggerHorizontalPosition: reactExports.useRef(null),
+    triggerVerticalPosition: reactExports.useRef(null),
+    triggerButtonSize: reactExports.useRef(null),
+    triggerButtonShape: reactExports.useRef(null),
+    triggerHorizontalOffset: reactExports.useRef(null),
+    triggerVerticalOffset: reactExports.useRef(null),
+    showOnMobile: reactExports.useRef(null),
+    mobileTriggerHorizontalPosition: reactExports.useRef(null),
+    mobileTriggerVerticalPosition: reactExports.useRef(null),
+    mobileTriggerSize: reactExports.useRef(null),
+    mobileTriggerShape: reactExports.useRef(null),
+    mobileTriggerHorizontalOffset: reactExports.useRef(null),
+    mobileTriggerVerticalOffset: reactExports.useRef(null)
   };
   reactExports.useEffect(() => {
     function handleGlobalClickOutside(event) {
@@ -13813,31 +13874,6 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
     document.addEventListener("mousedown", handleGlobalClickOutside);
     return () => document.removeEventListener("mousedown", handleGlobalClickOutside);
   }, [btnOpen, openDropdown]);
-  const dropdownRefs = {
-    triggerHorizontalPosition: reactExports.useRef(null),
-    triggerVerticalPosition: reactExports.useRef(null),
-    triggerButtonSize: reactExports.useRef(null),
-    triggerButtonShape: reactExports.useRef(null),
-    triggerHorizontalOffset: reactExports.useRef(null),
-    hideTriggerButton: reactExports.useRef(null),
-    triggerVerticalOffset: reactExports.useRef(null),
-    showOnMobile: reactExports.useRef(null),
-    mobileTriggerHorizontalPosition: reactExports.useRef(null),
-    mobileTriggerVerticalPosition: reactExports.useRef(null),
-    mobileTriggerSize: reactExports.useRef(null),
-    mobileTriggerShape: reactExports.useRef(null),
-    mobileTriggerHorizontalOffset: reactExports.useRef(null),
-    mobileTriggerVerticalOffset: reactExports.useRef(null)
-  };
-  const positionOptions = [
-    { label: "Left", value: "Left" },
-    { label: "Right", value: "Right" }
-  ];
-  const verticalPositionOptions = [
-    { label: "Top", value: "Top" },
-    { label: "Middle", value: "Middle" },
-    { label: "Bottom", value: "Bottom" }
-  ];
   const sizeOptions = [
     { label: "Small", value: "Small" },
     { label: "Medium", value: "Medium" },
@@ -13848,33 +13884,25 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
     { label: "Square", value: "Square" },
     { label: "Rounded", value: "Rounded" }
   ];
-  const yesNoOptions = [
-    { label: "Yes", value: "Yes" },
-    { label: "No", value: "No" }
-  ];
   const showOptions = [
     { label: "Show", value: "Show" },
     { label: "Hide", value: "Hide" }
-  ];
-  const mobileVerticalPositionOptions = [
-    { label: "Top", value: "Top" },
-    { label: "Middle", value: "Middle" },
-    { label: "Bottom", value: "Bottom" }
   ];
   const mobileShapeOptions = [
     { label: "Rounded", value: "Rounded" },
     { label: "Square", value: "Square" },
     { label: "Circle", value: "Circle" }
   ];
-  const getLabel = (opts, val) => (opts.find((o2) => o2.value === val) || {}).label || val;
+  const handleColorChange = (color) => setBtnColor(color);
   const handleNextPayment = async () => {
-    if (!isValidStatementLink(accessibilityStatementLink)) {
-      setLinkError("Please enter a valid URL starting with https:// or http://");
-      return;
-    }
     try {
+      const linkResult = normalizeStatementLink(accessibilityStatementLink);
+      if (!linkResult.ok) {
+        setStatementLinkError(linkResult.reason ?? null);
+        return;
+      }
+      setStatementLinkError(null);
       const customizationData = {
-        // Map your state variables to the customization object
         triggerButtonColor: btnColor,
         triggerButtonShape,
         triggerButtonSize,
@@ -13882,66 +13910,30 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
         triggerVerticalPosition,
         triggerHorizontalOffset,
         triggerVerticalOffset,
-        hideTriggerButton,
+        hideTriggerButton: hideTrigger ? "Yes" : "No",
         selectedIcon,
         selectedIconName,
         showOnMobile,
         mobileTriggerButtonColor: btnColor,
-        // Use same color as desktop
         mobileTriggerShape,
         mobileTriggerSize,
         mobileTriggerHorizontalPosition,
         mobileTriggerVerticalPosition,
         mobileTriggerHorizontalOffset,
         mobileTriggerVerticalOffset,
-        accessibilityStatementLink
+        accessibilityStatementLink: linkResult.value
       };
       onNext(customizationData);
-    } catch (error) {
+    } catch {
     }
   };
-  const handleColorChange = (color) => {
-    setBtnColor(color);
-  };
-  const handleShapeChange = (shape) => {
-    setTriggerButtonShape(shape);
-  };
-  const handlePositionChange = (position) => {
-    setTriggerHorizontalPosition(position);
-  };
-  const handleVerticalPositionChange = (position) => {
-    setTriggerVerticalPosition(position);
-  };
-  const renderDropdown = (type, label, value, options, onPick) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `custom-select ${openDropdown === type ? "open" : ""}`, ref: dropdownRefs[type], children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: "selected",
-          onClick: () => setOpenDropdown(openDropdown === type ? null : type),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: getLabel(options, value) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { className: "dropdown-icon", width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M3 4.5L6 7.5L9 4.5", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) })
-          ]
-        }
-      ),
-      openDropdown === type && /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "options", children: options.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "li",
-        {
-          onClick: () => {
-            onPick(opt.value);
-            setOpenDropdown(null);
-          },
-          children: opt.label
-        },
-        opt.value
-      )) })
-    ] })
-  ] });
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "customization-screen", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "customization-header", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "app-name" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-left", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: brandLogo$1, alt: "AccessBit", style: { height: "21px", display: "block" } }),
+        siteDomain && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "header-divider" }),
+        siteDomain && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "header-domain", children: siteDomain })
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-buttons", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "back-btn", onClick: onBack, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow$1, alt: "", style: { transform: "rotate(180deg)", width: "14px", height: "15px", marginRight: "8px" } }),
@@ -13954,268 +13946,439 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step-navigation", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-number", children: "STEP 1" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "1" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Customization" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-number", children: "STEP 2" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step", onClick: handleNextPayment, style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "2" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Publish" })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "main-content", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "left-panel", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "panel-content", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Customization AccessWidget Interface" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "interface-grid", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Accessibility Statement Link" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                placeholder: "https://example.com/accessibility",
-                value: accessibilityStatementLink,
-                onChange: (e2) => {
-                  const val = e2.target.value;
-                  setAccessibilityStatementLink(val);
-                  setLinkError(isValidStatementLink(val) ? null : "Please enter a valid URL starting with https:// or http://");
-                },
-                onBlur: () => {
-                  if (!isValidStatementLink(accessibilityStatementLink)) {
-                    setLinkError("Please enter a valid URL starting with https:// or http://");
-                  }
-                },
-                style: linkError ? { borderColor: "#ef4444" } : void 0
-              }
-            ),
-            linkError && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { color: "#ef4444", fontSize: "12px", marginTop: "4px" }, children: linkError })
-          ] }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "left-panel", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "panel-header", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "panel-header-title", children: "Widget configuration" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "panel-header-unsaved", children: [
+            unsavedCount,
+            " unsaved"
+          ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Customizing AccessWidget Trigger" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "trigger-grid", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-group", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Background Color" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "color-picker-dropdown", ref: btnDropdownRef, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "color-picker-button", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "panel-content", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "INTERFACE" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "interface-grid", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group statement-link-full", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Accessibility Statement Link" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "url",
+                  inputMode: "url",
+                  placeholder: "https://example.com/accessibility",
+                  value: accessibilityStatementLink,
+                  "aria-invalid": statementLinkError ? true : void 0,
+                  "aria-describedby": statementLinkError ? "statement-link-error" : void 0,
+                  onChange: (e2) => {
+                    setAccessibilityStatementLink(e2.target.value);
+                    if (statementLinkError) setStatementLinkError(null);
+                  },
+                  onBlur: (e2) => {
+                    const result = normalizeStatementLink(e2.target.value);
+                    if (result.ok) {
+                      setAccessibilityStatementLink(result.value);
+                      setStatementLinkError(null);
+                    } else {
+                      setStatementLinkError(result.reason ?? null);
+                    }
+                  }
+                }
+              ),
+              statementLinkError && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "span",
+                {
+                  id: "statement-link-error",
+                  role: "alert",
+                  style: { color: "#d93025", fontSize: "12px", marginTop: "4px", display: "block" },
+                  children: statementLinkError
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "statement-helper-text", children: "Opens from the widget's Statement button." })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "TRIGGER — DESKTOP" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "trigger-grid", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-group", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Background Color" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "color-picker-dropdown", ref: btnDropdownRef, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "color-picker-button", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "input",
+                      {
+                        type: "text",
+                        className: "color-picker-hex-input",
+                        value: hexInput,
+                        onChange: (e2) => handleHexInputChange(e2.target.value),
+                        onBlur: handleHexInputBlur,
+                        onKeyDown: handleHexInputKeyDown,
+                        spellCheck: false,
+                        autoComplete: "off",
+                        "aria-label": "Hex color code",
+                        placeholder: "#rrggbb",
+                        maxLength: 7
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        className: "color-preview",
+                        style: { backgroundColor: btnColor },
+                        onClick: () => setBtnOpen(!btnOpen),
+                        "aria-label": btnOpen ? "Close color wheel" : "Open color wheel"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `color-picker-container ${btnOpen ? "visible" : "hidden"}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: btnPickerRef }) })
+                ] })
+              ] }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Button size" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "select",
+                  {
+                    className: "form-native-select",
+                    value: triggerButtonSize,
+                    onChange: (e2) => {
+                      setTriggerButtonSize(e2.target.value);
+                      setUnsavedCount((c2) => c2 + 1);
+                    },
+                    children: sizeOptions.map((o2) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: o2.value, children: o2.label }, o2.value))
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Button shape" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "select",
+                  {
+                    className: "form-native-select",
+                    value: triggerButtonShape,
+                    onChange: (e2) => {
+                      setTriggerButtonShape(e2.target.value);
+                      setUnsavedCount((c2) => c2 + 1);
+                    },
+                    children: shapeOptions.map((o2) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: o2.value, children: o2.label }, o2.value))
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Anchor" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "anchor-select-row", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "select",
+                    {
+                      className: "anchor-select",
+                      value: triggerVerticalPosition,
+                      onChange: (e2) => {
+                        setTriggerVerticalPosition(e2.target.value);
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Top", children: "Top" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Middle", children: "Middle" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Bottom", children: "Bottom" })
+                      ]
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "select",
+                    {
+                      className: "anchor-select",
+                      value: triggerHorizontalPosition,
+                      onChange: (e2) => {
+                        setTriggerHorizontalPosition(e2.target.value);
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Left", children: "Left" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Right", children: "Right" })
+                      ]
+                    }
+                  )
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Horizontal offset" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "offset-input-wrapper offset-stepper", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "input",
                     {
-                      type: "text",
-                      className: "color-picker-hex-input",
-                      value: hexInput,
-                      onChange: (e2) => handleHexInputChange(e2.target.value),
-                      onBlur: handleHexInputBlur,
-                      onKeyDown: handleHexInputKeyDown,
-                      spellCheck: false,
-                      autoComplete: "off",
-                      "aria-label": "Hex color code",
-                      placeholder: "#rrggbb",
-                      maxLength: 7
+                      type: "number",
+                      min: "0",
+                      max: "50",
+                      value: triggerHorizontalOffset.replace("px", ""),
+                      onChange: (e2) => {
+                        setTriggerHorizontalOffset(Math.min(50, Math.max(0, Number(e2.target.value))).toString() + "px");
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      className: "offset-input"
                     }
                   ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "offset-px-suffix", children: "px" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Vertical offset" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "offset-input-wrapper offset-stepper", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
+                    "input",
                     {
-                      type: "button",
-                      className: "color-preview",
-                      style: { backgroundColor: btnColor },
-                      onClick: () => setBtnOpen(!btnOpen),
-                      "aria-label": btnOpen ? "Close color wheel" : "Open color wheel"
+                      type: "number",
+                      min: "0",
+                      max: "50",
+                      value: triggerVerticalOffset.replace("px", ""),
+                      onChange: (e2) => {
+                        setTriggerVerticalOffset(Math.min(50, Math.max(0, Number(e2.target.value))).toString() + "px");
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      className: "offset-input"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "offset-px-suffix", children: "px" })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "hide-trigger-row",
+                onClick: () => {
+                  setHideTrigger((h2) => !h2);
+                  setUnsavedCount((c2) => c2 + 1);
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hide-trigger-text", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hide-trigger-label", children: "Hide trigger button" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hide-trigger-sub" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `toggle-switch${hideTrigger ? " on" : ""}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "toggle-knob" }) })
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "TRIGGER — MOBILE" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mobile-grid", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Show on mobile" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "select",
+                  {
+                    className: "form-native-select",
+                    value: showOnMobile,
+                    onChange: (e2) => {
+                      setShowOnMobile(e2.target.value);
+                      setUnsavedCount((c2) => c2 + 1);
+                    },
+                    children: showOptions.map((o2) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: o2.value, children: o2.label }, o2.value))
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Size" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "select",
+                  {
+                    className: "form-native-select",
+                    value: mobileTriggerSize,
+                    onChange: (e2) => {
+                      setMobileTriggerSize(e2.target.value);
+                      setUnsavedCount((c2) => c2 + 1);
+                    },
+                    children: sizeOptions.map((o2) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: o2.value, children: o2.label }, o2.value))
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Shape" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "select",
+                  {
+                    className: "form-native-select",
+                    value: mobileTriggerShape,
+                    onChange: (e2) => {
+                      setMobileTriggerShape(e2.target.value);
+                      setUnsavedCount((c2) => c2 + 1);
+                    },
+                    children: mobileShapeOptions.map((o2) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: o2.value, children: o2.label }, o2.value))
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Anchor" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "anchor-select-row", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "select",
+                    {
+                      className: "anchor-select",
+                      value: mobileTriggerVerticalPosition,
+                      onChange: (e2) => {
+                        setMobileTriggerVerticalPosition(e2.target.value);
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Top", children: "Top" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Middle", children: "Middle" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Bottom", children: "Bottom" })
+                      ]
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "select",
+                    {
+                      className: "anchor-select",
+                      value: mobileTriggerHorizontalPosition,
+                      onChange: (e2) => {
+                        setMobileTriggerHorizontalPosition(e2.target.value);
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Left", children: "Left" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Right", children: "Right" })
+                      ]
                     }
                   )
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `color-picker-container ${btnOpen ? "visible" : "hidden"}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: btnPickerRef }) })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Horizontal offset" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "offset-input-wrapper offset-stepper", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "input",
+                    {
+                      type: "number",
+                      min: "0",
+                      max: "50",
+                      value: mobileTriggerHorizontalOffset,
+                      onChange: (e2) => {
+                        setMobileTriggerHorizontalOffset(Math.min(50, Math.max(0, Number(e2.target.value))).toString());
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      className: "offset-input"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "offset-px-suffix", children: "px" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Vertical offset" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "offset-input-wrapper offset-stepper", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "input",
+                    {
+                      type: "number",
+                      min: "0",
+                      max: "50",
+                      value: mobileTriggerVerticalOffset,
+                      onChange: (e2) => {
+                        setMobileTriggerVerticalOffset(Math.min(50, Math.max(0, Number(e2.target.value))).toString());
+                        setUnsavedCount((c2) => c2 + 1);
+                      },
+                      className: "offset-input"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "offset-px-suffix", children: "px" })
+                ] })
               ] })
-            ] }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Vertical Position" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("triggerVerticalPosition", "", triggerVerticalPosition, verticalPositionOptions, handleVerticalPositionChange) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Button Size" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("triggerButtonSize", "", triggerButtonSize, sizeOptions, setTriggerButtonSize) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Button Shape" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("triggerButtonShape", "", triggerButtonShape, shapeOptions, handleShapeChange) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Hide Trigger Button" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("hideTriggerButton", "", hideTriggerButton, yesNoOptions, setHideTriggerButton) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Horizontal Position" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("triggerHorizontalPosition", "", triggerHorizontalPosition, positionOptions, handlePositionChange) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Horizontal Offset" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "input",
-                {
-                  type: "number",
-                  min: "0",
-                  max: "50",
-                  value: triggerHorizontalOffset.replace("px", ""),
-                  onChange: (e2) => setTriggerHorizontalOffset(String(Math.min(50, Math.max(0, Number(e2.target.value)))) + "px"),
-                  className: "offset-input"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Vertical Offset" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "input",
-                {
-                  type: "number",
-                  min: "0",
-                  max: "50",
-                  value: triggerVerticalOffset.replace("px", ""),
-                  onChange: (e2) => setTriggerVerticalOffset(String(Math.min(50, Math.max(0, Number(e2.target.value)))) + "px"),
-                  className: "offset-input"
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "section", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Customizing AccessWidget for Mobile" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mobile-grid", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Show On Mobile?" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("showOnMobile", "", showOnMobile, showOptions, setShowOnMobile) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Mobile Trigger Horizontal Position" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("mobileTriggerHorizontalPosition", "", mobileTriggerHorizontalPosition, positionOptions, setMobileTriggerHorizontalPosition) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Mobile Trigger Vertical Position" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("mobileTriggerVerticalPosition", "", mobileTriggerVerticalPosition, mobileVerticalPositionOptions, setMobileTriggerVerticalPosition) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Mobile Trigger Size" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("mobileTriggerSize", "", mobileTriggerSize, sizeOptions, setMobileTriggerSize) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Trigger Mobile Shape" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "custom-select-container", children: renderDropdown("mobileTriggerShape", "", mobileTriggerShape, mobileShapeOptions, setMobileTriggerShape) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Mobile Trigger Horizontal Offset" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "input",
-                {
-                  type: "number",
-                  min: "0",
-                  max: "50",
-                  value: mobileTriggerHorizontalOffset,
-                  onChange: (e2) => setMobileTriggerHorizontalOffset(String(Math.min(50, Math.max(0, Number(e2.target.value))))),
-                  className: "offset-input"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Mobile Trigger Vertical Offset" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "input",
-                {
-                  type: "number",
-                  min: "0",
-                  max: "50",
-                  value: mobileTriggerVerticalOffset,
-                  onChange: (e2) => setMobileTriggerVerticalOffset(String(Math.min(50, Math.max(0, Number(e2.target.value))))),
-                  className: "offset-input"
-                }
-              )
             ] })
           ] })
         ] })
-      ] }) }),
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "right-panel", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-header", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Preview" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "device-selector", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "panel-header", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "panel-header-title", children: "Preview" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: "4px", background: "#08080f", border: "1px solid #1e1e40", borderRadius: "9px", padding: "3px" }, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
-                className: `device-btn ${isDesktopView ? "active" : ""}`,
                 onClick: () => setIsDesktopView(true),
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: monitor, alt: "" })
+                style: { border: "none", cursor: "pointer", borderRadius: "7px", padding: "6px 12px", font: "400 12px 'Archivo', sans-serif", background: isDesktopView ? "#3634cc" : "transparent", color: isDesktopView ? "#fff" : "#9498b8" },
+                children: "Desktop"
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
-                className: `device-btn ${!isDesktopView ? "active" : ""}`,
                 onClick: () => setIsDesktopView(false),
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: mobile, alt: "" })
+                style: { border: "none", cursor: "pointer", borderRadius: "7px", padding: "6px 12px", font: "400 12px 'Archivo', sans-serif", background: !isDesktopView ? "#3634cc" : "transparent", color: !isDesktopView ? "#fff" : "#9498b8" },
+                children: "Mobile"
               }
             )
           ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "10px" }, children: isDesktopView ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-window desktop-preview", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "browser-window", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "browser-controls", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "traffic-lights", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "traffic-light red" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "traffic-light yellow" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "traffic-light green" })
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "browser-content", children: hideTriggerButton === "No" && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { padding: "0 14px 10px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-chrome", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-bar", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-dots", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-dot red" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-dot yellow" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-dot green" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-addr-stub" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-content-area", children: isDesktopView ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-frame-desktop", children: !hideTrigger && /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: "accessibility-widget",
               style: {
-                left: triggerHorizontalPosition === "Left" ? `calc(9px + ${parseInt(triggerHorizontalOffset) * 0.2}px)` : triggerHorizontalPosition === "Right" ? "auto" : "50%",
-                right: triggerHorizontalPosition === "Right" ? `calc(9px + ${parseInt(triggerHorizontalOffset) * 0.2}px)` : "auto",
-                top: triggerVerticalPosition === "Top" ? `calc(9px + ${parseInt(triggerVerticalOffset) * 0.2}px)` : "auto",
-                bottom: triggerVerticalPosition === "Bottom" ? `calc(9px + ${parseInt(triggerVerticalOffset) * 0.2}px)` : "auto",
-                transform: triggerHorizontalPosition === "Center" ? triggerVerticalPosition === "Middle" ? "translateX(-50%)" : "translateX(-50%)" : triggerVerticalPosition === "Middle" ? "translateY(-13%)" : "none"
+                position: "absolute",
+                left: triggerHorizontalPosition === "Left" ? `calc(9px + ${scalePreviewOffset(triggerHorizontalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)` : triggerHorizontalPosition === "Right" ? "auto" : "50%",
+                right: triggerHorizontalPosition === "Right" ? `calc(9px + ${scalePreviewOffset(triggerHorizontalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)` : "auto",
+                top: triggerVerticalPosition === "Top" ? `calc(9px + ${scalePreviewOffset(triggerVerticalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)` : triggerVerticalPosition === "Middle" ? "50%" : "auto",
+                bottom: triggerVerticalPosition === "Bottom" ? `calc(9px + ${scalePreviewOffset(triggerVerticalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)` : "auto",
+                transform: triggerVerticalPosition === "Middle" ? "translateY(-50%)" : "none"
               },
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "div",
                 {
                   className: `widget-trigger ${triggerButtonShape.toLowerCase()} ${triggerButtonSize.toLowerCase()}`,
                   style: { backgroundColor: btnColor },
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "img",
-                    {
-                      src: icon1$1,
-                      alt: "Accessibility Icon",
-                      className: "widget-icon"
-                    }
-                  )
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: icon1$1, alt: "", className: "widget-icon" })
                 }
               )
             }
-          ) })
-        ] }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-window mobile-preview", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mobile-browser-window", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mobile-browser-content", children: showOnMobile === "Show" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "mobile-trigger-widget",
-            style: {
-              left: mobileTriggerHorizontalPosition === "Left" ? `calc(8px + ${Math.round(parseInt(mobileTriggerHorizontalOffset) * 0.4)}px)` : mobileTriggerHorizontalPosition === "Right" ? "auto" : "50%",
-              right: mobileTriggerHorizontalPosition === "Right" ? `calc(8px + ${Math.round(parseInt(mobileTriggerHorizontalOffset) * 0.4)}px)` : "auto",
-              top: mobileTriggerVerticalPosition === "Top" ? `calc(10px + ${Math.round(parseInt(mobileTriggerVerticalOffset) * 0.4)}px)` : mobileTriggerVerticalPosition === "Middle" ? "50%" : "auto",
-              bottom: mobileTriggerVerticalPosition === "Bottom" ? `calc(10px + ${Math.round(parseInt(mobileTriggerVerticalOffset) * 0.4)}px)` : "auto",
-              transform: mobileTriggerHorizontalPosition === "Center" ? mobileTriggerVerticalPosition === "Middle" ? "translateX(-50%)" : "translateX(-50%)" : mobileTriggerVerticalPosition === "Middle" ? "translateY(-50%)" : "none"
-            },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                className: `mobile-widget-trigger ${mobileTriggerShape === "Rounded" ? "round" : mobileTriggerShape.toLowerCase()} ${mobileTriggerSize.toLowerCase()}`,
-                style: { backgroundColor: btnColor },
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "img",
-                  {
-                    src: icon1$1,
-                    alt: "Accessibility Icon",
-                    className: "mobile-widget-icon"
-                  }
-                )
-              }
-            )
-          }
-        ) }) }) }) })
+          ) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-frame-mobile", children: showOnMobile === "Show" && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              style: {
+                position: "absolute",
+                left: mobileTriggerHorizontalPosition === "Left" ? `calc(8px + ${scalePreviewOffset(mobileTriggerHorizontalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)` : mobileTriggerHorizontalPosition === "Right" ? "auto" : "50%",
+                right: mobileTriggerHorizontalPosition === "Right" ? `calc(8px + ${scalePreviewOffset(mobileTriggerHorizontalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)` : "auto",
+                top: mobileTriggerVerticalPosition === "Top" ? `calc(10px + ${scalePreviewOffset(mobileTriggerVerticalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)` : mobileTriggerVerticalPosition === "Middle" ? "50%" : "auto",
+                bottom: mobileTriggerVerticalPosition === "Bottom" ? `calc(10px + ${scalePreviewOffset(mobileTriggerVerticalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)` : "auto",
+                transform: mobileTriggerVerticalPosition === "Middle" ? "translateY(-50%)" : "none",
+                zIndex: 5
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: `mobile-widget-trigger ${mobileTriggerShape === "Rounded" ? "round" : mobileTriggerShape.toLowerCase()} ${mobileTriggerSize.toLowerCase()}`,
+                  style: { backgroundColor: btnColor, animation: "abPulse 2.6s ease-in-out infinite" },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: icon1$1, alt: "", className: "mobile-widget-icon" })
+                }
+              )
+            }
+          ) }) })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-summary", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-summary-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "summary-label", children: "Position" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "summary-value", children: isDesktopView ? `${triggerVerticalPosition.toLowerCase()} · ${triggerHorizontalPosition.toLowerCase()}` : `${mobileTriggerVerticalPosition.toLowerCase()} · ${mobileTriggerHorizontalPosition.toLowerCase()}` })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-summary-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "summary-label", children: "Offset" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "summary-value", children: isDesktopView ? `${triggerHorizontalOffset.replace("px", "")} × ${triggerVerticalOffset.replace("px", "")} px` : `${mobileTriggerHorizontalOffset} × ${mobileTriggerVerticalOffset} px` })
+          ] })
+        ] })
       ] })
     ] })
   ] });
@@ -14233,7 +14396,8 @@ const framerEndpoints = {
     domain: () => `${FRAMER_WORKER_URL}/api/domain`,
     registerScript: (siteId) => `${FRAMER_WORKER_URL}/api/register-script?siteId=${encodeURIComponent(siteId)}`,
     applyScript: (siteId) => `${FRAMER_WORKER_URL}/api/apply-script?siteId=${encodeURIComponent(siteId)}`,
-    checkPayment: (domain) => `${FRAMER_WORKER_URL}/api/check-payment?domain=${encodeURIComponent(domain)}`
+    checkPayment: (domain) => `${FRAMER_WORKER_URL}/api/check-payment?domain=${encodeURIComponent(domain)}`,
+    invoicePdf: () => `${FRAMER_WORKER_URL}/api/invoice-pdf`
   }
 };
 const FRAMER_TOKEN_KEY = "accessbit-framer-token";
@@ -14522,6 +14686,7 @@ function useAuth() {
     getSessionToken
   };
 }
+const brandLogo = new URL("/assets/accessbit-logo-DzpDQ36u.svg", import.meta.url).href;
 const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
 </svg>`);
@@ -14533,8 +14698,9 @@ const icon5 = new URL("data:image/svg+xml,%3csvg%20width='27'%20height='16'%20vi
 const icon6 = new URL("data:image/svg+xml,%3csvg%20width='17'%20height='20'%20viewBox='0%200%2017%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M7.64613%2011.8454C6.60558%2011.8454%205.56504%2011.8454%204.5245%2011.8454C4.14066%2011.8454%204.13603%2011.8365%204.10366%2011.4611C4.01117%2010.4155%203.90943%209.37442%203.81694%208.32884C3.72907%207.35027%203.6597%206.37171%203.57183%205.39315C3.50246%204.58438%203.41922%203.78008%203.3406%202.97132C3.33135%202.89536%203.28973%202.81939%203.24811%202.7479C2.86889%202.09553%202.92438%201.29123%203.41459%200.714814C3.9418%200.0981854%204.62624%20-0.125231%205.43555%200.0669071C6.20787%200.250108%206.75357%200.862269%206.85069%201.60401C6.97555%202.52448%206.42522%203.35559%205.49105%203.62369C5.35231%203.66391%205.30606%203.71306%205.31069%203.84711C5.33844%204.88823%205.36618%205.92935%205.38931%206.97047C5.38931%207.15814%205.47255%207.20729%205.65291%207.20729C6.89231%207.20282%208.13171%207.20729%209.37574%207.20729C9.69483%207.20729%209.70408%207.21622%209.70408%207.5156C9.70408%207.88647%209.69483%208.26181%209.70408%208.63268C9.71333%208.84269%209.63934%208.91866%209.41736%208.91866C8.32132%208.90972%207.22991%208.91866%206.13387%208.90972C5.91652%208.90972%205.84715%208.96781%205.86102%209.17335C5.87952%209.41911%205.87489%209.66487%205.86102%209.91062C5.84715%2010.1162%205.95351%2010.1385%206.12925%2010.1385C7.6785%2010.1385%209.22775%2010.1385%2010.777%2010.1385C11.2071%2010.1385%2011.6418%2010.143%2012.0719%2010.1385C12.2338%2010.1385%2012.3216%2010.1877%2012.3817%2010.3351C12.9321%2011.6667%2013.4917%2012.9938%2014.0512%2014.3253C14.2362%2014.7677%2014.4305%2015.2056%2014.6062%2015.648C14.6617%2015.782%2014.7218%2015.8222%2014.879%2015.7775C15.2999%2015.6569%2015.73%2015.5675%2016.1508%2015.4558C16.2896%2015.4201%2016.3635%2015.4513%2016.419%2015.5809C16.5994%2016.0054%2016.7844%2016.4344%2016.974%2016.8544C17.0295%2016.9795%2016.9971%2017.0465%2016.8676%2017.0912C15.8918%2017.3861%2014.916%2017.6855%2013.9402%2017.9849C13.783%2018.034%2013.7183%2017.9581%2013.6628%2017.833C13.3622%2017.1314%2013.0523%2016.4344%2012.7517%2015.7328C12.2153%2014.4907%2011.6834%2013.2485%2011.1562%2012.0018C11.0961%2011.8588%2011.0082%2011.8186%2010.8602%2011.8186C9.78733%2011.8231%208.71904%2011.8186%207.64613%2011.8186C7.64613%2011.8275%207.64613%2011.8365%207.64613%2011.8499V11.8454Z'%20fill='white'/%3e%3cpath%20opacity='0.5'%20d='M3.78833%207.00454C3.81151%207.1996%203.83468%207.36744%203.84395%207.53528C3.87176%208.00252%203.8903%208.46976%203.92738%208.937C3.94129%209.11845%203.8764%209.25001%203.75125%209.37702C3.1348%2010.003%202.62031%2010.6971%202.30513%2011.5182C1.67013%2013.1558%201.92042%2014.6618%203.11162%2015.9637C4.36308%2017.3382%205.97606%2017.9416%207.83934%2017.7919C9.49404%2017.6603%2010.7316%2016.8166%2011.5937%2015.4466C11.844%2015.0519%2012.034%2014.621%2012.2704%2014.1719C12.3075%2014.2445%2012.3492%2014.3035%2012.3677%2014.367C12.5763%2015.0701%2012.7849%2015.7732%2012.9888%2016.4763C13.012%2016.5535%2012.9981%2016.6623%2012.9564%2016.7213C12.0665%2017.9325%2010.9911%2018.9305%209.56356%2019.5157C8.18233%2020.0827%206.76401%2020.1553%205.33643%2019.7153C3.28312%2019.0847%201.7721%2017.81%200.766306%2015.9547C0.279629%2015.0701%200.0247035%2014.1175%200.00152844%2013.1149C-0.0262816%2011.8629%200.325979%2010.7016%201.01196%209.64013C1.68867%208.59678%202.5925%207.77117%203.62611%207.07258C3.66319%207.0499%203.7049%207.03629%203.7837%207L3.78833%207.00454Z'%20fill='white'/%3e%3c/svg%3e", import.meta.url).href;
 const icon7 = new URL("data:image/svg+xml,%3csvg%20width='18'%20height='18'%20viewBox='0%200%2018%2018'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M12.4466%206.78579C12.3295%206.90156%2012.1928%206.99804%2012.0757%207.11381C11.3728%207.82772%2010.6895%208.54163%209.96714%209.25554C9.45953%209.75721%208.79573%209.7958%208.36621%209.39061C7.89765%208.94683%207.8586%208.2908%208.36621%207.76983C9.45953%206.61214%2010.5724%205.45444%2011.7243%204.35463C11.939%204.14239%2012.3295%204.1038%2012.6614%204.04591C13.5204%203.89155%2014.2233%204.1038%2014.4966%205.02995C14.5357%205.12643%2014.6137%205.2229%2014.7309%205.35797C14.9456%204.99136%2015.1409%204.66335%2015.3556%204.35463C15.4728%204.21957%2015.668%204.0845%2015.8437%204.06521C16.1952%204.02662%2016.5661%204.04591%2016.9175%204.06521C17.5618%204.1038%2017.9913%204.4704%2017.9913%205.08784C18.0108%206.86297%2017.9913%208.61881%2017.9913%2010.3939C17.9913%2010.8763%2017.7375%2011.2236%2017.2494%2011.3587C16.9175%2011.4359%2016.859%2011.6095%2016.8785%2011.9182C16.8785%2013.4425%2016.8785%2014.9668%2016.8785%2016.4911C16.8785%2017.07%2016.8199%2017.591%2016.2147%2017.8804C15.6094%2018.1505%2015.1409%2017.919%2014.7309%2017.4366C14.6528%2017.5138%2014.5747%2017.5717%2014.5161%2017.6295C14.1452%2017.9962%2013.6961%2018.1119%2013.2276%2017.8804C12.759%2017.6681%2012.5833%2017.2822%2012.5833%2016.7806C12.5833%2013.6934%2012.5833%2010.6062%2012.5833%207.519C12.5833%207.30675%2012.5833%207.09451%2012.5833%206.86297L12.4466%206.80509V6.78579Z'%20fill='white'/%3e%3cpath%20opacity='0.5'%20d='M9.8811%204.66302C8.32774%204.13514%206.88944%204.29155%205.64292%205.38643C4.77994%206.14894%204.31969%207.12651%204.28133%208.2996C4.2238%209.80506%204.79912%2010.9977%205.98811%2011.858C7.1771%2012.7182%208.50034%2012.816%209.8811%2012.3076C9.97699%2013.6958%209.93863%2015.0058%209.59344%2016.2766C9.40167%2016.9413%209.40167%2017%208.69211%2017C8.28939%2017%207.88666%2017%207.50312%2016.9413C7.33052%2016.9022%207.19628%2016.6872%207.08122%2016.5308C7.02368%2016.4526%207.02368%2016.3157%207.00451%2016.1984C6.67849%2014.6734%206.67849%2014.6734%205.25937%2014.2237C5.12513%2014.1846%204.91418%2014.2432%204.77994%2014.3214C4.35804%2014.5756%203.93614%2014.8689%203.51424%2015.1035C3.39918%2015.1622%203.14987%2015.1622%203.07316%2015.1035C2.65126%2014.7125%202.22936%2014.3019%201.86499%2013.8718C1.78828%2013.774%201.78828%2013.5394%201.86499%2013.4221C2.07594%2013.0115%202.34442%2012.6205%202.59373%2012.2099C2.65126%2012.1121%202.7855%2011.9948%202.74715%2011.9166C2.51702%2011.3105%202.28689%2010.724%202.01841%2010.1374C1.98006%2010.0592%201.78828%2010.0592%201.65404%2010.0397C1.25132%209.94192%200.829418%209.88327%200.445872%209.74641C0.273276%209.68775%200.0623262%209.47268%200.0431489%209.29672C-0.014383%208.76883%20-0.014383%208.22139%200.0431489%207.6935C0.0431489%207.53709%200.292454%207.40023%200.445872%207.26337C0.484227%207.22427%200.560936%207.24382%200.637645%207.22427C1.66043%207.00268%202.35721%206.39659%202.72797%205.40598C2.76632%205.28867%202.72797%205.09316%202.67044%204.9563C2.42113%204.52616%202.17183%204.09603%201.88417%203.6659C1.73075%203.45083%201.71157%203.25532%201.90335%203.0598C2.28689%202.68833%202.63208%202.27775%203.03481%201.92582C3.14987%201.82806%203.41835%201.88672%203.61013%201.88672C3.66766%201.88672%203.72519%201.94537%203.76354%201.98447C4.56899%202.72743%205.45115%202.9425%206.39083%202.25819C6.54425%202.14089%206.73602%201.98447%206.79356%201.80851C6.9278%201.35883%206.96615%200.889592%207.11957%200.439908C7.1771%200.263945%207.38805%200.0488787%207.54147%200.0293272C8.07843%20-0.00977573%208.6154%20-0.00977573%209.17154%200.0293272C9.30578%200.0293272%209.49755%200.166187%209.53591%200.283496C9.95781%201.6912%2010.0921%203.13801%209.93863%204.66302H9.8811Z'%20fill='white'/%3e%3cpath%20d='M14.4732%203C13.639%203%2013%202.33936%2013%201.48232C13%200.660983%2013.6922%20-0.0175106%2014.5087%200.000344543C15.3429%200.0181996%2016.0174%200.696693%2015.9997%201.51803C15.9997%202.33936%2015.3074%203%2014.4732%203Z'%20fill='white'/%3e%3c/svg%3e", import.meta.url).href;
 const icon8 = new URL("data:image/svg+xml,%3csvg%20width='34'%20height='13'%20viewBox='0%200%2034%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M24.9231%2012.2515C24.7975%2012.5142%2024.6091%2012.7245%2024.9231%2012.9347C25.2371%2013.0924%2025.551%2012.9347%2025.7394%2012.777C26.0534%2012.4617%2026.3046%2012.1463%2026.5557%2011.831C27.4976%2010.3069%2027.8744%208.62504%2028%206.68045C27.7488%204.73585%2027.3093%202.58103%2025.6766%200.794098C25.2998%200.373645%2024.8603%20-0.257035%2024.2323%200.110861C23.6044%200.478758%2024.4207%200.951768%2024.6719%201.26711C26.8069%204.15773%2027.3721%207.15346%2025.9278%2010.3594C25.6138%2010.9901%2025.2371%2011.6208%2024.8603%2012.2515H24.9231Z'%20fill='white'/%3e%3cpath%20d='M31.6716%2012.9244C32.1076%2013.1855%2032.3982%2012.7155%2032.592%2012.3498C33.5607%2010.6785%2034.0451%208.90274%2033.9967%206.91805C33.9967%204.67221%2033.1732%201.90408%2032.156%200.598357C31.9138%200.284984%2031.5748%20-0.185075%2031.1873%200.0760689C30.7513%200.389442%2031.1873%200.755044%2031.381%201.01619C33.5607%204.56775%2033.7061%208.17154%2031.817%2011.932C31.6716%2012.2454%2031.1873%2012.611%2031.6716%2012.9244Z'%20fill='white'/%3e%3cpath%20d='M28.6498%2012.9236C29.0904%2013.1873%2029.3842%2012.7127%2029.5801%2012.3437C30.6083%2010.6564%2030.8531%208.70556%2031%206.80743C31%204.90929%2030.2656%202.22026%2029.2863%200.796657C28.9925%200.374849%2028.6498%20-0.257864%2028.1602%200.111218C27.7195%200.427575%2028.307%200.849383%2028.5029%201.21847C30.4614%204.75111%2030.6573%208.28376%2028.7967%2011.9219C28.6498%2012.2382%2028.2091%2012.66%2028.6498%2012.9236Z'%20fill='white'/%3e%3cpath%20d='M11.4023%200.174093C10.2069%20-0.276776%208.6629%200.174093%207.86599%201.22612C6.47138%203.12979%205.12658%205.08355%203.78178%206.98721C2.63621%208.5903%201.54045%2010.1433%200.394877%2011.7464C0.14584%2012.0971%20-0.402041%2012.7483%200.494492%2012.8485C1.68987%2012.9988%203.08448%2013.3495%203.98101%2011.9468C4.32966%2011.3957%204.87754%2011.1953%205.47523%2011.1953C6.32196%2011.1953%207.21849%2011.1953%208.06522%2011.1953C8.76252%2011.1953%209.26059%2011.3957%209.45982%2012.1472C9.75867%2013.0489%2010.5058%2012.9487%2011.2031%2012.8485C12%2012.7984%2012%2012.1472%2012%2011.546C12%209.84271%2012%208.13943%2012%206.43615C12%204.73287%2012%203.02959%2012%201.32631C12%200.825347%2012%200.324382%2011.3525%200.123996L11.4023%200.174093ZM9.36021%206.73673C9.36021%208.5903%208.91194%208.99107%207.36791%208.74059C6.67061%208.6404%206.42157%208.33982%206.82003%207.63847C7.3181%206.88702%207.81618%206.13557%208.31425%205.38413C8.46368%205.13364%208.56329%204.83307%208.91194%204.88316C9.3104%204.93326%209.36021%205.33403%209.36021%205.63461C9.36021%205.98528%209.36021%206.38606%209.36021%206.73673Z'%20fill='white'/%3e%3cpath%20d='M15.3735%2012.9962C16.5508%2012.9455%2017.7281%2012.9962%2018.9054%2012.7428C21.3581%2012.2866%2023.0259%2010.766%2023.7126%208.28226C24.3994%205.84926%2023.8598%203.619%2022.0448%201.79425C20.1317%20-0.131879%2017.7281%20-0.0305035%2015.3245%200.020184C14.3924%200.020184%2014%200.425685%2014%201.38875C14%203.06144%2014%204.73413%2014%206.40682C14%208.1302%2014%209.85357%2014%2011.577C14%2012.5907%2014.3924%2013.0469%2015.3735%2012.9962ZM16.4036%204.12588C16.4036%203.2135%2016.9432%202.90938%2017.7771%202.90938C19.445%203.01075%2020.9656%204.63275%2020.9656%206.45751C20.9656%208.23157%2019.494%209.90426%2017.8262%2010.0563C16.9432%2010.107%2016.4036%209.7522%2016.4036%208.78914C16.4036%208.02882%2016.4036%207.26851%2016.4036%206.50819C16.4036%205.69719%2016.4036%204.93688%2016.4036%204.12588Z'%20fill='white'/%3e%3c/svg%3e", import.meta.url).href;
-const footerBrandSvg = new URL("/assets/footer-brand-5OsP1tkI.svg", import.meta.url).href;
+new URL("/assets/footer-brand-5OsP1tkI.svg", import.meta.url).href;
 const footerPoweredSvg = new URL("/assets/footer-powered-B-71xs9u.svg", import.meta.url).href;
+const spinnerGif = new URL("/assets/spinner-r5Tmd3By.gif", import.meta.url).href;
 const iconOptions = [
   { id: "accessibility", label: icon1, name: "Accessibility" },
   { id: "person", label: icon2, name: "Person" },
@@ -14545,14 +14711,6 @@ const iconOptions = [
   { id: "gear", label: icon7, name: "Gear" },
   { id: "ad-triple", label: icon8, name: "AD)))" }
 ];
-const STRIPE_PORTAL_URL = "https://billing.stripe.com/p/login/3cI8wRgGjaLt0MY3x64Ni00";
-const TRUSTED_STRIPE_URLS = /* @__PURE__ */ new Set([
-  STRIPE_PORTAL_URL
-]);
-function openTrustedStripeUrl(url) {
-  if (!TRUSTED_STRIPE_URLS.has(url)) return;
-  window.open(url, "_blank", "noopener,noreferrer");
-}
 const PublishScreen = ({ onBack, customizationData }) => {
   const { publishSettings: publishSettings2, makeAuthenticatedRequest: makeAuthenticatedRequest2 } = useAuth();
   const [showPreviewPanel, setShowPreviewPanel] = reactExports.useState(true);
@@ -14564,6 +14722,22 @@ const PublishScreen = ({ onBack, customizationData }) => {
   const [isCheckingSubscription, setIsCheckingSubscription] = reactExports.useState(true);
   const [isAnnual, setIsAnnual] = reactExports.useState(true);
   const [siteDomain, setSiteDomain] = reactExports.useState("");
+  const [invoiceUrl, setInvoiceUrl] = reactExports.useState(null);
+  const [invoiceId, setInvoiceId] = reactExports.useState(null);
+  const [isDownloadingInvoice, setIsDownloadingInvoice] = reactExports.useState(false);
+  const [subscriptionEmail, setSubscriptionEmail] = reactExports.useState(null);
+  const [subPlanType, setSubPlanType] = reactExports.useState(null);
+  const [subNextBilling, setSubNextBilling] = reactExports.useState(null);
+  const [subAmountYear, setSubAmountYear] = reactExports.useState(null);
+  const [subAmountMonth, setSubAmountMonth] = reactExports.useState(null);
+  const [subCardBrand, setSubCardBrand] = reactExports.useState(null);
+  const [subCardLast4, setSubCardLast4] = reactExports.useState(null);
+  const [invoices, setInvoices] = reactExports.useState([]);
+  const [showInvoicesModal, setShowInvoicesModal] = reactExports.useState(false);
+  const [paymentFlow, setPaymentFlow] = reactExports.useState({ open: false, phase: "polling" });
+  const [isPurchasing, setIsPurchasing] = reactExports.useState(false);
+  const normalizedDomainRef = reactExports.useRef("");
+  const silentPollRef = reactExports.useRef({ cancelled: true, timeoutId: null });
   const [accessibilityProfiles, setAccessibilityProfiles] = reactExports.useState({
     seizureSafe: false,
     visionImpaired: false,
@@ -14653,17 +14827,27 @@ const PublishScreen = ({ onBack, customizationData }) => {
         const customDomain = extractDomain(productionUrl);
         const stagingDomain = extractDomain(stagingUrl);
         const domain = customDomain || stagingDomain;
-        const isStaging = !customDomain || customDomain.includes(".framer.app") || customDomain.includes(".framer.com") || customDomain.includes("localhost") || customDomain.includes("127.0.0.1");
         setSiteDomain(domain);
-        if (isStaging) {
-          setHasSubscription(false);
-          return;
-        }
+        normalizedDomainRef.current = domain;
         const response = await makeAuthenticatedRequest2(
           framerEndpoints.site.checkPayment(domain),
           { method: "GET" }
         );
-        setHasSubscription(response?.hasAccess === true);
+        if (response?.hasAccess === true && !response?.isStaging) {
+          setHasSubscription(true);
+          if (response?.invoiceUrl) setInvoiceUrl(response.invoiceUrl);
+          if (response?.invoiceId) setInvoiceId(response.invoiceId);
+          if (Array.isArray(response?.invoices)) setInvoices(response.invoices);
+          if (response?.email) setSubscriptionEmail(response.email);
+          if (response?.planType) setSubPlanType(response.planType);
+          if (response?.nextBillingDate) setSubNextBilling(response.nextBillingDate);
+          if (response?.amountPerYear != null) setSubAmountYear(response.amountPerYear);
+          if (response?.amountPerMonth != null) setSubAmountMonth(response.amountPerMonth);
+          if (response?.cardBrand) setSubCardBrand(response.cardBrand);
+          if (response?.cardLast4) setSubCardLast4(response.cardLast4);
+        } else {
+          setHasSubscription(false);
+        }
       } catch (err) {
         console.error("[AccessBit] checkSubscriptionStatus error:", err);
         T$1.notify("AccessBit could not check your subscription. Please reopen the plugin and try again.", { variant: "error" });
@@ -14674,22 +14858,137 @@ const PublishScreen = ({ onBack, customizationData }) => {
     };
     checkSubscriptionStatus();
   }, []);
-  const handleCancelSubscription = () => {
-    openTrustedStripeUrl(STRIPE_PORTAL_URL);
+  reactExports.useEffect(() => {
+    if (!paymentFlow.open) return;
+    let pollCount = 0;
+    const maxPolls = 10;
+    let timeoutId;
+    let cancelled = false;
+    const runPoll = async () => {
+      if (cancelled) return;
+      if (pollCount >= maxPolls) {
+        setPaymentFlow((pf2) => ({ ...pf2, phase: "timeout" }));
+        return;
+      }
+      pollCount++;
+      const domain = normalizedDomainRef.current;
+      if (!domain) {
+        timeoutId = setTimeout(runPoll, 3e4);
+        return;
+      }
+      try {
+        const response = await makeAuthenticatedRequest2(
+          framerEndpoints.site.checkPayment(domain),
+          { method: "GET" }
+        );
+        if (response?.hasAccess === true && !response?.isStaging) {
+          cancelled = true;
+          silentPollRef.current.cancelled = true;
+          if (silentPollRef.current.timeoutId) clearTimeout(silentPollRef.current.timeoutId);
+          try {
+            localStorage.removeItem("ab_checkout_pending");
+          } catch {
+          }
+          setHasSubscription(true);
+          if (response?.invoiceUrl) setInvoiceUrl(response.invoiceUrl);
+          if (response?.invoiceId) setInvoiceId(response.invoiceId);
+          if (Array.isArray(response?.invoices)) setInvoices(response.invoices);
+          if (response?.email) setSubscriptionEmail(response.email);
+          if (response?.planType) setSubPlanType(response.planType);
+          if (response?.nextBillingDate) setSubNextBilling(response.nextBillingDate);
+          if (response?.amountPerYear != null) setSubAmountYear(response.amountPerYear);
+          if (response?.amountPerMonth != null) setSubAmountMonth(response.amountPerMonth);
+          if (response?.cardBrand) setSubCardBrand(response.cardBrand);
+          if (response?.cardLast4) setSubCardLast4(response.cardLast4);
+          setPaymentFlow({ open: false, phase: "success" });
+        } else {
+          timeoutId = setTimeout(runPoll, 3e4);
+        }
+      } catch {
+        timeoutId = setTimeout(runPoll, 3e4);
+      }
+    };
+    runPoll();
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, [paymentFlow.open]);
+  const startSilentPoll = () => {
+    const ref = silentPollRef.current;
+    if (ref.timeoutId) clearTimeout(ref.timeoutId);
+    ref.cancelled = false;
+    let tries = 0;
+    const maxTries = 5;
+    const poll = async () => {
+      if (ref.cancelled) return;
+      if (tries >= maxTries) return;
+      tries++;
+      const domain = normalizedDomainRef.current;
+      if (!domain) {
+        ref.timeoutId = setTimeout(poll, 6e4);
+        return;
+      }
+      try {
+        const response = await makeAuthenticatedRequest2(
+          framerEndpoints.site.checkPayment(domain),
+          { method: "GET" }
+        );
+        if (response?.hasAccess === true && !response?.isStaging) {
+          ref.cancelled = true;
+          try {
+            localStorage.removeItem("ab_checkout_pending");
+          } catch {
+          }
+          setHasSubscription(true);
+          if (response?.invoiceUrl) setInvoiceUrl(response.invoiceUrl);
+          if (response?.invoiceId) setInvoiceId(response.invoiceId);
+          if (Array.isArray(response?.invoices)) setInvoices(response.invoices);
+          if (response?.email) setSubscriptionEmail(response.email);
+          if (response?.planType) setSubPlanType(response.planType);
+          if (response?.nextBillingDate) setSubNextBilling(response.nextBillingDate);
+          if (response?.amountPerYear != null) setSubAmountYear(response.amountPerYear);
+          if (response?.amountPerMonth != null) setSubAmountMonth(response.amountPerMonth);
+          if (response?.cardBrand) setSubCardBrand(response.cardBrand);
+          if (response?.cardLast4) setSubCardLast4(response.cardLast4);
+          setPublishSuccess("Payment confirmed! Your subscription is now active.");
+          setTimeout(() => setPublishSuccess(false), 5e3);
+        } else {
+          ref.timeoutId = setTimeout(poll, 6e4);
+        }
+      } catch {
+        ref.timeoutId = setTimeout(poll, 6e4);
+      }
+    };
+    ref.timeoutId = setTimeout(poll, 6e4);
   };
   const handlePurchaseNow = () => {
+    setIsPurchasing(true);
     try {
       const jwt = loadStoredFramerToken();
       const payload = jwt ? decodeJWTPayload(jwt) : null;
       const email = payload?.email || payload?.sub || "";
       const plan = isAnnual ? "annually" : "monthly";
       const encoded = btoa(JSON.stringify({ email, plan, platform: "framer", domain: siteDomain }));
-      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}`, "_blank", "noopener,noreferrer");
+      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}&mode=test`, "_blank", "noopener,noreferrer");
+      try {
+        localStorage.setItem("ab_checkout_pending", JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() }));
+      } catch {
+      }
+      setPaymentFlow({ open: true, phase: "polling" });
     } catch (err) {
       console.error("[AccessBit] handlePurchaseNow error:", err);
+      window.open(`https://accounts.accessbit.io/checkout?mode=test`, "_blank", "noopener,noreferrer");
+      try {
+        localStorage.setItem("ab_checkout_pending", JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() }));
+      } catch {
+      }
+      setPaymentFlow({ open: true, phase: "polling" });
+    } finally {
+      setIsPurchasing(false);
     }
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "publish-screen", style: { paddingTop: "0" }, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "publish-screen", children: [
     showPublishModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "publish-modal-overlay", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "publish-modal", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "publish-modal-content", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "This will publish your accessibility settings and install the AccessBit widget on your site." }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Click confirm to proceed." }),
@@ -14715,45 +15014,20 @@ const PublishScreen = ({ onBack, customizationData }) => {
       ] })
     ] }) }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "publish-header", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "app-logo", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "app-name" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-buttons", style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "header-left", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: brandLogo, alt: "AccessBit", style: { height: "21px", display: "block" } }),
+        siteDomain && !siteDomain.includes(".framer.app") && !siteDomain.includes(".framer.com") && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "header-divider" }),
+        siteDomain && !siteDomain.includes(".framer.app") && !siteDomain.includes(".framer.com") && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "header-domain", children: siteDomain })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "back-btn", onClick: onBack, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow, alt: "", style: { transform: "rotate(180deg)", width: "14px", height: "15px", marginRight: "8px" } }),
           "Back"
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
-          isCheckingSubscription && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: {
-            color: "#a3a3a3",
-            fontSize: "14px",
-            fontWeight: "500"
-          }, children: "Checking subscription..." }),
-          hasSubscription === true && /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "span",
-            {
-              className: "cancel-subscription-link",
-              onClick: handleCancelSubscription,
-              role: "button",
-              tabIndex: 0,
-              onKeyDown: (e2) => {
-                if (e2.key === "Enter" || e2.key === " ") {
-                  e2.preventDefault();
-                  handleCancelSubscription();
-                }
-              },
-              children: "Cancel Subscription"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              className: "publish-btn",
-              onClick: handlePublish,
-              children: [
-                hasSubscription === true ? "Publish to live domain" : "Publish to Staging",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow, alt: "", style: { width: "14px", height: "15px", marginLeft: "8px" } })
-              ]
-            }
-          )
+        isCheckingSubscription && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#a3a3a3", fontSize: "13px" }, children: "Checking..." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "publish-btn", onClick: handlePublish, children: [
+          hasSubscription === true ? "Publish to live domain" : "Publish to staging",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow, alt: "", style: { width: "14px", height: "15px", marginLeft: "8px" } })
         ] })
       ] })
     ] }),
@@ -14781,18 +15055,18 @@ const PublishScreen = ({ onBack, customizationData }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: "14px", lineHeight: "1.5" }, children: typeof publishSuccess === "string" ? publishSuccess : "Accessibility settings published successfully!" })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step-navigation", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step completed", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-number", children: "STEP 1" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step completed", onClick: onBack, style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "✓" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Customization" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-number", children: "STEP 2" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "2" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Publish" })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "main-content", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "preview-panel", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "panel-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Preview" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "panel-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Live preview" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "preview-window1", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "browser-window", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "browser-controls", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "traffic-lights", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "traffic-light red" }),
@@ -15203,8 +15477,9 @@ const PublishScreen = ({ onBack, customizationData }) => {
                       "img",
                       {
                         className: "panel-footer-link panel-footer-link--brand",
-                        src: footerBrandSvg,
-                        alt: ""
+                        src: brandLogo,
+                        alt: "",
+                        style: { height: "8px", width: "auto", filter: "brightness(0)" }
                       }
                     ),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -15212,7 +15487,8 @@ const PublishScreen = ({ onBack, customizationData }) => {
                       {
                         className: "panel-footer-link panel-footer-link--powered",
                         src: footerPoweredSvg,
-                        alt: ""
+                        alt: "",
+                        style: { height: "8px", width: "auto" }
                       }
                     )
                   ] })
@@ -15251,55 +15527,254 @@ const PublishScreen = ({ onBack, customizationData }) => {
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "publish-page-payment-panel", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "panel-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Subscription" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "publish-page-payment-window", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "payment-card publish-page-payment-card", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pricing-flex publish-page-pricing-flex", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pricing-single-column", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "main-price", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "price-number", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", flexDirection: "column", gap: "10px", overflowY: "auto", minHeight: 0, height: "100%" }, children: isCheckingSubscription ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "subscription-card", style: { flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: spinnerGif, alt: "", className: "subscription-spinner" }) }) : hasSubscription === true ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "subscription-card", style: { flex: 1 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sub-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-header-title", children: "Subscription Active" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-success-row", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sub-active-checkmark", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "16", height: "16", viewBox: "0 0 18 18", fill: "none", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "9", cy: "9", r: "8", fill: "#111827", stroke: "#46b586", strokeWidth: "1" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M5.5 9.2L7.8 11.5L12.5 6.5", stroke: "#46b586", strokeWidth: "1.1", strokeLinecap: "round", strokeLinejoin: "round" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-success-text", children: "Payment successful" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-plan-row", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-plan-name", children: subPlanType ? subPlanType.charAt(0).toUpperCase() + subPlanType.slice(1) : "Plan" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-badge", children: "Active" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-plan-subtitle", children: [
+          subAmountMonth != null ? `$${subAmountMonth}/month` : "",
+          subPlanType === "Annual Plan" ? " · billed annually" : subPlanType === "Monthly Plan" ? " · billed monthly" : ""
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-details", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-detail-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-label", children: "Next billing date" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-value", children: subNextBilling ? new Date(subNextBilling).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { opacity: 0.4 }, children: "—" }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-detail-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-label", children: "Amount" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-value", children: subAmountYear != null ? `$${subAmountYear.toFixed(2)}/year` : subAmountMonth != null ? `$${subAmountMonth.toFixed(2)}/month` : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { opacity: 0.4 }, children: "—" }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-detail-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-label", children: "Payment method" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-value", children: subCardBrand && subCardLast4 ? `${subCardBrand.charAt(0).toUpperCase() + subCardBrand.slice(1)} •••• ${subCardLast4}` : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { opacity: 0.4 }, children: "—" }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-detail-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-label", children: "Invoice" }),
+            invoices.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                className: "sub-active-detail-value sub-active-invoice-link",
+                onClick: () => setShowInvoicesModal(true),
+                children: "Download"
+              }
+            ) : invoiceId || invoiceUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                className: "sub-active-detail-value sub-active-invoice-link",
+                disabled: isDownloadingInvoice,
+                onClick: async () => {
+                  if (invoiceId) {
+                    setIsDownloadingInvoice(true);
+                    try {
+                      const token = await getValidSessionToken();
+                      const res = await fetch(framerEndpoints.site.invoicePdf(), {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+                        body: JSON.stringify({ invoiceId })
+                      });
+                      if (res.ok) {
+                        const blob = await res.blob();
+                        const url = URL.createObjectURL(blob);
+                        const a2 = document.createElement("a");
+                        a2.href = url;
+                        a2.download = "invoice.pdf";
+                        a2.click();
+                        URL.revokeObjectURL(url);
+                      }
+                    } catch {
+                    } finally {
+                      setIsDownloadingInvoice(false);
+                    }
+                  } else if (invoiceUrl) {
+                    window.open(invoiceUrl, "_blank", "noopener,noreferrer");
+                  }
+                },
+                children: isDownloadingInvoice ? "Downloading..." : "Download"
+              }
+            ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-value", style: { opacity: 0.4 }, children: "Unavailable" })
+          ] })
+        ] }),
+        subscriptionEmail && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-user-row", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sub-active-avatar", children: (subscriptionEmail || "U").slice(0, 2).toUpperCase() }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sub-active-user-info", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-user-email", children: subscriptionEmail }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "a",
+          {
+            href: "https://accounts.accessbit.io",
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "sub-active-cta-btn",
+            children: [
+              "Access Web App",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow, alt: "", style: { width: "14px", height: "15px", marginLeft: "8px" } })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "sub-active-manage-link",
+            type: "button",
+            onClick: () => window.open("https://accounts.accessbit.io/", "_blank", "noopener,noreferrer"),
+            children: "Manage subscription"
+          }
+        )
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "subscription-card", style: { flex: 2 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-header-title", children: "Accessibility Widget" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-pro-badge", children: "PRO" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "billing-toggle", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setIsAnnual(false), style: { background: !isAnnual ? "#3634cc" : "transparent", color: !isAnnual ? "#fff" : "#9498b8" }, children: "Monthly" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setIsAnnual(true), style: { background: isAnnual ? "#3634cc" : "transparent", color: isAnnual ? "#fff" : "#9498b8" }, children: "Annually" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "price-display", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "price-amount", children: [
               "$",
               isAnnual ? "19" : "24"
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "price-period", children: [
-              "/",
-              isAnnual ? "month: Purchased Annually" : "month"
-            ] })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "price-unit", children: "/ month" })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `payment-toggle ${isAnnual ? "annually" : "monthly"}`, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                className: `toggle-option ${!isAnnual ? "active" : ""}`,
-                onClick: () => setIsAnnual(false),
-                children: "Monthly"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                className: `toggle-option ${isAnnual ? "active" : ""}`,
-                onClick: () => setIsAnnual(true),
-                children: "Annually"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "savings-info", style: { opacity: isAnnual ? 1 : 0, visibility: isAnnual ? "visible" : "hidden" }, children: "You Save 20%" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "secondary-price", children: [
-            "$",
-            isAnnual ? "19" : "24",
-            "/month",
-            isAnnual ? ": Purchased Annually" : ""
-          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "price-bill-note", children: isAnnual ? "Billed as $228/year" : "Billed monthly" }),
+          isAnnual && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "save-badge-pill", children: "Save 20% — $60 / year" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "button",
             {
-              className: "purchase-btn",
+              className: "purchase-btn-main",
               onClick: handlePurchaseNow,
-              children: "Purchase Now"
+              disabled: !!hasSubscription || isPurchasing,
+              children: isPurchasing ? "Opening checkout…" : "Purchase now"
             }
-          )
-        ] }) }) }) })
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "purchase-fine-print", children: "Cancel anytime. VAT calculated at checkout." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "included-card-panel", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "included-card-title", children: "INCLUDED" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "included-items", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "included-item", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "included-check", children: "✓" }),
+              "WCAG 2.2 AA compliant widget"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "included-item", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "included-check", children: "✓" }),
+              "10 widget languages"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "included-item", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "included-check", children: "✓" }),
+              "Staging and production environments"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "included-item", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "included-check", children: "✓" }),
+              "35+ accessibility features"
+            ] })
+          ] })
+        ] })
+      ] }) })
+    ] }),
+    paymentFlow.open && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cancel-modal-backdrop", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cancel-modal", onClick: (e2) => e2.stopPropagation(), children: paymentFlow.phase === "timeout" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cancel-modal-icon", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { width: "28", height: "28", viewBox: "0 0 24 24", fill: "none", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "12", cy: "12", r: "10", stroke: "#e8a838", strokeWidth: "2" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 8v4M12 16h.01", stroke: "#e8a838", strokeWidth: "2", strokeLinecap: "round" })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cancel-modal-title", children: "Payment not detected" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cancel-modal-body", children: "We checked for 5 minutes but couldn't confirm your payment. If you completed it, click Retry to check again." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cancel-modal-actions", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "cancel-modal-keep",
+            onClick: () => {
+              setPaymentFlow({ open: false, phase: "polling" });
+              startSilentPoll();
+            },
+            children: "Cancel"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "cancel-modal-confirm",
+            onClick: () => {
+              setPaymentFlow({ open: false, phase: "polling" });
+              setTimeout(() => setPaymentFlow({ open: true, phase: "polling" }), 50);
+            },
+            children: "Retry"
+          }
+        )
       ] })
-    ] })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", padding: "8px 0" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: spinnerGif, alt: "", style: { width: 48, height: 48 } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cancel-modal-title", style: { margin: 0 }, children: "Payment processing..." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "cancel-modal-body", style: { margin: 0, textAlign: "center" }, children: [
+          "Complete your payment in the checkout tab.",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+          "This will update automatically."
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cancel-modal-actions", style: { marginTop: 16 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          className: "cancel-modal-keep",
+          style: { width: "100%" },
+          onClick: () => {
+            setPaymentFlow({ open: false, phase: "polling" });
+            startSilentPoll();
+          },
+          children: "Cancel"
+        }
+      ) })
+    ] }) }) }),
+    showInvoicesModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cancel-modal-backdrop", onClick: () => setShowInvoicesModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "invoice-modal", onClick: (e2) => e2.stopPropagation(), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cancel-modal-title", children: "Invoices" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "invoice-modal-list", children: invoices.map((inv) => {
+        const date = inv.created ? new Date(inv.created).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "—";
+        const amount = inv.amountPaid != null ? `$${(inv.amountPaid / 100).toFixed(2)} ${(inv.currency || "usd").toUpperCase()}` : "—";
+        const downloadInvoice = async () => {
+          try {
+            const token = await getValidSessionToken();
+            const res = await fetch(framerEndpoints.site.invoicePdf(), {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+              body: JSON.stringify({ invoiceId: inv.id })
+            });
+            if (res.ok) {
+              const blob = await res.blob();
+              const url = URL.createObjectURL(blob);
+              const a2 = document.createElement("a");
+              a2.href = url;
+              a2.download = `invoice-${inv.number || inv.id}.pdf`;
+              a2.click();
+              URL.revokeObjectURL(url);
+            }
+          } catch {
+          }
+        };
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "invoice-modal-row", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "invoice-modal-info", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "invoice-modal-number", children: inv.number || inv.id }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "invoice-modal-date", children: [
+              date,
+              " · ",
+              amount
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "invoice-modal-download", onClick: downloadInvoice, children: "PDF" })
+        ] }, inv.id);
+      }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "cancel-modal-keep", style: { width: "100%", marginTop: 4 }, onClick: () => setShowInvoicesModal(false), children: "Close" })
+    ] }) })
   ] });
 };
 const App = () => {

@@ -1,34 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/customization.css";
-import iro from "@jaames/iro"; // Import iro.js
+import iro from "@jaames/iro";
+import { platform } from "../platform";
+import { normalizeStatementLink, sanitizeStatementLink } from "../util/statementLink";
+
+const brandLogo = new URL("../assets/accessbit-logo.svg", import.meta.url).href;
 
 const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
 </svg>`);
 
-const mobile = new URL("../assets/mobile.svg", import.meta.url).href;
-const monitor = new URL("../assets/monitor.svg", import.meta.url).href;
 const icon1 = new URL("../assets/Accessibility.webp", import.meta.url).href;
 
-/** Mirrors the TRUSTED_STRIPE_URLS pattern in PublishScreen — only these protocols are allowed for user-supplied URLs. */
-const ALLOWED_LINK_PROTOCOLS = new Set<string>(["https:", "http:"]);
-
-const isValidStatementLink = (url: string): boolean => {
-  if (!url) return true;
-  try {
-    return ALLOWED_LINK_PROTOCOLS.has(new URL(url).protocol);
-  } catch {
-    return false;
-  }
+const PREVIEW_OFFSET_SCALE = {
+  desktop: 0.2,
+  mobile: 80 / 390,
 };
 
-type CustomizationData = {
-  selectedIcon: string;
-  triggerButtonColor: string;
-  triggerButtonShape: string;
-  triggerHorizontalPosition: string;
-  triggerVerticalPosition: string;
-  triggerButtonSize: string;
+const scalePreviewOffset = (value: string, scale: number): number => {
+  const parsed = parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return 0;
+  return Math.round(parsed * scale * 100) / 100;
 };
 
 type CustomizationScreenProps = {
@@ -37,19 +29,36 @@ type CustomizationScreenProps = {
   existingCustomizationData?: any;
   isLoadingExistingData?: boolean;
 };
+
 const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNext, existingCustomizationData, isLoadingExistingData = false }) => {
   const [isDesktopView, setIsDesktopView] = useState(true);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [siteDomain, setSiteDomain] = useState('');
+
+  // Load domain from Framer platform on mount
+  useEffect(() => {
+    platform.getPublishInfo().then((publishInfo: any) => {
+      const productionUrl = publishInfo?.productionUrl || '';
+      const extractDomain = (url: string) => url
+        .replace(/^https?:\/\//, '')
+        .replace(/^www\./, '')
+        .replace(/\/$/, '')
+        .split('/')[0];
+      const customDomain = extractDomain(productionUrl);
+      const isStaging = !customDomain || customDomain.includes('.framer.app') || customDomain.includes('.framer.com') || customDomain.includes('localhost') || customDomain.includes('127.0.0.1');
+      if (!isStaging && customDomain) setSiteDomain(customDomain);
+    }).catch(() => {});
+  }, []);
 
   // Customization state
   const [accessibilityStatementLink, setAccessibilityStatementLink] = useState("");
-  const [linkError, setLinkError] = useState<string | null>(null);
+  const [statementLinkError, setStatementLinkError] = useState<string | null>(null);
   const [triggerVerticalPosition, setTriggerVerticalPosition] = useState("Bottom");
   const [triggerButtonSize, setTriggerButtonSize] = useState("Medium");
   const [triggerButtonShape, setTriggerButtonShape] = useState("Circle");
   const [triggerHorizontalOffset, setTriggerHorizontalOffset] = useState("0px");
-  const [hideTriggerButton, setHideTriggerButton] = useState("No");
-  const [triggerVerticalOffset, setTriggerVerticalOffset] = useState("0px");
+  const [hideTrigger, setHideTrigger] = useState(false);
+  const [triggerVerticalOffset, setTriggerVerticalOffset] = useState("3px");
   const [triggerHorizontalPosition, setTriggerHorizontalPosition] = useState("Left");
   const [btnColor, setBtnColor] = useState("#007bff");
   const [showOnMobile, setShowOnMobile] = useState("Show");
@@ -57,34 +66,29 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
   const [mobileTriggerVerticalPosition, setMobileTriggerVerticalPosition] = useState("Bottom");
   const [mobileTriggerSize, setMobileTriggerSize] = useState("Medium");
   const [mobileTriggerShape, setMobileTriggerShape] = useState("Rounded");
-  const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = useState("0");
-  const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = useState("0");
+  const [mobileTriggerHorizontalOffset, setMobileTriggerHorizontalOffset] = useState("3");
+  const [mobileTriggerVerticalOffset, setMobileTriggerVerticalOffset] = useState("3");
   const [selectedIcon, setSelectedIcon] = useState("accessibility");
   const [selectedIconName, setSelectedIconName] = useState("Accessibility");
+  const [unsavedCount, setUnsavedCount] = useState(0);
 
-  // colorpicker
+  // color picker
   const [btnOpen, setBtnOpen] = useState(false);
-  // Text-input mirror of btnColor for the "type a hex" field inside the
-  // color picker dropdown. Kept as a separate piece of state so the user
-  // can type intermediate values (e.g. "#ff" while aiming for "#ff0000")
-  // without the wheel overwriting their input until they've typed a
-  // complete 7-char hex.
   const [hexInput, setHexInput] = useState("#007bff");
   const btnPickerInstance = useRef<any>(null);
   const btnDropdownRef = useRef<HTMLDivElement | null>(null);
   const btnPickerRef = useRef<HTMLDivElement | null>(null);
 
-
-  // Load existing customization data when component mounts
+  // Load existing customization data
   useEffect(() => {
-  
     if (existingCustomizationData) {
-      setAccessibilityStatementLink(existingCustomizationData.accessibilityStatementLink || "");
+      setAccessibilityStatementLink(sanitizeStatementLink(existingCustomizationData.accessibilityStatementLink));
+      setStatementLinkError(null);
       setTriggerVerticalPosition(existingCustomizationData.triggerVerticalPosition || "Bottom");
       setTriggerButtonSize(existingCustomizationData.triggerButtonSize || "Medium");
       setTriggerButtonShape(existingCustomizationData.triggerButtonShape || "Circle");
       setTriggerHorizontalOffset(existingCustomizationData.triggerHorizontalOffset || "0px");
-      setHideTriggerButton(existingCustomizationData.hideTriggerButton || "No");
+      setHideTrigger(existingCustomizationData.hideTriggerButton === "Yes");
       setTriggerVerticalOffset(existingCustomizationData.triggerVerticalOffset || "0px");
       setTriggerHorizontalPosition(existingCustomizationData.triggerHorizontalPosition || "Left");
       setBtnColor(existingCustomizationData.triggerButtonColor || "#007bff");
@@ -97,108 +101,56 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
       setMobileTriggerVerticalOffset(existingCustomizationData.mobileTriggerVerticalOffset || "0");
       setSelectedIcon(existingCustomizationData.selectedIcon || "accessibility");
       setSelectedIconName(existingCustomizationData.selectedIconName || "Accessibility");
+      setUnsavedCount(0);
     }
   }, [existingCustomizationData]);
-
- 
 
   useEffect(() => {
     if (!btnPickerInstance.current && btnPickerRef.current) {
       btnPickerInstance.current = iro.ColorPicker(btnPickerRef.current, { width: 100, color: btnColor, borderWidth: 2, borderColor: "#ccc" });
-    }
-    if (btnPickerInstance.current) {
-      btnPickerInstance.current.off("color:change");
       btnPickerInstance.current.on("color:change", (newColor: any) => handleColorChange(newColor.hexString));
     }
-    return () => {
-      if (btnPickerInstance.current) {
-        btnPickerInstance.current.off("color:change");
-      }
-    };
-  }, [])
-  useEffect(() => {
-    // Sync picker color with state when dropdown opens
-    if (btnOpen && btnPickerInstance.current) btnPickerInstance.current.color.set(btnColor);
-  }, [btnOpen])
+  }, []);
 
-  
+  useEffect(() => {
+    if (btnOpen && btnPickerInstance.current) btnPickerInstance.current.color.set(btnColor);
+  }, [btnOpen]);
+
   useEffect(() => {
     setHexInput(btnColor);
   }, [btnColor]);
 
-  
   const isCompleteHex = (v: string) => /^#[0-9a-fA-F]{6}$/.test(v);
 
   const handleHexInputChange = (rawValue: string) => {
     let next = rawValue.trim();
-    // Auto-prepend "#" if the user didn't type it
     if (next && !next.startsWith("#")) next = "#" + next;
-    // Hard cap at 7 characters (# + 6 hex digits)
     if (next.length > 7) next = next.substring(0, 7);
-    // Always reflect what the user typed, even intermediate values
     setHexInput(next);
-
-    // Push to the wheel + state only when the value is fully valid
     if (isCompleteHex(next)) {
       setBtnColor(next);
       if (btnPickerInstance.current) {
-        try {
-          btnPickerInstance.current.color.set(next);
-        } catch {
-          // iro may throw on unexpected input — safely ignore
-        }
+        try { btnPickerInstance.current.color.set(next); } catch {}
       }
     }
   };
 
   const handleHexInputBlur = () => {
-    // If the user left an invalid value in the input, snap back to the
-    // last committed color so the UI never shows a broken state.
-    if (!isCompleteHex(hexInput)) {
-      setHexInput(btnColor);
-    }
+    if (!isCompleteHex(hexInput)) setHexInput(btnColor);
   };
 
   const handleHexInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      (e.target as HTMLInputElement).blur();
-    }
+    if (e.key === "Enter") (e.target as HTMLInputElement).blur();
   };
 
-  useEffect(() => {
-    // Handle click outside to close any open dropdowns or color pickers
-    function handleGlobalClickOutside(event: MouseEvent) {
-      // Close button color picker dropdown if clicked outside
-      if (
-        btnOpen &&
-        btnDropdownRef.current &&
-        !btnDropdownRef.current.contains(event.target as Node) &&
-        btnPickerRef.current &&
-        !btnPickerRef.current.contains(event.target as Node)
-      ) {
-        setBtnOpen(false);
-      }
-
-      // Close any open custom dropdown if clicked outside
-      Object.entries(dropdownRefs).forEach(([key, ref]) => {
-        if (ref.current && !ref.current.contains(event.target as Node)) {
-          if (openDropdown === key) setOpenDropdown(null);
-        }
-      });
-    }
-
-    document.addEventListener("mousedown", handleGlobalClickOutside);
-    return () => document.removeEventListener("mousedown", handleGlobalClickOutside);
-  }, [btnOpen, openDropdown]);
-
-
   const dropdownRefs = {
+    interfaceLanguage: useRef<HTMLDivElement>(null),
+    interfacePosition: useRef<HTMLDivElement>(null),
     triggerHorizontalPosition: useRef<HTMLDivElement>(null),
     triggerVerticalPosition: useRef<HTMLDivElement>(null),
     triggerButtonSize: useRef<HTMLDivElement>(null),
     triggerButtonShape: useRef<HTMLDivElement>(null),
     triggerHorizontalOffset: useRef<HTMLDivElement>(null),
-    hideTriggerButton: useRef<HTMLDivElement>(null),
     triggerVerticalOffset: useRef<HTMLDivElement>(null),
     showOnMobile: useRef<HTMLDivElement>(null),
     mobileTriggerHorizontalPosition: useRef<HTMLDivElement>(null),
@@ -209,17 +161,26 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     mobileTriggerVerticalOffset: useRef<HTMLDivElement>(null),
   };
 
-  // Dropdown options
-  const positionOptions = [
-    { label: "Left", value: "Left" },
-    { label: "Right", value: "Right" },
-  ];
-
-  const verticalPositionOptions = [
-    { label: "Top", value: "Top" },   
-    { label: "Middle", value: "Middle" },
-    { label: "Bottom", value: "Bottom" },
-  ];
+  useEffect(() => {
+    function handleGlobalClickOutside(event: MouseEvent) {
+      if (
+        btnOpen &&
+        btnDropdownRef.current &&
+        !btnDropdownRef.current.contains(event.target as Node) &&
+        btnPickerRef.current &&
+        !btnPickerRef.current.contains(event.target as Node)
+      ) {
+        setBtnOpen(false);
+      }
+      Object.entries(dropdownRefs).forEach(([key, ref]) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
+          if (openDropdown === key) setOpenDropdown(null);
+        }
+      });
+    }
+    document.addEventListener("mousedown", handleGlobalClickOutside);
+    return () => document.removeEventListener("mousedown", handleGlobalClickOutside);
+  }, [btnOpen, openDropdown]);
 
   const sizeOptions = [
     { label: "Small", value: "Small" },
@@ -233,20 +194,9 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     { label: "Rounded", value: "Rounded" },
   ];
 
-  const yesNoOptions = [
-    { label: "Yes", value: "Yes" },
-    { label: "No", value: "No" },
-  ];
-
   const showOptions = [
     { label: "Show", value: "Show" },
     { label: "Hide", value: "Hide" },
-  ];
-
-  const mobileVerticalPositionOptions = [
-    { label: "Top", value: "Top" },
-    { label: "Middle", value: "Middle" },
-    { label: "Bottom", value: "Bottom" },
   ];
 
   const mobileShapeOptions = [
@@ -255,20 +205,18 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
     { label: "Circle", value: "Circle" },
   ];
 
-  const getLabel = (opts: any[], val: string) =>
-    (opts.find((o) => o.value === val) || {}).label || val;
-
-  // (Consolidated click-outside handling in the effect above)
+  const handleColorChange = (color: string) => setBtnColor(color);
 
   const handleNextPayment = async () => {
-    if (!isValidStatementLink(accessibilityStatementLink)) {
-      setLinkError("Please enter a valid URL starting with https:// or http://");
-      return;
-    }
-
     try {
+      const linkResult = normalizeStatementLink(accessibilityStatementLink);
+      if (!linkResult.ok) {
+        setStatementLinkError(linkResult.reason ?? null);
+        return;
+      }
+      setStatementLinkError(null);
+
       const customizationData = {
-        // Map your state variables to the customization object
         triggerButtonColor: btnColor,
         triggerButtonShape: triggerButtonShape,
         triggerButtonSize: triggerButtonSize,
@@ -276,98 +224,40 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
         triggerVerticalPosition: triggerVerticalPosition,
         triggerHorizontalOffset: triggerHorizontalOffset,
         triggerVerticalOffset: triggerVerticalOffset,
-        hideTriggerButton: hideTriggerButton,
+        hideTriggerButton: hideTrigger ? "Yes" : "No",
         selectedIcon: selectedIcon,
         selectedIconName: selectedIconName,
         showOnMobile: showOnMobile,
-        mobileTriggerButtonColor: btnColor, // Use same color as desktop
+        mobileTriggerButtonColor: btnColor,
         mobileTriggerShape: mobileTriggerShape,
         mobileTriggerSize: mobileTriggerSize,
         mobileTriggerHorizontalPosition: mobileTriggerHorizontalPosition,
         mobileTriggerVerticalPosition: mobileTriggerVerticalPosition,
         mobileTriggerHorizontalOffset: mobileTriggerHorizontalOffset,
         mobileTriggerVerticalOffset: mobileTriggerVerticalOffset,
-        accessibilityStatementLink: accessibilityStatementLink
+        accessibilityStatementLink: linkResult.value,
       };
-      
+
       onNext(customizationData);
-    } catch (error) {
-
-      
-    }
+    } catch {}
   };
-
-
-  const handleColorChange = (color: string) => {
-    setBtnColor(color);
-  };
-
-  const handleShapeChange = (shape: string) => {
-    setTriggerButtonShape(shape);
-  };
-
-  const handlePositionChange = (position: string) => {
-    setTriggerHorizontalPosition(position);
-  };
-
-  const handleVerticalPositionChange = (position: string) => {
-    setTriggerVerticalPosition(position);
-  };
-
-  const renderDropdown = (
-    type: string,
-    label: string,
-    value: string,
-    options: any[],
-    onPick: (val: string) => void
-  ) => (
-    <div className="form-group">
-      <label>{label}</label>
-      <div className={`custom-select ${openDropdown === type ? "open" : ""}`} ref={dropdownRefs[type as keyof typeof dropdownRefs]}>
-        <div
-          className="selected"
-          onClick={() =>
-            setOpenDropdown(openDropdown === type ? null : type)
-          }
-        >
-          <span>{getLabel(options, value)}</span>
-          <svg className="dropdown-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-
-        {openDropdown === type && (
-          <ul className="options">
-            {options.map((opt) => (
-              <li
-                key={opt.value}
-                onClick={() => {
-                  onPick(opt.value);
-                  setOpenDropdown(null);
-                }}
-              >
-                {opt.label}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
-  );
-
 
   return (
     <div className="customization-screen">
-      
+
       {/* Header */}
       <div className="customization-header">
-        <div className="app-name"></div>
+        <div className="header-left">
+          <img src={brandLogo} alt="AccessBit" style={{ height: '21px', display: 'block' }} />
+          {siteDomain && <div className="header-divider" />}
+          {siteDomain && <div className="header-domain">{siteDomain}</div>}
+        </div>
         <div className="header-buttons">
           <button className="back-btn" onClick={onBack}>
             <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
             Back
           </button>
-                <button className="next-btn" onClick={handleNextPayment}>
+          <button className="next-btn" onClick={handleNextPayment}>
             Next
             <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
           </button>
@@ -376,54 +266,73 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
 
       {/* Step Navigation */}
       <div className="step-navigation">
-        <div className="step active">
-          <span className="step-number">STEP 1</span>
+        <div className="step active" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+          <div className="step-circle">1</div>
           <span className="step-name">Customization</span>
         </div>
-        <div className="step">
-          <span className="step-number">STEP 2</span>
+        <div className="step" onClick={handleNextPayment} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+          <div className="step-circle">2</div>
           <span className="step-name">Publish</span>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="main-content">
-        {/* Left Panel - Customization Options */}
-        <div className="left-panel">
-          <div className="panel-content">
-            <div className="section">
-              <h3>Customization AccessWidget Interface</h3>
 
+        {/* Left Panel */}
+        <div className="left-panel">
+          <div className="panel-header">
+            <span className="panel-header-title">Widget configuration</span>
+            <span className="panel-header-unsaved">{unsavedCount} unsaved</span>
+          </div>
+          <div className="panel-content">
+
+            {/* INTERFACE section */}
+            <div className="section">
+              <h3>INTERFACE</h3>
               <div className="interface-grid">
-                <div className="form-group">
+                <div className="form-group statement-link-full">
                   <label>Accessibility Statement Link</label>
                   <input
-                    type="text"
+                    type="url"
+                    inputMode="url"
                     placeholder="https://example.com/accessibility"
                     value={accessibilityStatementLink}
+                    aria-invalid={statementLinkError ? true : undefined}
+                    aria-describedby={statementLinkError ? "statement-link-error" : undefined}
                     onChange={(e) => {
-                      const val = e.target.value;
-                      setAccessibilityStatementLink(val);
-                      setLinkError(isValidStatementLink(val) ? null : "Please enter a valid URL starting with https:// or http://");
+                      setAccessibilityStatementLink(e.target.value);
+                      if (statementLinkError) setStatementLinkError(null);
                     }}
-                    onBlur={() => {
-                      if (!isValidStatementLink(accessibilityStatementLink)) {
-                        setLinkError("Please enter a valid URL starting with https:// or http://");
+                    onBlur={(e) => {
+                      const result = normalizeStatementLink(e.target.value);
+                      if (result.ok) {
+                        setAccessibilityStatementLink(result.value);
+                        setStatementLinkError(null);
+                      } else {
+                        setStatementLinkError(result.reason ?? null);
                       }
                     }}
-                    style={linkError ? { borderColor: "#ef4444" } : undefined}
                   />
-                  {linkError && (
-                    <p style={{ color: "#ef4444", fontSize: "12px", marginTop: "4px" }}>{linkError}</p>
+                  {statementLinkError && (
+                    <span
+                      id="statement-link-error"
+                      role="alert"
+                      style={{ color: '#d93025', fontSize: '12px', marginTop: '4px', display: 'block' }}
+                    >
+                      {statementLinkError}
+                    </span>
                   )}
+                  <div className="statement-helper-text">Opens from the widget's Statement button.</div>
                 </div>
               </div>
             </div>
 
+            {/* TRIGGER — DESKTOP section */}
             <div className="section">
-              <h3>Customizing AccessWidget Trigger</h3>
-
+              <h3>TRIGGER — DESKTOP</h3>
               <div className="trigger-grid">
+
                 <div className="form-group">
                   <div>
                     <label>Background Color</label>
@@ -458,242 +367,310 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
                 </div>
 
                 <div className="form-group">
-                  <label>Trigger Vertical Position</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("triggerVerticalPosition", "", triggerVerticalPosition, verticalPositionOptions, handleVerticalPositionChange)}
+                  <label>Button size</label>
+                  <select
+                    className="form-native-select"
+                    value={triggerButtonSize}
+                    onChange={e => { setTriggerButtonSize(e.target.value); setUnsavedCount(c => c + 1); }}
+                  >
+                    {sizeOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Button shape</label>
+                  <select
+                    className="form-native-select"
+                    value={triggerButtonShape}
+                    onChange={e => { setTriggerButtonShape(e.target.value); setUnsavedCount(c => c + 1); }}
+                  >
+                    {shapeOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Anchor</label>
+                  <div className="anchor-select-row">
+                    <select
+                      className="anchor-select"
+                      value={triggerVerticalPosition}
+                      onChange={e => { setTriggerVerticalPosition(e.target.value); setUnsavedCount(c => c + 1); }}
+                    >
+                      <option value="Top">Top</option>
+                      <option value="Middle">Middle</option>
+                      <option value="Bottom">Bottom</option>
+                    </select>
+                    <select
+                      className="anchor-select"
+                      value={triggerHorizontalPosition}
+                      onChange={e => { setTriggerHorizontalPosition(e.target.value); setUnsavedCount(c => c + 1); }}
+                    >
+                      <option value="Left">Left</option>
+                      <option value="Right">Right</option>
+                    </select>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Trigger Button Size</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("triggerButtonSize", "", triggerButtonSize, sizeOptions, setTriggerButtonSize)}
+                  <label>Horizontal offset</label>
+                  <div className="offset-input-wrapper offset-stepper">
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      value={triggerHorizontalOffset.replace('px', '')}
+                      onChange={(e) => { setTriggerHorizontalOffset(Math.min(50, Math.max(0, Number(e.target.value))).toString() + 'px'); setUnsavedCount(c => c + 1); }}
+                      className="offset-input"
+                    />
+                    <span className="offset-px-suffix">px</span>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Trigger Button Shape</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("triggerButtonShape", "", triggerButtonShape, shapeOptions, handleShapeChange)}
+                  <label>Vertical offset</label>
+                  <div className="offset-input-wrapper offset-stepper">
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      value={triggerVerticalOffset.replace('px', '')}
+                      onChange={(e) => { setTriggerVerticalOffset(Math.min(50, Math.max(0, Number(e.target.value))).toString() + 'px'); setUnsavedCount(c => c + 1); }}
+                      className="offset-input"
+                    />
+                    <span className="offset-px-suffix">px</span>
                   </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Hide Trigger Button</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("hideTriggerButton", "", hideTriggerButton, yesNoOptions, setHideTriggerButton)}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Trigger Horizontal Position</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("triggerHorizontalPosition", "", triggerHorizontalPosition, positionOptions, handlePositionChange)}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Trigger Horizontal Offset</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="50"
-                    value={triggerHorizontalOffset.replace('px', '')}
-                    onChange={(e) => setTriggerHorizontalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))) + 'px')}
-                    className="offset-input"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Trigger Vertical Offset</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="50"
-                    value={triggerVerticalOffset.replace('px', '')}
-                    onChange={(e) => setTriggerVerticalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))) + 'px')}
-                    className="offset-input"
-                  />
                 </div>
               </div>
 
+              {/* Hide trigger toggle */}
+              <div
+                className="hide-trigger-row"
+                onClick={() => { setHideTrigger(h => !h); setUnsavedCount(c => c + 1); }}
+              >
+                <div className="hide-trigger-text">
+                  <div className="hide-trigger-label">Hide trigger button</div>
+                  <div className="hide-trigger-sub"></div>
+                </div>
+                <div className={`toggle-switch${hideTrigger ? ' on' : ''}`}>
+                  <div className="toggle-knob" />
+                </div>
+              </div>
             </div>
 
+            {/* TRIGGER — MOBILE section */}
             <div className="section">
-              <h3>Customizing AccessWidget for Mobile</h3>
-
+              <h3>TRIGGER — MOBILE</h3>
               <div className="mobile-grid">
+
                 <div className="form-group">
-                  <label>Show On Mobile?</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("showOnMobile", "", showOnMobile, showOptions, setShowOnMobile)}
+                  <label>Show on mobile</label>
+                  <select
+                    className="form-native-select"
+                    value={showOnMobile}
+                    onChange={e => { setShowOnMobile(e.target.value); setUnsavedCount(c => c + 1); }}
+                  >
+                    {showOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Size</label>
+                  <select
+                    className="form-native-select"
+                    value={mobileTriggerSize}
+                    onChange={e => { setMobileTriggerSize(e.target.value); setUnsavedCount(c => c + 1); }}
+                  >
+                    {sizeOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Shape</label>
+                  <select
+                    className="form-native-select"
+                    value={mobileTriggerShape}
+                    onChange={e => { setMobileTriggerShape(e.target.value); setUnsavedCount(c => c + 1); }}
+                  >
+                    {mobileShapeOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Anchor</label>
+                  <div className="anchor-select-row">
+                    <select
+                      className="anchor-select"
+                      value={mobileTriggerVerticalPosition}
+                      onChange={e => { setMobileTriggerVerticalPosition(e.target.value); setUnsavedCount(c => c + 1); }}
+                    >
+                      <option value="Top">Top</option>
+                      <option value="Middle">Middle</option>
+                      <option value="Bottom">Bottom</option>
+                    </select>
+                    <select
+                      className="anchor-select"
+                      value={mobileTriggerHorizontalPosition}
+                      onChange={e => { setMobileTriggerHorizontalPosition(e.target.value); setUnsavedCount(c => c + 1); }}
+                    >
+                      <option value="Left">Left</option>
+                      <option value="Right">Right</option>
+                    </select>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Mobile Trigger Horizontal Position</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("mobileTriggerHorizontalPosition", "", mobileTriggerHorizontalPosition, positionOptions, setMobileTriggerHorizontalPosition)}
+                  <label>Horizontal offset</label>
+                  <div className="offset-input-wrapper offset-stepper">
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      value={mobileTriggerHorizontalOffset}
+                      onChange={(e) => { setMobileTriggerHorizontalOffset(Math.min(50, Math.max(0, Number(e.target.value))).toString()); setUnsavedCount(c => c + 1); }}
+                      className="offset-input"
+                    />
+                    <span className="offset-px-suffix">px</span>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Mobile Trigger Vertical Position</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("mobileTriggerVerticalPosition", "", mobileTriggerVerticalPosition, mobileVerticalPositionOptions, setMobileTriggerVerticalPosition)}
+                  <label>Vertical offset</label>
+                  <div className="offset-input-wrapper offset-stepper">
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      value={mobileTriggerVerticalOffset}
+                      onChange={(e) => { setMobileTriggerVerticalOffset(Math.min(50, Math.max(0, Number(e.target.value))).toString()); setUnsavedCount(c => c + 1); }}
+                      className="offset-input"
+                    />
+                    <span className="offset-px-suffix">px</span>
                   </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Mobile Trigger Size</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("mobileTriggerSize", "", mobileTriggerSize, sizeOptions, setMobileTriggerSize)}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Trigger Mobile Shape</label>
-                  <div className="custom-select-container">
-                    {renderDropdown("mobileTriggerShape", "", mobileTriggerShape, mobileShapeOptions, setMobileTriggerShape)}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Mobile Trigger Horizontal Offset</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="50"
-                    value={mobileTriggerHorizontalOffset}
-                    onChange={(e) => setMobileTriggerHorizontalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))))}
-                    className="offset-input"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Mobile Trigger Vertical Offset</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="50"
-                    value={mobileTriggerVerticalOffset}
-                    onChange={(e) => setMobileTriggerVerticalOffset(String(Math.min(50, Math.max(0, Number(e.target.value)))))}
-                    className="offset-input"
-                  />
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
         {/* Right Panel - Preview */}
         <div className="right-panel">
-          <div className="preview-header">
-            <h3>Preview</h3>
-            <div className="device-selector">
+          <div className="panel-header">
+            <span className="panel-header-title">Preview</span>
+            <div style={{ display: 'flex', gap: '4px', background: '#08080f', border: '1px solid #1e1e40', borderRadius: '9px', padding: '3px' }}>
               <button
-                className={`device-btn ${isDesktopView ? 'active' : ''}`}
                 onClick={() => setIsDesktopView(true)}
-              >
-                <img src={monitor} alt="" />
-              </button>
+                style={{ border: 'none', cursor: 'pointer', borderRadius: '7px', padding: '6px 12px', font: "400 12px 'Archivo', sans-serif", background: isDesktopView ? '#3634cc' : 'transparent', color: isDesktopView ? '#fff' : '#9498b8' }}
+              >Desktop</button>
               <button
-                className={`device-btn ${!isDesktopView ? 'active' : ''}`}
                 onClick={() => setIsDesktopView(false)}
-              >
-                <img src={mobile} alt="" />
-              </button>
+                style={{ border: 'none', cursor: 'pointer', borderRadius: '7px', padding: '6px 12px', font: "400 12px 'Archivo', sans-serif", background: !isDesktopView ? '#3634cc' : 'transparent', color: !isDesktopView ? '#fff' : '#9498b8' }}
+              >Mobile</button>
             </div>
           </div>
 
-          <div style={{ padding: "10px" }}>
-            {isDesktopView ? (
-              <div className="preview-window desktop-preview">
-                <div className="browser-window">
-                  <div className="browser-controls">
-                    <div className="traffic-lights">
-                      <div className="traffic-light red"></div>
-                      <div className="traffic-light yellow"></div>
-                      <div className="traffic-light green"></div>
-                    </div>
-                  </div>
-                  <div className="browser-content">
-                    {hideTriggerButton === 'No' && (
+          {/* Preview chrome */}
+          <div style={{ padding: '0 14px 10px' }}>
+            <div className="preview-chrome">
+              <div className="preview-bar">
+                <div className="preview-dots">
+                  <div className="preview-dot red" />
+                  <div className="preview-dot yellow" />
+                  <div className="preview-dot green" />
+                </div>
+                <div className="preview-addr-stub" />
+              </div>
+
+              <div className="preview-content-area">
+                {isDesktopView ? (
+                  <div className="preview-frame-desktop">
+                    {!hideTrigger && (
                       <div
-                        className="accessibility-widget"
                         style={{
-                          left: triggerHorizontalPosition === 'Left' ?
-                            `calc(9px + ${parseInt(triggerHorizontalOffset)* 0.2}px)` :
-                            triggerHorizontalPosition === 'Right' ? 'auto' : '50%',
-                          right: triggerHorizontalPosition === 'Right' ?
-                            `calc(9px + ${parseInt(triggerHorizontalOffset)* 0.2}px)` : 'auto',
-                          top: triggerVerticalPosition === 'Top' ?
-                            `calc(9px + ${parseInt(triggerVerticalOffset) * 0.2}px)` : 'auto',
-                          bottom: triggerVerticalPosition === 'Bottom' ?
-                            `calc(9px + ${parseInt(triggerVerticalOffset) * 0.2}px)` : 'auto',
-                          transform: triggerHorizontalPosition === 'Center' ?
-                            (triggerVerticalPosition === 'Middle' ? 'translateX(-50%)' : 'translateX(-50%)') :
-                            (triggerVerticalPosition === 'Middle' ? 'translateY(-13%)' : 'none')
+                          position: 'absolute',
+                          left: triggerHorizontalPosition === 'Left'
+                            ? `calc(9px + ${scalePreviewOffset(triggerHorizontalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)`
+                            : triggerHorizontalPosition === 'Right' ? 'auto' : '50%',
+                          right: triggerHorizontalPosition === 'Right'
+                            ? `calc(9px + ${scalePreviewOffset(triggerHorizontalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)`
+                            : 'auto',
+                          top: triggerVerticalPosition === 'Top'
+                            ? `calc(9px + ${scalePreviewOffset(triggerVerticalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)`
+                            : triggerVerticalPosition === 'Middle' ? '50%' : 'auto',
+                          bottom: triggerVerticalPosition === 'Bottom'
+                            ? `calc(9px + ${scalePreviewOffset(triggerVerticalOffset, PREVIEW_OFFSET_SCALE.desktop)}px)`
+                            : 'auto',
+                          transform: triggerVerticalPosition === 'Middle' ? 'translateY(-50%)' : 'none',
                         }}
                       >
                         <div
                           className={`widget-trigger ${triggerButtonShape.toLowerCase()} ${triggerButtonSize.toLowerCase()}`}
                           style={{ backgroundColor: btnColor }}
                         >
-                          <img
-                            src={icon1}
-                            alt="Accessibility Icon"
-                            className="widget-icon"
-                          />
+                          <img src={icon1} alt="" className="widget-icon" />
                         </div>
                       </div>
                     )}
                   </div>
-                </div>
-              </div>
-            ) : (
-              <div className="preview-window mobile-preview">
-                <div className="mobile-browser-window">
-                  <div className="mobile-browser-content">
+                ) : (
+                  <div className="preview-frame-mobile">
                     {showOnMobile === 'Show' && (
                       <div
-                        className="mobile-trigger-widget"
                         style={{
-                          left: mobileTriggerHorizontalPosition === 'Left' ?
-                            `calc(8px + ${Math.round(parseInt(mobileTriggerHorizontalOffset) * 0.4)}px)` :
-                            mobileTriggerHorizontalPosition === 'Right' ? 'auto' : '50%',
-                          right: mobileTriggerHorizontalPosition === 'Right' ?
-                            `calc(8px + ${Math.round(parseInt(mobileTriggerHorizontalOffset) * 0.4)}px)` : 'auto',
-                          top: mobileTriggerVerticalPosition === 'Top' ?
-                            `calc(10px + ${Math.round(parseInt(mobileTriggerVerticalOffset) * 0.4)}px)` :
-                            mobileTriggerVerticalPosition === 'Middle' ? '50%' : 'auto',
-                          bottom: mobileTriggerVerticalPosition === 'Bottom' ?
-                            `calc(10px + ${Math.round(parseInt(mobileTriggerVerticalOffset) * 0.4)}px)` : 'auto',
-                          transform: mobileTriggerHorizontalPosition === 'Center' ?
-                            (mobileTriggerVerticalPosition === 'Middle' ? 'translateX(-50%)' : 'translateX(-50%)') :
-                            (mobileTriggerVerticalPosition === 'Middle' ? 'translateY(-50%)' : 'none')
+                          position: 'absolute',
+                          left: mobileTriggerHorizontalPosition === 'Left'
+                            ? `calc(8px + ${scalePreviewOffset(mobileTriggerHorizontalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)`
+                            : mobileTriggerHorizontalPosition === 'Right' ? 'auto' : '50%',
+                          right: mobileTriggerHorizontalPosition === 'Right'
+                            ? `calc(8px + ${scalePreviewOffset(mobileTriggerHorizontalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)`
+                            : 'auto',
+                          top: mobileTriggerVerticalPosition === 'Top'
+                            ? `calc(10px + ${scalePreviewOffset(mobileTriggerVerticalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)`
+                            : mobileTriggerVerticalPosition === 'Middle' ? '50%' : 'auto',
+                          bottom: mobileTriggerVerticalPosition === 'Bottom'
+                            ? `calc(10px + ${scalePreviewOffset(mobileTriggerVerticalOffset, PREVIEW_OFFSET_SCALE.mobile)}px)`
+                            : 'auto',
+                          transform: mobileTriggerVerticalPosition === 'Middle' ? 'translateY(-50%)' : 'none',
+                          zIndex: 5,
                         }}
                       >
                         <div
                           className={`mobile-widget-trigger ${mobileTriggerShape === 'Rounded' ? 'round' : mobileTriggerShape.toLowerCase()} ${mobileTriggerSize.toLowerCase()}`}
-                          style={{ backgroundColor: btnColor }}
+                          style={{ backgroundColor: btnColor, animation: 'abPulse 2.6s ease-in-out infinite' }}
                         >
-                          <img
-                            src={icon1}
-                            alt="Accessibility Icon"
-                            className="mobile-widget-icon"
-                          />
+                          <img src={icon1} alt="" className="mobile-widget-icon" />
                         </div>
                       </div>
                     )}
                   </div>
-                </div>
+                )}
               </div>
-            )}
+            </div>
+          </div>
+
+          <div className="preview-summary">
+            <div className="preview-summary-row">
+              <span className="summary-label">Position</span>
+              <span className="summary-value">
+                {isDesktopView
+                  ? `${triggerVerticalPosition.toLowerCase()} · ${triggerHorizontalPosition.toLowerCase()}`
+                  : `${mobileTriggerVerticalPosition.toLowerCase()} · ${mobileTriggerHorizontalPosition.toLowerCase()}`}
+              </span>
+            </div>
+            <div className="preview-summary-row">
+              <span className="summary-label">Offset</span>
+              <span className="summary-value">
+                {isDesktopView
+                  ? `${triggerHorizontalOffset.replace('px', '')} × ${triggerVerticalOffset.replace('px', '')} px`
+                  : `${mobileTriggerHorizontalOffset} × ${mobileTriggerVerticalOffset} px`}
+              </span>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );
 };
+
 export default CustomizationScreen;

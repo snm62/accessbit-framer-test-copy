@@ -137,6 +137,14 @@
   opacity: 0.6;
 }
 
+/* Top-left logo */
+.welcome-logo-topleft {
+  position: absolute;
+  top: 22px;
+  left: 28px;
+  z-index: 20;
+}
+
 /* Need help trigger button */
 .help-trigger {
   position: absolute;

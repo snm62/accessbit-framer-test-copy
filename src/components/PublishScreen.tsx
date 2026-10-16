@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { framer } from "framer-plugin";
 import { useAuth } from "../hooks/userAuth";
 import { platform } from "../platform";
 import { framerEndpoints } from "../config/endpoints";
-import { loadStoredFramerToken, decodeJWTPayload } from "../api/framer";
+import { loadStoredFramerToken, decodeJWTPayload, getValidSessionToken } from "../api/framer";
 import "../styles/publish.css";
 import "../styles/payment.css";
+
+const brandLogo = new URL("../assets/accessbit-logo.svg", import.meta.url).href;
 
 const whitearrow = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
   <path d="M0.756 8.59012V6.62812H10.314L5.598 2.30812L6.948 0.940125L13.356 6.97012V8.23012L6.948 14.2601L5.58 12.8741L10.278 8.59012H0.756Z" fill="white"/>
@@ -21,6 +23,7 @@ const icon7 = new URL("../assets/icon7.svg", import.meta.url).href;
 const icon8 = new URL("../assets/icon8.svg", import.meta.url).href;
 const footerBrandSvg = new URL("../assets/footer-brand.svg", import.meta.url).href;
 const footerPoweredSvg = new URL("../assets/footer-powered.svg", import.meta.url).href;
+const spinnerGif = new URL("../assets/spinner.gif", import.meta.url).href;
 
 // Icon options matching CustomizationScreen
 const iconOptions = [
@@ -71,6 +74,22 @@ const PublishScreen: React.FC<PublishScreenProps> = ({ onBack, customizationData
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [isAnnual, setIsAnnual] = useState(true);
   const [siteDomain, setSiteDomain] = useState('');
+  const [invoiceUrl, setInvoiceUrl] = useState<string | null>(null);
+  const [invoiceId, setInvoiceId] = useState<string | null>(null);
+  const [isDownloadingInvoice, setIsDownloadingInvoice] = useState(false);
+  const [subscriptionEmail, setSubscriptionEmail] = useState<string | null>(null);
+  const [subPlanType, setSubPlanType] = useState<string | null>(null);
+  const [subNextBilling, setSubNextBilling] = useState<string | null>(null);
+  const [subAmountYear, setSubAmountYear] = useState<number | null>(null);
+  const [subAmountMonth, setSubAmountMonth] = useState<number | null>(null);
+  const [subCardBrand, setSubCardBrand] = useState<string | null>(null);
+  const [subCardLast4, setSubCardLast4] = useState<string | null>(null);
+  const [invoices, setInvoices] = useState<any[]>([]);
+  const [showInvoicesModal, setShowInvoicesModal] = useState(false);
+  const [paymentFlow, setPaymentFlow] = useState<{ open: boolean; phase: 'polling' | 'timeout' | 'success' }>({ open: false, phase: 'polling' });
+  const [isPurchasing, setIsPurchasing] = useState(false);
+  const normalizedDomainRef = useRef<string>('');
+  const silentPollRef = useRef<{ cancelled: boolean; timeoutId: ReturnType<typeof setTimeout> | null }>({ cancelled: true, timeoutId: null });
   const [accessibilityProfiles, setAccessibilityProfiles] = useState({
     seizureSafe: false,
     visionImpaired: false,
@@ -189,27 +208,32 @@ const productionUrl = publishInfo.productionUrl || '';
         const stagingDomain = extractDomain(stagingUrl);
         const domain = customDomain || stagingDomain;
 
-        // Framer staging domains (.framer.app) don't need a subscription
-        const isStaging = (
-          !customDomain ||
-          customDomain.includes('.framer.app') ||
-          customDomain.includes('.framer.com') ||
-          customDomain.includes('localhost') ||
-          customDomain.includes('127.0.0.1')
-        );
-
         setSiteDomain(domain);
-        if (isStaging) {
-          setHasSubscription(false);
-          return;
-        }
+        normalizedDomainRef.current = domain;
 
-        // Custom domain — check payment status via Framer worker
+        // Always check payment status via API — even for staging domains.
+        // The API returns isStaging:true when no subscription exists, so the card won't show.
+        // But if a subscription was paid on a staging domain, the API returns real data and the card should show.
+        // Short-circuiting here would wipe the card on plugin reload.
         const response = await makeAuthenticatedRequest(
           framerEndpoints.site.checkPayment(domain),
           { method: 'GET' }
         );
-        setHasSubscription(response?.hasAccess === true);
+        if (response?.hasAccess === true && !response?.isStaging) {
+          setHasSubscription(true);
+          if (response?.invoiceUrl) setInvoiceUrl(response.invoiceUrl);
+          if (response?.invoiceId) setInvoiceId(response.invoiceId);
+          if (Array.isArray(response?.invoices)) setInvoices(response.invoices);
+          if (response?.email) setSubscriptionEmail(response.email);
+          if (response?.planType) setSubPlanType(response.planType);
+          if (response?.nextBillingDate) setSubNextBilling(response.nextBillingDate);
+          if (response?.amountPerYear != null) setSubAmountYear(response.amountPerYear);
+          if (response?.amountPerMonth != null) setSubAmountMonth(response.amountPerMonth);
+          if (response?.cardBrand) setSubCardBrand(response.cardBrand);
+          if (response?.cardLast4) setSubCardLast4(response.cardLast4);
+        } else {
+          setHasSubscription(false);
+        }
       } catch (err) {
         console.error('[AccessBit] checkSubscriptionStatus error:', err);
         framer.notify("AccessBit could not check your subscription. Please reopen the plugin and try again.", { variant: "error" });
@@ -222,25 +246,123 @@ const productionUrl = publishInfo.productionUrl || '';
     checkSubscriptionStatus();
   }, []);
 
+  // Payment polling — runs when paymentFlow.open becomes true
+  useEffect(() => {
+    if (!paymentFlow.open) return;
+
+    let pollCount = 0;
+    const maxPolls = 10;
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let cancelled = false;
+
+    const runPoll = async () => {
+      if (cancelled) return;
+      if (pollCount >= maxPolls) { setPaymentFlow(pf => ({ ...pf, phase: 'timeout' })); return; }
+      pollCount++;
+      const domain = normalizedDomainRef.current;
+      if (!domain) { timeoutId = setTimeout(runPoll, 30000); return; }
+      try {
+        const response = await makeAuthenticatedRequest(
+          framerEndpoints.site.checkPayment(domain),
+          { method: 'GET' }
+        );
+        if (response?.hasAccess === true && !response?.isStaging) {
+          cancelled = true;
+          silentPollRef.current.cancelled = true;
+          if (silentPollRef.current.timeoutId) clearTimeout(silentPollRef.current.timeoutId);
+          try { localStorage.removeItem('ab_checkout_pending'); } catch {}
+          setHasSubscription(true);
+          if (response?.invoiceUrl) setInvoiceUrl(response.invoiceUrl);
+          if (response?.invoiceId) setInvoiceId(response.invoiceId);
+          if (Array.isArray(response?.invoices)) setInvoices(response.invoices);
+          if (response?.email) setSubscriptionEmail(response.email);
+          if (response?.planType) setSubPlanType(response.planType);
+          if (response?.nextBillingDate) setSubNextBilling(response.nextBillingDate);
+          if (response?.amountPerYear != null) setSubAmountYear(response.amountPerYear);
+          if (response?.amountPerMonth != null) setSubAmountMonth(response.amountPerMonth);
+          if (response?.cardBrand) setSubCardBrand(response.cardBrand);
+          if (response?.cardLast4) setSubCardLast4(response.cardLast4);
+          setPaymentFlow({ open: false, phase: 'success' });
+        } else {
+          timeoutId = setTimeout(runPoll, 30000);
+        }
+      } catch { timeoutId = setTimeout(runPoll, 30000); }
+    };
+
+    // Poll immediately, then every 30s — up to 10 times (5 minutes total)
+    runPoll();
+    return () => { cancelled = true; clearTimeout(timeoutId); };
+  }, [paymentFlow.open]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const startSilentPoll = () => {
+    const ref = silentPollRef.current;
+    if (ref.timeoutId) clearTimeout(ref.timeoutId);
+    ref.cancelled = false;
+    let tries = 0;
+    const maxTries = 5;
+    const poll = async () => {
+      if (ref.cancelled) return;
+      if (tries >= maxTries) return;
+      tries++;
+      const domain = normalizedDomainRef.current;
+      if (!domain) { ref.timeoutId = setTimeout(poll, 60000); return; }
+      try {
+        const response = await makeAuthenticatedRequest(
+          framerEndpoints.site.checkPayment(domain),
+          { method: 'GET' }
+        );
+        if (response?.hasAccess === true && !response?.isStaging) {
+          ref.cancelled = true;
+          try { localStorage.removeItem('ab_checkout_pending'); } catch {}
+          setHasSubscription(true);
+          if (response?.invoiceUrl) setInvoiceUrl(response.invoiceUrl);
+          if (response?.invoiceId) setInvoiceId(response.invoiceId);
+          if (Array.isArray(response?.invoices)) setInvoices(response.invoices);
+          if (response?.email) setSubscriptionEmail(response.email);
+          if (response?.planType) setSubPlanType(response.planType);
+          if (response?.nextBillingDate) setSubNextBilling(response.nextBillingDate);
+          if (response?.amountPerYear != null) setSubAmountYear(response.amountPerYear);
+          if (response?.amountPerMonth != null) setSubAmountMonth(response.amountPerMonth);
+          if (response?.cardBrand) setSubCardBrand(response.cardBrand);
+          if (response?.cardLast4) setSubCardLast4(response.cardLast4);
+          setPublishSuccess('Payment confirmed! Your subscription is now active.');
+          setTimeout(() => setPublishSuccess(false), 5000);
+        } else {
+          ref.timeoutId = setTimeout(poll, 60000);
+        }
+      } catch { ref.timeoutId = setTimeout(poll, 60000); }
+    };
+    ref.timeoutId = setTimeout(poll, 60000);
+  };
+
   const handleCancelSubscription = () => {
     openTrustedStripeUrl(STRIPE_PORTAL_URL);
   };
 
   const handlePurchaseNow = () => {
+    setIsPurchasing(true);
     try {
       const jwt = loadStoredFramerToken();
       const payload = jwt ? decodeJWTPayload(jwt) : null;
       const email = (payload?.email || payload?.sub || '') as string;
       const plan = isAnnual ? 'annually' : 'monthly';
       const encoded = btoa(JSON.stringify({ email, plan, platform: 'framer', domain: siteDomain }));
-      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}`, '_blank', 'noopener,noreferrer');
+      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}&mode=test`, '_blank', 'noopener,noreferrer');
+      try { localStorage.setItem('ab_checkout_pending', JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() })); } catch {}
+      setPaymentFlow({ open: true, phase: 'polling' });
     } catch (err) {
       console.error('[AccessBit] handlePurchaseNow error:', err);
+      // Even if token/open fails, still show the modal so user can retry
+      window.open(`https://accounts.accessbit.io/checkout?mode=test`, '_blank', 'noopener,noreferrer');
+      try { localStorage.setItem('ab_checkout_pending', JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() })); } catch {}
+      setPaymentFlow({ open: true, phase: 'polling' });
+    } finally {
+      setIsPurchasing(false);
     }
   };
 
   return (
-    <div className="publish-screen" style={{ paddingTop: '0' }}>
+    <div className="publish-screen">
       {/* Publish Confirmation Modal */}
       {showPublishModal && (
         <div className="publish-modal-overlay">
@@ -271,45 +393,22 @@ const productionUrl = publishInfo.productionUrl || '';
 
       {/* Header */}
       <div className="publish-header">
-          <div className="app-logo">
-            <span className="app-name"></span>
-          </div>
-          <div className="header-buttons" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-            <button className="back-btn" onClick={onBack}>
-              <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
-              Back
-            </button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              {isCheckingSubscription && (
-                <span style={{ 
-                  color: '#a3a3a3', 
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}>
-                  Checking subscription...
-                </span>
-              )}
-              {hasSubscription === true && (
-                <span 
-                  className="cancel-subscription-link" 
-                  onClick={handleCancelSubscription}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCancelSubscription(); } }}
-                >
-                  Cancel Subscription
-                </span>
-              )}
-              <button 
-                className="publish-btn" 
-                onClick={handlePublish}
-              >
-                {hasSubscription === true ? 'Publish to live domain' : 'Publish to Staging'}
-                <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
-              </button>
-            </div>
-          </div>
+        <div className="header-left">
+          <img src={brandLogo} alt="AccessBit" style={{ height: '21px', display: 'block' }} />
+          {siteDomain && !siteDomain.includes('.framer.app') && !siteDomain.includes('.framer.com') && <div className="header-divider" />}
+          {siteDomain && !siteDomain.includes('.framer.app') && !siteDomain.includes('.framer.com') && <div className="header-domain">{siteDomain}</div>}
         </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button className="back-btn" onClick={onBack}>
+            <img src={whitearrow} alt="" style={{ transform: 'rotate(180deg)', width: '14px', height: '15px', marginRight: '8px' }} />
+            Back
+          </button>
+          <button className="publish-btn" onClick={handlePublish}>
+            {hasSubscription === true ? 'Publish to live domain' : 'Publish to staging'}
+            <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
+          </button>
+        </div>
+      </div>
 
       {/* Success Toast Notification - Top Right */}
       {publishSuccess && (
@@ -347,12 +446,12 @@ const productionUrl = publishInfo.productionUrl || '';
 
       {/* Step Navigation */}
       <div className="step-navigation">
-        <div className="step completed">
-          <span className="step-number">STEP 1</span>
+        <div className="step completed" onClick={onBack} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+          <div className="step-circle">✓</div>
           <span className="step-name">Customization</span>
         </div>
-        <div className="step active">
-          <span className="step-number">STEP 2</span>
+        <div className="step active" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+          <div className="step-circle">2</div>
           <span className="step-name">Publish</span>
         </div>
       </div>
@@ -362,7 +461,7 @@ const productionUrl = publishInfo.productionUrl || '';
         {/* Left Panel - Preview */}
         <div className="preview-panel">
           <div className="panel-header">
-            <h3>Preview</h3>
+            <h3>Live preview</h3>
           </div>
           <div className="preview-window1">
             <div className="browser-window">
@@ -736,18 +835,20 @@ const productionUrl = publishInfo.productionUrl || '';
                       </div>
                     </div>
 
-                    {/* Preview footer (copied from widget UI; links removed for preview) */}
+                    {/* Preview footer */}
                     <div className="panel-footer" aria-hidden="true">
                       <img
                         className="panel-footer-link panel-footer-link--brand"
-                        src={footerBrandSvg}
+                        src={brandLogo}
                         alt=""
+                        style={{ height: '8px', width: 'auto', filter: 'brightness(0)' }}
                       />
 
                       <img
                         className="panel-footer-link panel-footer-link--powered"
                         src={footerPoweredSvg}
                         alt=""
+                        style={{ height: '8px', width: 'auto' }}
                       />
                     </div>
                   </div>
@@ -790,51 +891,309 @@ const productionUrl = publishInfo.productionUrl || '';
           </div>
         </div>
 
-        {/* Right Panel - Payment card (aligned with Preview) */}
-        <div className="publish-page-payment-panel">
-          <div className="panel-header">
-            <h3>Subscription</h3>
-          </div>
-          <div className="publish-page-payment-window">
-            <div className="payment-card publish-page-payment-card">
-              <div className="pricing-flex publish-page-pricing-flex">
-                <div className="pricing-single-column">
-                  <div className="main-price">
-                    <div className="price-number">${isAnnual ? '19' : '24'}</div>
-                    <div className="price-period">/{isAnnual ? 'month: Purchased Annually' : 'month'}</div>
-                  </div>
-                  <div className={`payment-toggle ${isAnnual ? 'annually' : 'monthly'}`}>
+        {/* Right Panel - Payment card or Subscription Active */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', overflowY: 'auto', minHeight: 0, height: '100%' }}>
+          {isCheckingSubscription ? (
+            <div className="subscription-card" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={spinnerGif} alt="" className="subscription-spinner" />
+            </div>
+          ) : hasSubscription === true ? (
+            <div className="subscription-card" style={{ flex: 1 }}>
+              <div className="sub-header">
+                <span className="sub-header-title">Subscription Active</span>
+              </div>
+
+              {/* Success header */}
+              <div className="sub-active-success-row">
+                <div className="sub-active-checkmark">
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+                    <circle cx="9" cy="9" r="8" fill="#111827" stroke="#46b586" strokeWidth="1"/>
+                    <path d="M5.5 9.2L7.8 11.5L12.5 6.5" stroke="#46b586" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span className="sub-active-success-text">Payment successful</span>
+              </div>
+
+              {/* Plan name + badge */}
+              <div className="sub-active-plan-row">
+                <span className="sub-active-plan-name">{subPlanType ? subPlanType.charAt(0).toUpperCase() + subPlanType.slice(1) : 'Plan'}</span>
+                <span className="sub-active-badge">Active</span>
+              </div>
+              <div className="sub-active-plan-subtitle">
+                {subAmountMonth != null ? `$${subAmountMonth}/month` : ''}
+                {subPlanType === 'Annual Plan' ? ' · billed annually' : subPlanType === 'Monthly Plan' ? ' · billed monthly' : ''}
+              </div>
+
+              {/* Details grid */}
+              <div className="sub-active-details">
+                <div className="sub-active-detail-item">
+                  <span className="sub-active-detail-label">Next billing date</span>
+                  <span className="sub-active-detail-value">
+                    {subNextBilling
+                      ? new Date(subNextBilling).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+                      : <span style={{ opacity: 0.4 }}>—</span>}
+                  </span>
+                </div>
+                <div className="sub-active-detail-item">
+                  <span className="sub-active-detail-label">Amount</span>
+                  <span className="sub-active-detail-value">
+                    {subPlanType === 'annually' && subAmountYear != null
+                      ? `$${subAmountYear.toFixed(2)}/year`
+                      : subAmountMonth != null
+                        ? `$${subAmountMonth.toFixed(2)}/month`
+                        : subAmountYear != null
+                          ? `$${subAmountYear.toFixed(2)}/year`
+                          : <span style={{ opacity: 0.4 }}>—</span>}
+                  </span>
+                </div>
+                <div className="sub-active-detail-item">
+                  <span className="sub-active-detail-label">Payment method</span>
+                  <span className="sub-active-detail-value">
+                    {subCardBrand && subCardLast4
+                      ? `${subCardBrand.charAt(0).toUpperCase() + subCardBrand.slice(1)} •••• ${subCardLast4}`
+                      : <span style={{ opacity: 0.4 }}>—</span>}
+                  </span>
+                </div>
+                <div className="sub-active-detail-item">
+                  <span className="sub-active-detail-label">Invoice</span>
+                  {invoices.length > 0 ? (
                     <button
-                      className={`toggle-option ${!isAnnual ? 'active' : ''}`}
-                      onClick={() => setIsAnnual(false)}
+                      className="sub-active-detail-value sub-active-invoice-link"
+                      onClick={() => setShowInvoicesModal(true)}
                     >
-                      Monthly
+                      Download
                     </button>
+                  ) : (invoiceId || invoiceUrl) ? (
                     <button
-                      className={`toggle-option ${isAnnual ? 'active' : ''}`}
-                      onClick={() => setIsAnnual(true)}
+                      className="sub-active-detail-value sub-active-invoice-link"
+                      disabled={isDownloadingInvoice}
+                      onClick={async () => {
+                        if (invoiceId) {
+                          setIsDownloadingInvoice(true);
+                          try {
+                            const token = await getValidSessionToken();
+                            const res = await fetch(framerEndpoints.site.invoicePdf(), {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                              body: JSON.stringify({ invoiceId }),
+                            });
+                            if (res.ok) {
+                              const blob = await res.blob();
+                              const url = URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = url;
+                              a.download = 'invoice.pdf';
+                              a.click();
+                              URL.revokeObjectURL(url);
+                            }
+                          } catch { /* silent */ } finally {
+                            setIsDownloadingInvoice(false);
+                          }
+                        } else if (invoiceUrl) {
+                          window.open(invoiceUrl, '_blank', 'noopener,noreferrer');
+                        }
+                      }}
                     >
-                      Annually
+                      {isDownloadingInvoice ? 'Downloading...' : 'Download'}
                     </button>
-                  </div>
-                  <div className="savings-info" style={{ opacity: isAnnual ? 1 : 0, visibility: isAnnual ? 'visible' : 'hidden' }}>
-                    You Save 20%
-                  </div>
-                  <div className="secondary-price">
-                    ${isAnnual ? '19' : '24'}/month{isAnnual ? ': Purchased Annually' : ''}
-                  </div>
-                  <button
-                    className="purchase-btn"
-                    onClick={handlePurchaseNow}
-                  >
-                    Purchase Now
-                  </button>
+                  ) : (
+                    <span className="sub-active-detail-value" style={{ opacity: 0.4 }}>Unavailable</span>
+                  )}
                 </div>
               </div>
+
+              {/* User info */}
+              {subscriptionEmail && (
+                <div className="sub-active-user-row">
+                  <div className="sub-active-avatar">
+                    {(subscriptionEmail || 'U').slice(0, 2).toUpperCase()}
+                  </div>
+                  <div className="sub-active-user-info">
+                    <span className="sub-active-user-email">{subscriptionEmail}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* CTA button */}
+              <a
+                href="https://accounts.accessbit.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sub-active-cta-btn"
+              >
+                Access Web App
+                <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
+              </a>
+
+              {/* Manage subscription */}
+              <button
+                className="sub-active-manage-link"
+                type="button"
+                onClick={() => window.open('https://accounts.accessbit.io/', '_blank', 'noopener,noreferrer')}
+              >
+                Manage subscription
+              </button>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="subscription-card" style={{ flex: 2 }}>
+                <div className="sub-header">
+                  <span className="sub-header-title">Accessibility Widget</span>
+                  <span className="sub-pro-badge">PRO</span>
+                </div>
+
+                <div className="billing-toggle">
+                  <button onClick={() => setIsAnnual(false)} style={{ background: !isAnnual ? '#3634cc' : 'transparent', color: !isAnnual ? '#fff' : '#9498b8' }}>Monthly</button>
+                  <button onClick={() => setIsAnnual(true)} style={{ background: isAnnual ? '#3634cc' : 'transparent', color: isAnnual ? '#fff' : '#9498b8' }}>Annually</button>
+                </div>
+
+                <div className="price-display">
+                  <div className="price-amount">${isAnnual ? '19' : '24'}</div>
+                  <div className="price-unit">/ month</div>
+                </div>
+
+                <div className="price-bill-note">{isAnnual ? 'Billed as $228/year' : 'Billed monthly'}</div>
+
+                {isAnnual && (
+                  <div className="save-badge-pill">Save 20% — $60 / year</div>
+                )}
+
+                <button
+                  className="purchase-btn-main"
+                  onClick={handlePurchaseNow}
+                  disabled={!!hasSubscription || isPurchasing}
+                >
+                  {isPurchasing ? 'Opening checkout…' : 'Purchase now'}
+                </button>
+
+                <div className="purchase-fine-print">Cancel anytime. VAT calculated at checkout.</div>
+              </div>
+
+              <div className="included-card-panel">
+                <div className="included-card-title">INCLUDED</div>
+                <div className="included-items">
+                  <div className="included-item"><span className="included-check">✓</span>WCAG 2.2 AA compliant widget</div>
+                  <div className="included-item"><span className="included-check">✓</span>10 widget languages</div>
+                  <div className="included-item"><span className="included-check">✓</span>Staging and production environments</div>
+                  <div className="included-item"><span className="included-check">✓</span>35+ accessibility features</div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
+
+      {/* Payment processing modal */}
+      {paymentFlow.open && (
+        <div className="cancel-modal-backdrop">
+          <div className="cancel-modal" onClick={e => e.stopPropagation()}>
+            {paymentFlow.phase === 'timeout' ? (
+              <>
+                <div className="cancel-modal-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="#e8a838" strokeWidth="2"/>
+                    <path d="M12 8v4M12 16h.01" stroke="#e8a838" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <h3 className="cancel-modal-title">Payment not detected</h3>
+                <p className="cancel-modal-body">
+                  We checked for 5 minutes but couldn't confirm your payment. If you completed it, click Retry to check again.
+                </p>
+                <div className="cancel-modal-actions">
+                  <button
+                    className="cancel-modal-keep"
+                    onClick={() => {
+                      setPaymentFlow({ open: false, phase: 'polling' });
+                      startSilentPoll();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="cancel-modal-confirm"
+                    onClick={() => {
+                      setPaymentFlow({ open: false, phase: 'polling' });
+                      setTimeout(() => setPaymentFlow({ open: true, phase: 'polling' }), 50);
+                    }}
+                  >
+                    Retry
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '8px 0' }}>
+                  <img src={spinnerGif} alt="" style={{ width: 48, height: 48 }} />
+                  <h3 className="cancel-modal-title" style={{ margin: 0 }}>Payment processing...</h3>
+                  <p className="cancel-modal-body" style={{ margin: 0, textAlign: 'center' }}>
+                    Complete your payment in the checkout tab.<br/>This will update automatically.
+                  </p>
+                </div>
+                <div className="cancel-modal-actions" style={{ marginTop: 16 }}>
+                  <button
+                    className="cancel-modal-keep"
+                    style={{ width: '100%' }}
+                    onClick={() => {
+                      setPaymentFlow({ open: false, phase: 'polling' });
+                      startSilentPoll();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Invoices modal */}
+      {showInvoicesModal && (
+        <div className="cancel-modal-backdrop" onClick={() => setShowInvoicesModal(false)}>
+          <div className="invoice-modal" onClick={e => e.stopPropagation()}>
+            <h3 className="cancel-modal-title">Invoices</h3>
+            <div className="invoice-modal-list">
+              {invoices.map(inv => {
+                const date = inv.created ? new Date(inv.created).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+                const amount = inv.amountPaid != null ? `$${(inv.amountPaid / 100).toFixed(2)} ${(inv.currency || 'usd').toUpperCase()}` : '—';
+                const downloadInvoice = async () => {
+                  try {
+                    const token = await getValidSessionToken();
+                    const res = await fetch(framerEndpoints.site.invoicePdf(), {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                      body: JSON.stringify({ invoiceId: inv.id }),
+                    });
+                    if (res.ok) {
+                      const blob = await res.blob();
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `invoice-${inv.number || inv.id}.pdf`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }
+                  } catch { /* silent */ }
+                };
+                return (
+                  <div key={inv.id} className="invoice-modal-row">
+                    <div className="invoice-modal-info">
+                      <span className="invoice-modal-number">{inv.number || inv.id}</span>
+                      <span className="invoice-modal-date">{date} · {amount}</span>
+                    </div>
+                    <button className="invoice-modal-download" onClick={downloadInvoice}>
+                      PDF
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+            <button className="cancel-modal-keep" style={{ width: '100%', marginTop: 4 }} onClick={() => setShowInvoicesModal(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
