@@ -821,7 +821,7 @@ html, body, #root {
 /* Step Navigation */
 .step-navigation {
   display: flex;
-  margin: 0 0 14px 0;
+  margin: 0 0 18px 0;
   padding: 0;
   gap: 0;
   flex-shrink: 0;
@@ -2111,7 +2111,7 @@ html, body, #root {
 /* Step Navigation */
 .step-navigation {
   display: flex;
-  margin: 0 0 14px 0;
+  margin: 0 0 18px 0;
   padding: 0;
   gap: 0;
   flex-shrink: 0;
@@ -3704,13 +3704,13 @@ html, body, #root {
   color: #ffffff;
 }
 
-.header-buttons {
+.payment-screen .header-buttons {
   display: flex;
   gap: 15px;
 }
 
-.back-btn,
-.next-btn {
+.payment-screen .back-btn,
+.payment-screen .next-btn {
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
@@ -3722,32 +3722,32 @@ html, body, #root {
   gap: 8px;
 }
 
-.back-btn {
+.payment-screen .back-btn {
   background: rgba(21, 19, 40, 1);
   color: #ffffff;
 }
 
-.back-btn:disabled {
+.payment-screen .back-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.next-btn {
+.payment-screen .next-btn {
   background: rgba(38, 46, 132, 1);
   color: #ffffff;
 }
 
-.next-btn:hover:not(:disabled) {
+.payment-screen .next-btn:hover:not(:disabled) {
   background: #2563eb;
 }
 
-.next-btn:disabled {
+.payment-screen .next-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
 /* Step Navigation */
-.step-navigation {
+.payment-screen .step-navigation {
   display: flex;
   margin: 10px 30px 0px 27px;
   padding: 0px;
@@ -3756,7 +3756,7 @@ html, body, #root {
   font-weight: 400;
 }
 
-.step {
+.payment-screen .step {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -3767,33 +3767,33 @@ html, body, #root {
   padding-bottom: 17px;
 }
 
-.step-number {
+.payment-screen .step-number {
   font-size: 12px;
   color: #999;
 }
 
-.step-name {
+.payment-screen .step-name {
   font-size: 16px;
   color: #999;
 }
 
-.step.active .step-number {
+.payment-screen .step.active .step-number {
   color: #ffffff;
 }
 
-.step.active .step-name {
+.payment-screen .step.active .step-name {
   color: #ffffff;
 }
 
-.step:not(.active) .step-name {
+.payment-screen .step:not(.active) .step-name {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.step.completed .step-number {
+.payment-screen .step.completed .step-number {
   color: rgba(43, 110, 47, 1);
 }
 
-.step.completed .step-name {
+.payment-screen .step.completed .step-name {
   color: rgba(43, 110, 47, 1);
 }
 
@@ -4457,7 +4457,7 @@ html, body, #root {
     padding: 15px 20px;
   }
 
-  .step-navigation {
+  .payment-screen .step-navigation {
     margin: 10px 20px 0px 20px;
     gap: 50px;
   }

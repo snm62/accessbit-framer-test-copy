@@ -404,7 +404,7 @@ const productionUrl = publishInfo.productionUrl || '';
             Back
           </button>
           <button className="publish-btn" onClick={handlePublish}>
-            {hasSubscription === true ? 'Publish to live domain' : 'Publish to staging'}
+            {hasSubscription === true && siteDomain && !siteDomain.includes('.framer.app') && !siteDomain.includes('.framer.com') ? 'Publish to live domain' : 'Publish to staging'}
             <img src={whitearrow} alt="" style={{ width: '14px', height: '15px', marginLeft: '8px' }} />
           </button>
         </div>
@@ -446,11 +446,11 @@ const productionUrl = publishInfo.productionUrl || '';
 
       {/* Step Navigation */}
       <div className="step-navigation">
-        <div className="step completed" onClick={onBack} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+        <div className="step completed" onClick={onBack}>
           <div className="step-circle">✓</div>
           <span className="step-name">Customization</span>
         </div>
-        <div className="step active" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+        <div className="step active">
           <div className="step-circle">2</div>
           <span className="step-name">Publish</span>
         </div>
@@ -1038,7 +1038,7 @@ const productionUrl = publishInfo.productionUrl || '';
             <>
               <div className="subscription-card" style={{ flex: 2 }}>
                 <div className="sub-header">
-                  <span className="sub-header-title">Accessibility Widget</span>
+                  <span className="sub-title">Subscription</span>
                   <span className="sub-pro-badge">PRO</span>
                 </div>
 

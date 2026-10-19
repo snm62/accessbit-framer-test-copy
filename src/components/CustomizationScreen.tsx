@@ -266,11 +266,11 @@ const CustomizationScreen: React.FC<CustomizationScreenProps> = ({ onBack, onNex
 
       {/* Step Navigation */}
       <div className="step-navigation">
-        <div className="step active" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+        <div className="step active">
           <div className="step-circle">1</div>
           <span className="step-name">Customization</span>
         </div>
-        <div className="step" onClick={handleNextPayment} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+        <div className="step" onClick={handleNextPayment}>
           <div className="step-circle">2</div>
           <span className="step-name">Publish</span>
         </div>

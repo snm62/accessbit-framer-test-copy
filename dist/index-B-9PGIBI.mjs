@@ -13946,11 +13946,11 @@ const CustomizationScreen = ({ onBack, onNext, existingCustomizationData, isLoad
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step-navigation", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "1" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Customization" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step", onClick: handleNextPayment, style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step", onClick: handleNextPayment, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "2" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Publish" })
       ] })
@@ -15024,9 +15024,8 @@ const PublishScreen = ({ onBack, customizationData }) => {
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow, alt: "", style: { transform: "rotate(180deg)", width: "14px", height: "15px", marginRight: "8px" } }),
           "Back"
         ] }),
-        isCheckingSubscription && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#a3a3a3", fontSize: "13px" }, children: "Checking..." }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "publish-btn", onClick: handlePublish, children: [
-          hasSubscription === true ? "Publish to live domain" : "Publish to staging",
+          hasSubscription === true && siteDomain && !siteDomain.includes(".framer.app") && !siteDomain.includes(".framer.com") ? "Publish to live domain" : "Publish to staging",
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: whitearrow, alt: "", style: { width: "14px", height: "15px", marginLeft: "8px" } })
         ] })
       ] })
@@ -15055,11 +15054,11 @@ const PublishScreen = ({ onBack, customizationData }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontSize: "14px", lineHeight: "1.5" }, children: typeof publishSuccess === "string" ? publishSuccess : "Accessibility settings published successfully!" })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step-navigation", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step completed", onClick: onBack, style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step completed", onClick: onBack, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "✓" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Customization" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", style: { display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "step active", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "step-circle", children: "2" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "step-name", children: "Publish" })
       ] })
@@ -15551,7 +15550,7 @@ const PublishScreen = ({ onBack, customizationData }) => {
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-detail-item", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-label", children: "Amount" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-value", children: subAmountYear != null ? `$${subAmountYear.toFixed(2)}/year` : subAmountMonth != null ? `$${subAmountMonth.toFixed(2)}/month` : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { opacity: 0.4 }, children: "—" }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-value", children: subPlanType === "annually" && subAmountYear != null ? `$${subAmountYear.toFixed(2)}/year` : subAmountMonth != null ? `$${subAmountMonth.toFixed(2)}/month` : subAmountYear != null ? `$${subAmountYear.toFixed(2)}/year` : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { opacity: 0.4 }, children: "—" }) })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-active-detail-item", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-active-detail-label", children: "Payment method" }),
@@ -15632,7 +15631,7 @@ const PublishScreen = ({ onBack, customizationData }) => {
       ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "subscription-card", style: { flex: 2 }, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sub-header", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-header-title", children: "Accessibility Widget" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-title", children: "Subscription" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sub-pro-badge", children: "PRO" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "billing-toggle", children: [
