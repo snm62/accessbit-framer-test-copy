@@ -211,10 +211,7 @@ const productionUrl = publishInfo.productionUrl || '';
         setSiteDomain(domain);
         normalizedDomainRef.current = domain;
 
-        // Always check payment status via API — even for staging domains.
-        // The API returns isStaging:true when no subscription exists, so the card won't show.
-        // But if a subscription was paid on a staging domain, the API returns real data and the card should show.
-        // Short-circuiting here would wipe the card on plugin reload.
+        
         const response = await makeAuthenticatedRequest(
           framerEndpoints.site.checkPayment(domain),
           { method: 'GET' }
@@ -347,13 +344,13 @@ const productionUrl = publishInfo.productionUrl || '';
       const email = (payload?.email || payload?.sub || '') as string;
       const plan = isAnnual ? 'annually' : 'monthly';
       const encoded = btoa(JSON.stringify({ email, plan, platform: 'framer', domain: siteDomain }));
-      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}&mode=test`, '_blank', 'noopener,noreferrer');
+      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}`, '_blank', 'noopener,noreferrer');
       try { localStorage.setItem('ab_checkout_pending', JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() })); } catch {}
       setPaymentFlow({ open: true, phase: 'polling' });
     } catch (err) {
       console.error('[AccessBit] handlePurchaseNow error:', err);
       // Even if token/open fails, still show the modal so user can retry
-      window.open(`https://accounts.accessbit.io/checkout?mode=test`, '_blank', 'noopener,noreferrer');
+      window.open(`https://accounts.accessbit.io/checkout`, '_blank', 'noopener,noreferrer');
       try { localStorage.setItem('ab_checkout_pending', JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() })); } catch {}
       setPaymentFlow({ open: true, phase: 'polling' });
     } finally {

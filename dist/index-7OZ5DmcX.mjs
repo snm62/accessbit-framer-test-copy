@@ -14970,7 +14970,7 @@ const PublishScreen = ({ onBack, customizationData }) => {
       const email = payload?.email || payload?.sub || "";
       const plan = isAnnual ? "annually" : "monthly";
       const encoded = btoa(JSON.stringify({ email, plan, platform: "framer", domain: siteDomain }));
-      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}&mode=test`, "_blank", "noopener,noreferrer");
+      window.open(`https://accounts.accessbit.io/checkout?d=${encodeURIComponent(encoded)}`, "_blank", "noopener,noreferrer");
       try {
         localStorage.setItem("ab_checkout_pending", JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() }));
       } catch {
@@ -14978,7 +14978,7 @@ const PublishScreen = ({ onBack, customizationData }) => {
       setPaymentFlow({ open: true, phase: "polling" });
     } catch (err) {
       console.error("[AccessBit] handlePurchaseNow error:", err);
-      window.open(`https://accounts.accessbit.io/checkout?mode=test`, "_blank", "noopener,noreferrer");
+      window.open(`https://accounts.accessbit.io/checkout`, "_blank", "noopener,noreferrer");
       try {
         localStorage.setItem("ab_checkout_pending", JSON.stringify({ domain: normalizedDomainRef.current, ts: Date.now() }));
       } catch {
